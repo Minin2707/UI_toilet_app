@@ -23,7 +23,7 @@ class AppConfig {
         if (kIsWeb) {
           return 'http://localhost:8080';
         }
-        return 'https://chancellor-thick-resources-followed.trycloudflare.com';
+        return 'https://regulation-medieval-apparel-commissioner.trycloudflare.com';
         //return 'http://10.0.2.2:8080';
 
       case Environment.stage:

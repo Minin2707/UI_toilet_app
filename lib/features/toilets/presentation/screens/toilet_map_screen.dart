@@ -124,8 +124,14 @@ class _ToiletMapScreenState
   Widget build(BuildContext context) {
 
     return Scaffold(
+    backgroundColor:
+        const Color(0xFF07111A),
 
       appBar: AppBar(
+        backgroundColor:
+              const Color(0xFF07111A),
+
+          elevation: 0,
         title: const Text(
           'Toilet Map',
         ),
@@ -155,62 +161,182 @@ class _ToiletMapScreenState
             child: Row(
               children: [
 
-                FilterChip(
+                SizedBox(
 
-                  label:
-                      const Text('Approved'),
+                  width: 120,
 
-                  selected:
-                      _approvedOnly,
+                  child: FilterChip(
 
-                  onSelected: (value) {
+                    label: Center(
 
-                    setState(() {
-                      _approvedOnly = value;
-                    });
+                      child: Text(
 
-                    _reloadToilets();
-                  },
+                        'Approved',
+
+                        style: TextStyle(
+
+                          color:
+                              _approvedOnly
+                                  ? Colors.black
+                                  : Colors.black,
+
+                          fontWeight:
+                              FontWeight.w600,
+                        ),
+                      ),
+                    ),
+
+                    selected:
+                        _approvedOnly,
+
+                    selectedColor:
+                        Colors.cyanAccent,
+
+                    backgroundColor:
+                        Colors.white.withOpacity(0.05),
+
+                    checkmarkColor:
+                        Colors.black,
+
+                    side: BorderSide(
+                      color:
+                          Colors.white.withOpacity(0.08),
+                    ),
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(14),
+                    ),
+
+                    onSelected: (value) {
+
+                      setState(() {
+                        _approvedOnly = value;
+                      });
+
+                      _reloadToilets();
+                    },
+                  ),
                 ),
 
                 const SizedBox(width: 8),
 
-                FilterChip(
+                SizedBox(
 
-                  label:
-                      const Text('Accessible'),
+                  width: 120,
 
-                  selected:
-                      _accessibleOnly,
+                  child: FilterChip(
 
-                  onSelected: (value) {
+                    label: Center(
 
-                    setState(() {
-                      _accessibleOnly = value;
-                    });
+                      child: Text(
 
-                    _reloadToilets();
-                  },
+                        'Accessible',
+
+                        style: TextStyle(
+
+                          color:
+                              _accessibleOnly
+                                  ? Colors.black
+                                  : Colors.black,
+
+                          fontWeight:
+                              FontWeight.w600,
+                        ),
+                      ),
+                    ),
+
+                    selected:
+                        _accessibleOnly,
+
+                    selectedColor:
+                        Colors.cyanAccent,
+
+                    backgroundColor:
+                        Colors.white.withOpacity(0.05),
+
+                    checkmarkColor:
+                        Colors.black,
+
+                    side: BorderSide(
+                      color:
+                          Colors.white.withOpacity(0.08),
+                    ),
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(14),
+                    ),
+
+                    onSelected: (value) {
+
+                      setState(() {
+                        _accessibleOnly= value;
+                      });
+
+                      _reloadToilets();
+                    },
+                  ),
                 ),
 
                 const SizedBox(width: 8),
 
-                FilterChip(
+                SizedBox(
 
-                  label:
-                      const Text('Free'),
+                  width: 120,
 
-                  selected:
-                      _freeOnly,
+                  child: FilterChip(
 
-                  onSelected: (value) {
+                    label: Center(
 
-                    setState(() {
-                      _freeOnly = value;
-                    });
+                      child: Text(
 
-                    _reloadToilets();
-                  },
+                        'Free',
+
+                        style: TextStyle(
+
+                          color:
+                              _freeOnly
+                                  ? Colors.black
+                                  : Colors.black,
+
+                          fontWeight:
+                              FontWeight.w600,
+                        ),
+                      ),
+                    ),
+
+                    selected:
+                        _freeOnly,
+
+                    selectedColor:
+                        Colors.cyanAccent,
+
+                    backgroundColor:
+                        Colors.white.withOpacity(0.05),
+
+                    checkmarkColor:
+                        Colors.black,
+
+                    side: BorderSide(
+                      color:
+                          Colors.white.withOpacity(0.08),
+                    ),
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(14),
+                    ),
+
+                    onSelected: (value) {
+
+                      setState(() {
+                        _freeOnly= value;
+                      });
+
+                      _reloadToilets();
+                    },
+                  ),
                 ),
               ],
             ),
@@ -295,7 +421,14 @@ class _ToiletMapScreenState
                     TileLayer(
 
                       urlTemplate:
-                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+
+                      subdomains: const [
+                        'a',
+                        'b',
+                        'c',
+                        'd',
+                      ],
 
                       userAgentPackageName:
                           'com.example.toilet_map_app',
