@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -149,206 +150,10 @@ class _ToiletMapScreenState
         ),
       ),
 
-      body: Column(
+      body: Stack(
         children: [
 
-          // FILTERS
-
-          SingleChildScrollView(
-
-            scrollDirection: Axis.horizontal,
-
-            padding: const EdgeInsets.all(8),
-
-            child: Row(
-              children: [
-
-                SizedBox(
-
-                  width: 120,
-
-                  child: FilterChip(
-
-                    label: Center(
-
-                      child: Text(
-
-                        'Approved',
-
-                        style: TextStyle(
-
-                          color:
-                              _approvedOnly
-                                  ? Colors.black
-                                  : Colors.black,
-
-                          fontWeight:
-                              FontWeight.w600,
-                        ),
-                      ),
-                    ),
-
-                    selected:
-                        _approvedOnly,
-
-                    selectedColor:
-                        Colors.cyanAccent,
-
-                    backgroundColor:
-                        Colors.white.withOpacity(0.05),
-
-                    checkmarkColor:
-                        Colors.black,
-
-                    side: BorderSide(
-                      color:
-                          Colors.white.withOpacity(0.08),
-                    ),
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(14),
-                    ),
-
-                    onSelected: (value) {
-
-                      setState(() {
-                        _approvedOnly = value;
-                      });
-
-                      _reloadToilets();
-                    },
-                  ),
-                ),
-
-                const SizedBox(width: 8),
-
-                SizedBox(
-
-                  width: 120,
-
-                  child: FilterChip(
-
-                    label: Center(
-
-                      child: Text(
-
-                        'Accessible',
-
-                        style: TextStyle(
-
-                          color:
-                              _accessibleOnly
-                                  ? Colors.black
-                                  : Colors.black,
-
-                          fontWeight:
-                              FontWeight.w600,
-                        ),
-                      ),
-                    ),
-
-                    selected:
-                        _accessibleOnly,
-
-                    selectedColor:
-                        Colors.cyanAccent,
-
-                    backgroundColor:
-                        Colors.white.withOpacity(0.05),
-
-                    checkmarkColor:
-                        Colors.black,
-
-                    side: BorderSide(
-                      color:
-                          Colors.white.withOpacity(0.08),
-                    ),
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(14),
-                    ),
-
-                    onSelected: (value) {
-
-                      setState(() {
-                        _accessibleOnly= value;
-                      });
-
-                      _reloadToilets();
-                    },
-                  ),
-                ),
-
-                const SizedBox(width: 8),
-
-                SizedBox(
-
-                  width: 120,
-
-                  child: FilterChip(
-
-                    label: Center(
-
-                      child: Text(
-
-                        'Free',
-
-                        style: TextStyle(
-
-                          color:
-                              _freeOnly
-                                  ? Colors.black
-                                  : Colors.black,
-
-                          fontWeight:
-                              FontWeight.w600,
-                        ),
-                      ),
-                    ),
-
-                    selected:
-                        _freeOnly,
-
-                    selectedColor:
-                        Colors.cyanAccent,
-
-                    backgroundColor:
-                        Colors.white.withOpacity(0.05),
-
-                    checkmarkColor:
-                        Colors.black,
-
-                    side: BorderSide(
-                      color:
-                          Colors.white.withOpacity(0.08),
-                    ),
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(14),
-                    ),
-
-                    onSelected: (value) {
-
-                      setState(() {
-                        _freeOnly= value;
-                      });
-
-                      _reloadToilets();
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // MAP
-
-          Expanded(
-
-            child: BlocBuilder<
+          BlocBuilder<
                 ToiletBloc,
                 ToiletState>(
 
@@ -500,7 +305,276 @@ class _ToiletMapScreenState
                   ],
                 );
               },
+          ),
+          Positioned(
+
+            top: 12,
+            left: 12,
+
+
+            child: SingleChildScrollView(
+
+              scrollDirection: Axis.horizontal,
+
+              child: ClipRRect(
+
+                borderRadius:
+                    BorderRadius.circular(22),
+
+                child: BackdropFilter(
+
+                  filter: ImageFilter.blur(
+
+                    sigmaX: 18,
+                    sigmaY: 18,
+                  ),
+
+                  child: Container(
+
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+
+                    decoration: BoxDecoration(
+
+                      color:
+                          Colors.white.withOpacity(0.08),
+
+                      borderRadius:
+                          BorderRadius.circular(22),
+
+                      border: Border.all(
+                        color:
+                            Colors.white.withOpacity(0.08),
+                      ),
+
+                      boxShadow: [
+
+                        BoxShadow(
+
+                          color:
+                              Colors.black.withOpacity(0.25),
+
+                          blurRadius: 24,
+
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+
+                    child: Row(
+                  children: [
+
+                    SizedBox(
+
+                      width: 120,
+
+                      child: FilterChip(
+                      showCheckmark: false,
+
+                        label:  Center(
+                          child: Text(
+                            'Approved',
+                            style: TextStyle(
+                              color:
+                                  _approvedOnly
+                                      ? Colors.black
+                                      : Colors.white,
+
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+
+                        selected:
+                            _approvedOnly,
+
+                        selectedColor:
+                            Colors.cyanAccent,
+
+                        backgroundColor:
+                            Colors.transparent,
+
+                        disabledColor:
+                            Colors.transparent,
+
+                        selectedShadowColor:
+                            Colors.transparent,
+
+                        shadowColor:
+                            Colors.transparent,
+
+                        surfaceTintColor:
+                            Colors.transparent,
+
+                        checkmarkColor:
+                            Colors.black,
+
+                        side: BorderSide(
+                          color:
+                              Colors.black.withOpacity(0.22),
+                        ),
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(14),
+                        ),
+
+                        onSelected: (value) {
+
+                          setState(() {
+                            _approvedOnly = value;
+                          });
+
+                          _reloadToilets();
+                        },
+                      ),
+                    ),
+
+                    const SizedBox(width: 8),
+
+                    SizedBox(
+
+                      width: 120,
+
+                      child: FilterChip(
+                      showCheckmark: false,
+
+                        label:  Center(
+                          child: Text(
+                            'Accessible',
+                            style: TextStyle(
+                              color:
+                                  _accessibleOnly
+                                      ? Colors.black
+                                      : Colors.white,
+
+
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+
+                        selected:
+                            _accessibleOnly,
+
+                        selectedColor:
+                            Colors.cyanAccent,
+
+                       backgroundColor:
+                           Colors.transparent,
+
+                       disabledColor:
+                           Colors.transparent,
+
+                       selectedShadowColor:
+                           Colors.transparent,
+
+                       shadowColor:
+                           Colors.transparent,
+
+                       surfaceTintColor:
+                           Colors.transparent,
+
+                        checkmarkColor:
+                            Colors.black,
+
+                        side: BorderSide(
+                          color:
+                              Colors.black.withOpacity(0.22),
+                        ),
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(14),
+                        ),
+
+                        onSelected: (value) {
+
+                          setState(() {
+                            _accessibleOnly = value;
+                          });
+
+                          _reloadToilets();
+                        },
+                      ),
+                    ),
+
+                    const SizedBox(width: 8),
+
+                    SizedBox(
+
+                      width: 120,
+
+                      child: FilterChip(
+                      showCheckmark: false,
+
+                        label:  Center(
+                          child: Text(
+                            'Free',
+                            style: TextStyle(
+                              color:
+                                  _freeOnly
+                                      ? Colors.black
+                                      : Colors.white,
+
+
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+
+                        selected:
+                            _freeOnly,
+
+                        selectedColor:
+                            Colors.cyanAccent,
+
+                        backgroundColor:
+                            Colors.transparent,
+
+                        disabledColor:
+                            Colors.transparent,
+
+                        selectedShadowColor:
+                            Colors.transparent,
+
+                        shadowColor:
+                            Colors.transparent,
+
+                        surfaceTintColor:
+                            Colors.transparent,
+
+                        checkmarkColor:
+                            Colors.black,
+
+                        side: BorderSide(
+                          color:
+                              Colors.black.withOpacity(0.22),
+                        ),
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(14),
+                        ),
+
+                        onSelected: (value) {
+
+                          setState(() {
+                            _freeOnly = value;
+                          });
+
+                          _reloadToilets();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
+          ),
+          ),
           ),
         ],
       ),
