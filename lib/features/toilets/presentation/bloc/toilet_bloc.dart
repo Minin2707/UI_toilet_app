@@ -27,6 +27,10 @@ class ToiletBloc
     on<ApproveToiletEvent>(
       _onApproveToilet,
     );
+
+    on<ReportToiletEvent>(
+      _onReportToilet,
+    );
   }
 
   Future<void> _onLoadToilets(
@@ -87,6 +91,41 @@ class ToiletBloc
       final toilets =
           await repository.getToilets(
         latitude: event.reloadLatitude,
+        longitude: event.reloadLongitude,
+      );
+
+      emit(
+        ToiletLoaded(
+          toilets,
+        ),
+      );
+
+    } catch (e) {
+
+      emit(
+        ToiletError(
+          e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onReportToilet(
+    ReportToiletEvent event,
+    Emitter<ToiletState> emit,
+  ) async {
+
+    try {
+
+      await repository.reportToilet(
+        event.toiletId,
+      );
+
+      final toilets =
+          await repository.getToilets(
+
+        latitude: event.reloadLatitude,
+
         longitude: event.reloadLongitude,
       );
 

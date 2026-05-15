@@ -15,9 +15,7 @@ class LoadToiletsEvent
     required this.latitude,
     required this.longitude,
     this.approvedOnly = false,
-
     this.accessibleOnly = false,
-
     this.accessType,
   });
 }
@@ -32,7 +30,6 @@ class CreateToiletEvent
 
   CreateToiletEvent({
     required this.request,
-
     required this.reloadLatitude,
     required this.reloadLongitude,
   });
@@ -48,7 +45,21 @@ class ApproveToiletEvent
 
   ApproveToiletEvent({
     required this.toiletId,
+    required this.reloadLatitude,
+    required this.reloadLongitude,
+  });
+}
 
+class ReportToiletEvent
+    extends ToiletEvent {
+
+  final String toiletId;
+
+  final double reloadLatitude;
+  final double reloadLongitude;
+
+  ReportToiletEvent({
+    required this.toiletId,
     required this.reloadLatitude,
     required this.reloadLongitude,
   });

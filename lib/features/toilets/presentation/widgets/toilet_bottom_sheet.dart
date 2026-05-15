@@ -305,6 +305,8 @@ class ToiletBottomSheet
                           value: _distanceText(),
                         ),
 
+
+
                         const SizedBox(height: 18),
 
                         _InfoRow(
@@ -325,6 +327,114 @@ class ToiletBottomSheet
                               toilet.accessType
                                   .replaceAll('_', ' '),
                         ),
+
+                        const SizedBox(height: 26),
+
+                                                Divider(
+                                                  color: Colors.white.withOpacity(0.08),
+                                                ),
+
+                                                const SizedBox(height: 18),
+
+                                                GestureDetector(
+
+                                                  onTap: () {
+
+                                                    context.read<ToiletBloc>().add(
+
+                                                      ReportToiletEvent(
+
+                                                        toiletId: toilet.id,
+
+                                                        reloadLatitude:
+                                                            currentLocation.latitude,
+
+                                                        reloadLongitude:
+                                                            currentLocation.longitude,
+                                                      ),
+                                                    );
+
+                                                    Navigator.pop(context);
+                                                  },
+
+                                                  child: Container(
+
+                                                    padding: const EdgeInsets.symmetric(
+                                                      vertical: 14,
+                                                      horizontal: 16,
+                                                    ),
+
+                                                    decoration: BoxDecoration(
+
+                                                      color:
+                                                          Colors.red.withOpacity(0.08),
+
+                                                      borderRadius:
+                                                          BorderRadius.circular(16),
+
+                                                      border: Border.all(
+                                                        color:
+                                                            Colors.red.withOpacity(0.18),
+                                                      ),
+                                                    ),
+
+                                                    child: Row(
+                                                      children: [
+
+                                                        Icon(
+                                                          Icons.flag_outlined,
+                                                          color: Colors.redAccent.shade100,
+                                                          size: 20,
+                                                        ),
+
+                                                        const SizedBox(width: 12),
+
+                                                        Expanded(
+
+                                                          child: Column(
+
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment.start,
+
+                                                            children: [
+
+                                                              Text(
+
+                                                                'Report incorrect location',
+
+                                                                style: TextStyle(
+
+                                                                  color:
+                                                                      Colors.redAccent.shade100,
+
+                                                                  fontWeight:
+                                                                      FontWeight.w600,
+
+                                                                  fontSize: 14,
+                                                                ),
+                                                              ),
+
+                                                              const SizedBox(height: 2),
+
+                                                              Text(
+
+                                                                'Helps keep the map accurate',
+
+                                                                style: TextStyle(
+
+                                                                  color:
+                                                                      Colors.white.withOpacity(0.45),
+
+                                                                  fontSize: 12,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                       ],
                     ),
                   ),

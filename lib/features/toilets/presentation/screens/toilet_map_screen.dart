@@ -312,11 +312,7 @@ class _ToiletMapScreenState
             left: 12,
 
 
-            child: SingleChildScrollView(
-
-              scrollDirection: Axis.horizontal,
-
-              child: ClipRRect(
+            child: ClipRRect(
 
                 borderRadius:
                     BorderRadius.circular(22),
@@ -420,7 +416,7 @@ class _ToiletMapScreenState
                   ],
                 ),
               ),
-            ),
+
           ),
           ),
           ),
@@ -459,7 +455,9 @@ class _GlassFilterChip
         duration:
             const Duration(milliseconds: 180),
 
-        width: 120,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 22,
+        ),
         height: 46,
 
         decoration: BoxDecoration(

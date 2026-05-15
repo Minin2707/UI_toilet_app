@@ -76,4 +76,13 @@ class ToiletRepository {
       '/toilets/$toiletId/approve',
     );
   }
+
+  Future<void> reportToilet(
+    String toiletId,
+  ) async {
+
+    await _dio.post(
+      '/toilets/$toiletId/report',
+    );
+  }
 }
