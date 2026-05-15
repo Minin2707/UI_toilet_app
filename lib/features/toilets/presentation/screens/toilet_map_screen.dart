@@ -366,208 +366,56 @@ class _ToiletMapScreenState
                     child: Row(
                   children: [
 
-                    SizedBox(
+                    _GlassFilterChip(
 
-                      width: 120,
+                      title: 'Approved',
 
-                      child: FilterChip(
-                      showCheckmark: false,
+                      selected: _approvedOnly,
 
-                        label:  Center(
-                          child: Text(
-                            'Approved',
-                            style: TextStyle(
-                              color:
-                                  _approvedOnly
-                                      ? Colors.black
-                                      : Colors.white,
+                      onTap: () {
 
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
+                        setState(() {
+                          _approvedOnly = !_approvedOnly;
+                        });
 
-                        selected:
-                            _approvedOnly,
-
-                        selectedColor:
-                            Colors.cyanAccent,
-
-                        backgroundColor:
-                            Colors.transparent,
-
-                        disabledColor:
-                            Colors.transparent,
-
-                        selectedShadowColor:
-                            Colors.transparent,
-
-                        shadowColor:
-                            Colors.transparent,
-
-                        surfaceTintColor:
-                            Colors.transparent,
-
-                        checkmarkColor:
-                            Colors.black,
-
-                        side: BorderSide(
-                          color:
-                              Colors.black.withOpacity(0.22),
-                        ),
-
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(14),
-                        ),
-
-                        onSelected: (value) {
-
-                          setState(() {
-                            _approvedOnly = value;
-                          });
-
-                          _reloadToilets();
-                        },
-                      ),
+                        _reloadToilets();
+                      },
                     ),
 
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 10),
 
-                    SizedBox(
+                    _GlassFilterChip(
 
-                      width: 120,
+                      title: 'Accessible',
 
-                      child: FilterChip(
-                      showCheckmark: false,
+                      selected: _accessibleOnly,
 
-                        label:  Center(
-                          child: Text(
-                            'Accessible',
-                            style: TextStyle(
-                              color:
-                                  _accessibleOnly
-                                      ? Colors.black
-                                      : Colors.white,
+                      onTap: () {
 
+                        setState(() {
+                          _accessibleOnly = !_accessibleOnly;
+                        });
 
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-
-                        selected:
-                            _accessibleOnly,
-
-                        selectedColor:
-                            Colors.cyanAccent,
-
-                       backgroundColor:
-                           Colors.transparent,
-
-                       disabledColor:
-                           Colors.transparent,
-
-                       selectedShadowColor:
-                           Colors.transparent,
-
-                       shadowColor:
-                           Colors.transparent,
-
-                       surfaceTintColor:
-                           Colors.transparent,
-
-                        checkmarkColor:
-                            Colors.black,
-
-                        side: BorderSide(
-                          color:
-                              Colors.black.withOpacity(0.22),
-                        ),
-
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(14),
-                        ),
-
-                        onSelected: (value) {
-
-                          setState(() {
-                            _accessibleOnly = value;
-                          });
-
-                          _reloadToilets();
-                        },
-                      ),
+                        _reloadToilets();
+                      },
                     ),
 
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 10),
 
-                    SizedBox(
+                    _GlassFilterChip(
 
-                      width: 120,
+                      title: 'Free',
 
-                      child: FilterChip(
-                      showCheckmark: false,
+                      selected: _freeOnly,
 
-                        label:  Center(
-                          child: Text(
-                            'Free',
-                            style: TextStyle(
-                              color:
-                                  _freeOnly
-                                      ? Colors.black
-                                      : Colors.white,
+                      onTap: () {
 
+                        setState(() {
+                          _freeOnly = !_freeOnly;
+                        });
 
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-
-                        selected:
-                            _freeOnly,
-
-                        selectedColor:
-                            Colors.cyanAccent,
-
-                        backgroundColor:
-                            Colors.transparent,
-
-                        disabledColor:
-                            Colors.transparent,
-
-                        selectedShadowColor:
-                            Colors.transparent,
-
-                        shadowColor:
-                            Colors.transparent,
-
-                        surfaceTintColor:
-                            Colors.transparent,
-
-                        checkmarkColor:
-                            Colors.black,
-
-                        side: BorderSide(
-                          color:
-                              Colors.black.withOpacity(0.22),
-                        ),
-
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(14),
-                        ),
-
-                        onSelected: (value) {
-
-                          setState(() {
-                            _freeOnly = value;
-                          });
-
-                          _reloadToilets();
-                        },
-                      ),
+                        _reloadToilets();
+                      },
                     ),
                   ],
                 ),
@@ -577,6 +425,95 @@ class _ToiletMapScreenState
           ),
           ),
         ],
+      ),
+    );
+  }
+}
+class _GlassFilterChip
+    extends StatelessWidget {
+
+  final String title;
+
+  final bool selected;
+
+  final VoidCallback onTap;
+
+  const _GlassFilterChip({
+
+    required this.title,
+
+    required this.selected,
+
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+
+      onTap: onTap,
+
+      child: AnimatedContainer(
+
+        duration:
+            const Duration(milliseconds: 180),
+
+        width: 120,
+        height: 46,
+
+        decoration: BoxDecoration(
+
+          color:
+              selected
+                  ? Colors.cyanAccent
+                  : Colors.white.withOpacity(0.06),
+
+          borderRadius:
+              BorderRadius.circular(16),
+
+          border: Border.all(
+
+            color:
+                selected
+                    ? Colors.cyanAccent
+                    : Colors.white.withOpacity(0.08),
+          ),
+
+          boxShadow: [
+
+            if (selected)
+
+              BoxShadow(
+
+                color:
+                    Colors.cyanAccent.withOpacity(0.35),
+
+                blurRadius: 18,
+              ),
+          ],
+        ),
+
+        child: Center(
+
+          child: Text(
+
+            title,
+
+            style: TextStyle(
+
+              color:
+                  selected
+                      ? Colors.black
+                      : Colors.white,
+
+              fontWeight:
+                  FontWeight.w600,
+
+              fontSize: 15,
+            ),
+          ),
+        ),
       ),
     );
   }
