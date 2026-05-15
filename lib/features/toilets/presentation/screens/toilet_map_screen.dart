@@ -12,6 +12,8 @@ import '../bloc/toilet_event.dart';
 import '../bloc/toilet_state.dart';
 
 import '../widgets/toilet_bottom_sheet.dart';
+import '../widgets/animated_toilet_marker.dart';
+import '../widgets/animated_user_marker.dart';
 
 class ToiletMapScreen extends StatefulWidget {
   const ToiletMapScreen({super.key});
@@ -473,16 +475,10 @@ class _ToiletMapScreenState
                                 );
                               },
 
-                              child: Icon(
+                              child: AnimatedToiletMarker(
 
-                                Icons.wc,
-
-                                size: 36,
-
-                                color:
-                                    toilet.status == 'APPROVED'
-                                        ? Colors.green
-                                        : Colors.grey,
+                                approved:
+                                    toilet.status == 'APPROVED',
                               ),
                             ),
                           ),
@@ -497,10 +493,7 @@ class _ToiletMapScreenState
                             width: 80,
                             height: 80,
 
-                            child: const Icon(
-                              Icons.person_pin_circle,
-                              size: 45,
-                            ),
+                            child: const AnimatedUserMarker(),
                           ),
                       ],
                     ),
