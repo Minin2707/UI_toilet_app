@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/models/toilet_dto.dart';
 
@@ -31,6 +32,24 @@ class ToiletBottomSheet
         toilet.distanceMeters / 1000;
 
     return '${km.toStringAsFixed(1)} km away';
+  }
+
+  Future<void> _openDirections() async {
+
+    final lat = toilet.latitude;
+    final lon = toilet.longitude;
+
+    final uri = Uri.parse(
+      'https://www.google.com/maps/dir/?api=1&destination=$lat,$lon',
+    );
+
+    if (await canLaunchUrl(uri)) {
+
+      await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+    }
   }
 
   @override
@@ -262,6 +281,50 @@ class ToiletBottomSheet
               const SizedBox(height: 24),
 
               // SCROLLABLE CONTENT
+
+              SizedBox(
+
+                width: double.infinity,
+                height: 56,
+
+                child: FilledButton.icon(
+
+                  onPressed: _openDirections,
+
+                  icon: const Icon(
+                    Icons.navigation,
+                  ),
+
+                  label: const Text(
+                    'Navigate',
+                  ),
+
+                  style: FilledButton.styleFrom(
+
+                    backgroundColor:
+                        Colors.cyanAccent,
+
+                    foregroundColor:
+                        Colors.black,
+
+                    textStyle: const TextStyle(
+
+                      fontWeight:
+                          FontWeight.bold,
+
+                      fontSize: 16,
+                    ),
+
+                    shape: RoundedRectangleBorder(
+
+                      borderRadius:
+                          BorderRadius.circular(18),
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 18),
 
               Expanded(
 

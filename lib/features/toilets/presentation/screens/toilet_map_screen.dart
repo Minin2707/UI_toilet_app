@@ -226,17 +226,26 @@ class _ToiletMapScreenState
 
                   children: [
 
+//                     TileLayer(
+//
+//                       urlTemplate:
+//                           'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+//
+//                       subdomains: const [
+//                         'a',
+//                         'b',
+//                         'c',
+//                         'd',
+//                       ],
+//
+//                       userAgentPackageName:
+//                           'com.example.toilet_map_app',
+//                     ),
+
                     TileLayer(
 
                       urlTemplate:
-                          'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-
-                      subdomains: const [
-                        'a',
-                        'b',
-                        'c',
-                        'd',
-                      ],
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 
                       userAgentPackageName:
                           'com.example.toilet_map_app',
