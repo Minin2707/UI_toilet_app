@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 
 import '../../data/models/toilet_dto.dart';
 
@@ -241,66 +242,120 @@ class _ToiletMapScreenState
                           'com.example.toilet_map_app',
                     ),
 
-                    MarkerLayer(
+                    MarkerClusterLayerWidget(
 
-                      markers: [
+                      options: MarkerClusterLayerOptions(
 
-                        ...toilets.map(
+                        maxClusterRadius: 45,
 
-                          (toilet) => Marker(
+                        size: const Size(50, 50),
 
-                            point: LatLng(
-                              toilet.latitude,
-                              toilet.longitude,
-                            ),
+                        alignment: Alignment.center,
 
-                            width: 80,
-                            height: 80,
+                        padding: const EdgeInsets.all(50),
 
-                            child: GestureDetector(
+                        maxZoom: 17,
 
-                              onTap: () {
+                        markers: [
 
-                                showModalBottomSheet(
+                          ...toilets.map(
 
-                                  context: context,
+                            (toilet) => Marker(
 
-                                  builder: (_) =>
-                                      BlocProvider.value(
+                              point: LatLng(
+                                toilet.latitude,
+                                toilet.longitude,
+                              ),
 
-                                    value:
-                                        context.read<ToiletBloc>(),
+                              width: 80,
+                              height: 80,
 
-                                    child: ToiletBottomSheet(
-                                      toilet: toilet,
-                                      currentLocation:
-                                          _currentLocation!,
+                              child: GestureDetector(
+
+                                onTap: () {
+
+                                  showModalBottomSheet(
+
+                                    context: context,
+
+                                    builder: (_) =>
+                                        BlocProvider.value(
+
+                                      value:
+                                          context.read<ToiletBloc>(),
+
+                                      child: ToiletBottomSheet(
+                                        toilet: toilet,
+                                        currentLocation:
+                                            _currentLocation!,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
 
-                              child: AnimatedToiletMarker(
+                                child: AnimatedToiletMarker(
 
-                                approved:
-                                    toilet.status == 'APPROVED',
+                                  approved:
+                                      toilet.status == 'APPROVED',
+                                ),
                               ),
                             ),
                           ),
-                        ),
 
-                        if (_currentLocation != null)
+                          if (_currentLocation != null)
 
-                          Marker(
+                            Marker(
 
-                            point: _currentLocation!,
+                              point: _currentLocation!,
 
-                            width: 80,
-                            height: 80,
+                              width: 80,
+                              height: 80,
 
-                            child: const AnimatedUserMarker(),
-                          ),
-                      ],
+                              child: const AnimatedUserMarker(),
+                            ),
+                        ],
+
+                        builder: (context, markers) {
+
+                          return Container(
+
+                            decoration: BoxDecoration(
+
+                              color: Colors.cyanAccent,
+
+                              shape: BoxShape.circle,
+
+                              boxShadow: [
+
+                                BoxShadow(
+
+                                  color:
+                                      Colors.cyanAccent.withOpacity(0.45),
+
+                                  blurRadius: 18,
+                                ),
+                              ],
+                            ),
+
+                            child: Center(
+
+                              child: Text(
+
+                                markers.length.toString(),
+
+                                style: const TextStyle(
+
+                                  color: Colors.black,
+
+                                  fontWeight: FontWeight.bold,
+
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 );
