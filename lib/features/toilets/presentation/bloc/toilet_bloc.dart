@@ -28,8 +28,16 @@ class ToiletBloc
       _onApproveToilet,
     );
 
+    on<LeaveFeedbackEvent>(
+      _onLeaveFeedback,
+    );
+
     on<ReportToiletEvent>(
       _onReportToilet,
+    );
+
+    on<ConfirmToiletEvent>(
+      _onConfirmToilet,
     );
   }
 
@@ -91,6 +99,41 @@ class ToiletBloc
       final toilets =
           await repository.getToilets(
         latitude: event.reloadLatitude,
+        longitude: event.reloadLongitude,
+      );
+
+      emit(
+        ToiletLoaded(
+          toilets,
+        ),
+      );
+
+    } catch (e) {
+
+      emit(
+        ToiletError(
+          e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onConfirmToilet(
+    ConfirmToiletEvent event,
+    Emitter<ToiletState> emit,
+  ) async {
+
+    try {
+
+      await repository.confirmToilet(
+        event.toiletId,
+      );
+
+      final toilets =
+          await repository.getToilets(
+
+        latitude: event.reloadLatitude,
+
         longitude: event.reloadLongitude,
       );
 
@@ -174,6 +217,42 @@ class ToiletBloc
         ToiletError(
           e.toString(),
         ),
+      );
+    }
+  }
+
+  Future<void> _onLeaveFeedback(
+
+    LeaveFeedbackEvent event,
+
+    Emitter<ToiletState> emit,
+  ) async {
+
+    try {
+
+      await repository.leaveFeedback(
+
+        event.toiletId,
+
+        event.type,
+      );
+
+      final toilets =
+          await repository.getToilets(
+
+        latitude: event.reloadLatitude,
+
+        longitude: event.reloadLongitude,
+      );
+
+      emit(
+        ToiletLoaded(toilets),
+      );
+
+    } catch (e) {
+
+      emit(
+        ToiletError(e.toString()),
       );
     }
   }

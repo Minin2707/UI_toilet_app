@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -32,6 +33,8 @@ class _ToiletMapScreenState
       MapController();
 
   LatLng? _currentLocation;
+  StreamSubscription<Position>?
+      _positionStreamSubscription;
   bool _approvedOnly = false;
 
   bool _accessibleOnly = false;
@@ -43,6 +46,45 @@ class _ToiletMapScreenState
     super.initState();
 
     _determinePosition();
+  }
+
+  void _startLiveTracking() {
+
+    _positionStreamSubscription?.cancel();
+
+    _positionStreamSubscription =
+
+        Geolocator.getPositionStream(
+
+          locationSettings:
+
+              const LocationSettings(
+
+                accuracy:
+                    LocationAccuracy.high,
+
+                distanceFilter: 10,
+              ),
+        ).listen(
+
+          (Position position) {
+
+            final newLocation = LatLng(
+
+              position.latitude,
+
+              position.longitude,
+            );
+
+            setState(() {
+
+              _currentLocation =
+                  newLocation;
+            });
+
+            _reloadToilets();
+          },
+        );
   }
 
   Future<void> _determinePosition() async {
@@ -95,6 +137,7 @@ class _ToiletMapScreenState
     );
 
     _reloadToilets();
+    _startLiveTracking();
   }
 
   void _reloadToilets() {
@@ -124,6 +167,13 @@ class _ToiletMapScreenState
     );
   }
 
+  @override
+      void dispose() {
+
+        _positionStreamSubscription?.cancel();
+
+        super.dispose();
+      }
   @override
   Widget build(BuildContext context) {
 
@@ -225,22 +275,6 @@ class _ToiletMapScreenState
                   ),
 
                   children: [
-
-//                     TileLayer(
-//
-//                       urlTemplate:
-//                           'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-//
-//                       subdomains: const [
-//                         'a',
-//                         'b',
-//                         'c',
-//                         'd',
-//                       ],
-//
-//                       userAgentPackageName:
-//                           'com.example.toilet_map_app',
-//                     ),
 
                     TileLayer(
 

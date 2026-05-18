@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../../data/models/toilet_dto.dart';
 
@@ -9,7 +10,7 @@ import '../bloc/toilet_bloc.dart';
 import '../bloc/toilet_event.dart';
 
 class ToiletBottomSheet
-    extends StatelessWidget {
+    extends StatefulWidget {
 
   final ToiletDto toilet;
 
@@ -21,23 +22,94 @@ class ToiletBottomSheet
     required this.currentLocation,
   });
 
+  @override
+  State<ToiletBottomSheet> createState() =>
+      _ToiletBottomSheetState();
+  }
+
+  class _ToiletBottomSheetState
+      extends State<ToiletBottomSheet> {
+
+      late int cleanCount;
+
+      late int dirtyCount;
+
+      late int safeCount;
+
+      late int warmCount;
+
+      late int hasPaperCount;
+
+      bool cleanSelected = false;
+
+      bool dirtySelected = false;
+
+      bool safeSelected = false;
+
+      bool warmSelected = false;
+
+      bool hasPaperSelected = false;
+
+      @override
+      void initState() {
+
+        super.initState();
+
+        cleanCount =
+            widget.toilet.cleanCount;
+
+        dirtyCount =
+            widget.toilet.dirtyCount;
+
+        safeCount =
+            widget.toilet.safeCount;
+
+        warmCount =
+            widget.toilet.warmCount;
+
+        hasPaperCount =
+            widget.toilet.hasPaperCount;
+      }
+
+      void _toggleFeedback({
+
+        required bool selected,
+
+        required VoidCallback onSelect,
+
+        required VoidCallback onUnselect,
+      }) {
+
+        setState(() {
+
+          if (selected) {
+
+            onUnselect();
+
+          } else {
+
+            onSelect();
+          }
+        });
+      }
+
   String _distanceText() {
 
-    if (toilet.distanceMeters < 1000) {
+    if (widget.toilet.distanceMeters < 1000) {
 
-      return '${toilet.distanceMeters.toInt()} m away';
+      return '${widget.toilet.distanceMeters.toInt()} m away';
     }
 
     final km =
-        toilet.distanceMeters / 1000;
+        widget.toilet.distanceMeters / 1000;
 
     return '${km.toStringAsFixed(1)} km away';
   }
 
   Future<void> _openDirections() async {
 
-    final lat = toilet.latitude;
-    final lon = toilet.longitude;
+    final lat = widget.toilet.latitude;
+    final lon = widget.toilet.longitude;
 
     final uri = Uri.parse(
       'https://www.google.com/maps/dir/?api=1&destination=$lat,$lon',
@@ -56,7 +128,19 @@ class ToiletBottomSheet
   Widget build(BuildContext context) {
 
     final isApproved =
-        toilet.status == 'APPROVED';
+        widget.toilet.status == 'APPROVED';
+
+    final lastConfirmedText =
+
+        widget.toilet.lastConfirmedAt != null
+
+            ? timeago.format(
+                DateTime.parse(
+                  widget.toilet.lastConfirmedAt!,
+                ),
+              )
+
+            : null;
 
     return SafeArea(
 
@@ -83,181 +167,227 @@ class ToiletBottomSheet
             ),
           ),
 
-          child: Column(
+          child: SingleChildScrollView(
 
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            child: Column(
 
-            children: [
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
 
-              // HANDLE
+              children: [
 
-              Center(
-                child: Container(
+                // HANDLE
 
-                  width: 52,
-                  height: 5,
+                Center(
+                  child: Container(
 
-                  decoration: BoxDecoration(
-                    color:
-                        Colors.white24,
-
-                    borderRadius:
-                        BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // HEADER
-
-              Row(
-                children: [
-
-                  Container(
-
-                    width: 64,
-                    height: 64,
+                    width: 52,
+                    height: 5,
 
                     decoration: BoxDecoration(
-
-                      color:
-                          isApproved
-                              ? Colors.green.withOpacity(0.18)
-                              : Colors.grey.withOpacity(0.18),
+                      color: Colors.white24,
 
                       borderRadius:
-                          BorderRadius.circular(18),
-                    ),
-
-                    child: Icon(
-
-                      Icons.wc,
-
-                      size: 36,
-
-                      color:
-                          isApproved
-                              ? Colors.greenAccent
-                              : Colors.grey.shade400,
+                          BorderRadius.circular(20),
                     ),
                   ),
+                ),
 
-                  const SizedBox(width: 18),
+                const SizedBox(height: 24),
 
-                  Expanded(
+                // HEADER
 
-                    child: Column(
+                Row(
+                  children: [
 
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                    Container(
 
-                      children: [
+                      width: 64,
+                      height: 64,
 
-                        Text(
+                      decoration: BoxDecoration(
 
-                          toilet.title,
+                        color:
+                            isApproved
+                                ? Colors.green.withOpacity(0.18)
+                                : Colors.grey.withOpacity(0.18),
 
-                          style: const TextStyle(
+                        borderRadius:
+                            BorderRadius.circular(18),
+                      ),
 
-                            color: Colors.white,
+                      child: Icon(
 
-                            fontSize: 24,
+                        Icons.wc,
 
-                            fontWeight:
-                                FontWeight.bold,
-                          ),
-                        ),
+                        size: 36,
 
-                        const SizedBox(height: 6),
+                        color:
+                            isApproved
+                                ? Colors.greenAccent
+                                : Colors.grey.shade400,
+                      ),
+                    ),
 
-                        Row(
-                          children: [
+                    const SizedBox(width: 18),
 
-                            Icon(
+                    Expanded(
 
-                              Icons.circle,
+                      child: Column(
 
-                              size: 10,
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
 
-                              color:
-                                  isApproved
-                                      ? Colors.greenAccent
-                                      : Colors.orangeAccent,
+                        children: [
+
+                          Text(
+
+                            widget.toilet.title,
+
+                            style: const TextStyle(
+
+                              color: Colors.white,
+
+                              fontSize: 24,
+
+                              fontWeight:
+                                  FontWeight.bold,
                             ),
+                          ),
 
-                            const SizedBox(width: 8),
+                          const SizedBox(height: 6),
 
-                            Text(
+                          Row(
+                            children: [
 
-                              isApproved
-                                  ? 'Approved'
-                                  : 'Pending approval',
+                              Icon(
 
-                              style: TextStyle(
+                                Icons.circle,
+
+                                size: 10,
 
                                 color:
                                     isApproved
                                         ? Colors.greenAccent
                                         : Colors.orangeAccent,
-
-                                fontWeight:
-                                    FontWeight.w600,
                               ),
-                            ),
-                          ],
+
+                              const SizedBox(width: 8),
+
+                              Text(
+
+                                isApproved
+                                    ? 'Approved'
+                                    : 'Pending approval',
+
+                                style: TextStyle(
+
+                                  color:
+                                      isApproved
+                                          ? Colors.greenAccent
+                                          : Colors.orangeAccent,
+
+                                  fontWeight:
+                                      FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // APPROVE BUTTON
+
+                if (!isApproved)
+
+                  SizedBox(
+
+                    width: double.infinity,
+                    height: 58,
+
+                    child: FilledButton.icon(
+
+                      onPressed: () {
+
+                        context.read<ToiletBloc>().add(
+
+                          ApproveToiletEvent(
+
+                            toiletId: widget.toilet.id,
+
+                            reloadLatitude:
+                                widget.currentLocation.latitude,
+
+                            reloadLongitude:
+                                widget.currentLocation.longitude,
+                          ),
+                        );
+
+                        Navigator.pop(context);
+                      },
+
+                      icon: const Icon(
+                        Icons.verified,
+                      ),
+
+                      label: const Text(
+                        'Approve Toilet',
+                      ),
+
+                      style: FilledButton.styleFrom(
+
+                        backgroundColor:
+                            Colors.orangeAccent,
+
+                        foregroundColor:
+                            Colors.black,
+
+                        textStyle: const TextStyle(
+
+                          fontWeight:
+                              FontWeight.bold,
+
+                          fontSize: 16,
                         ),
-                      ],
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(18),
+                        ),
+                      ),
                     ),
                   ),
-                ],
-              ),
 
-              const SizedBox(height: 24),
+                const SizedBox(height: 18),
 
-              // APPROVE BUTTON
-
-              if (!isApproved)
+                // NAVIGATE BUTTON
 
                 SizedBox(
 
                   width: double.infinity,
-                  height: 58,
+                  height: 56,
 
                   child: FilledButton.icon(
 
-                    onPressed: () {
-
-                      context.read<ToiletBloc>().add(
-
-                        ApproveToiletEvent(
-
-                          toiletId: toilet.id,
-
-                          reloadLatitude:
-                              currentLocation.latitude,
-
-                          reloadLongitude:
-                              currentLocation.longitude,
-                        ),
-                      );
-
-                      Navigator.pop(context);
-                    },
+                    onPressed: _openDirections,
 
                     icon: const Icon(
-                      Icons.verified,
+                      Icons.navigation,
                     ),
 
                     label: const Text(
-                      'Approve Toilet',
+                      'Navigate',
                     ),
 
                     style: FilledButton.styleFrom(
 
                       backgroundColor:
-                          Colors.orangeAccent,
+                          Colors.cyanAccent,
 
                       foregroundColor:
                           Colors.black,
@@ -271,6 +401,7 @@ class ToiletBottomSheet
                       ),
 
                       shape: RoundedRectangleBorder(
+
                         borderRadius:
                             BorderRadius.circular(18),
                       ),
@@ -278,232 +409,615 @@ class ToiletBottomSheet
                   ),
                 ),
 
-              const SizedBox(height: 24),
+                const SizedBox(height: 24),
 
-              // SCROLLABLE CONTENT
+                // FEEDBACK TITLE
 
-              SizedBox(
+                Text(
 
-                width: double.infinity,
-                height: 56,
+                  'Community feedback',
 
-                child: FilledButton.icon(
+                  style: TextStyle(
 
-                  onPressed: _openDirections,
+                    color:
+                        Colors.white.withOpacity(0.7),
 
-                  icon: const Icon(
-                    Icons.navigation,
-                  ),
+                    fontSize: 15,
 
-                  label: const Text(
-                    'Navigate',
-                  ),
-
-                  style: FilledButton.styleFrom(
-
-                    backgroundColor:
-                        Colors.cyanAccent,
-
-                    foregroundColor:
-                        Colors.black,
-
-                    textStyle: const TextStyle(
-
-                      fontWeight:
-                          FontWeight.bold,
-
-                      fontSize: 16,
-                    ),
-
-                    shape: RoundedRectangleBorder(
-
-                      borderRadius:
-                          BorderRadius.circular(18),
-                    ),
+                    fontWeight:
+                        FontWeight.w600,
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 18),
+                const SizedBox(height: 14),
 
-              Expanded(
+                // FEEDBACK CHIPS
 
-                child: SingleChildScrollView(
+                Wrap(
 
-                  child: Container(
+                  spacing: 10,
+                  runSpacing: 10,
 
-                    padding: const EdgeInsets.all(18),
+                  children: [
 
-                    decoration: BoxDecoration(
+                    _FeedbackChip(
 
+                      emoji: '🧼',
+
+                      title: 'Clean',
+
+                      count: cleanCount,
+
+                      selected: cleanSelected,
+
+                      onTap: () {
+
+                        _toggleFeedback(
+
+                          selected: cleanSelected,
+
+                          onSelect: () {
+
+                            cleanSelected = true;
+
+                            cleanCount++;
+                          },
+
+                          onUnselect: () {
+
+                            cleanSelected = false;
+
+                            cleanCount--;
+                          },
+                        );
+
+                        context.read<ToiletBloc>().add(
+
+                          LeaveFeedbackEvent(
+
+                            toiletId: widget.toilet.id,
+
+                            type: 'CLEAN',
+
+                            reloadLatitude:
+                                widget.currentLocation.latitude,
+
+                            reloadLongitude:
+                                widget.currentLocation.longitude,
+                          ),
+                        );
+                      },
+                    ),
+
+                    _FeedbackChip(
+
+                      emoji: '🧻',
+
+                      title: 'Has paper',
+
+                      count: hasPaperCount,
+
+                      selected: hasPaperSelected,
+
+                      onTap: () {
+
+                        _toggleFeedback(
+
+                          selected: hasPaperSelected,
+
+                          onSelect: () {
+
+                            hasPaperSelected = true;
+
+                            hasPaperCount++;
+                          },
+
+                          onUnselect: () {
+
+                            hasPaperSelected = false;
+
+                            hasPaperCount--;
+                          },
+                        );
+
+                        context.read<ToiletBloc>().add(
+
+                          LeaveFeedbackEvent(
+
+                            toiletId: widget.toilet.id,
+
+                            type: 'HAS_PAPER',
+
+                            reloadLatitude:
+                                widget.currentLocation.latitude,
+
+                            reloadLongitude:
+                                widget.currentLocation.longitude,
+                          ),
+                        );
+                      },
+                    ),
+
+                    _FeedbackChip(
+
+                      emoji: '🔥',
+
+                      title: 'Warm',
+
+                      count: warmCount,
+
+                      selected: warmSelected,
+
+                      onTap: () {
+
+                        _toggleFeedback(
+
+                          selected: warmSelected,
+
+                          onSelect: () {
+
+                            warmSelected = true;
+
+                            warmCount++;
+                          },
+
+                          onUnselect: () {
+
+                            warmSelected = false;
+
+                            warmCount--;
+                          },
+                        );
+
+                        context.read<ToiletBloc>().add(
+
+                          LeaveFeedbackEvent(
+
+                            toiletId: widget.toilet.id,
+
+                            type: 'WARM',
+
+                            reloadLatitude:
+                                widget.currentLocation.latitude,
+
+                            reloadLongitude:
+                                widget.currentLocation.longitude,
+                          ),
+                        );
+                      },
+                    ),
+
+                    _FeedbackChip(
+
+                      emoji: '🔒',
+
+                      title: 'Safe',
+
+                      count: safeCount,
+
+                      selected: safeSelected,
+
+                      onTap: () {
+
+                        _toggleFeedback(
+
+                          selected: safeSelected,
+
+                          onSelect: () {
+
+                            safeSelected = true;
+
+                            safeCount++;
+                          },
+
+                          onUnselect: () {
+
+                            safeSelected = false;
+
+                            safeCount--;
+                          },
+                        );
+
+                        context.read<ToiletBloc>().add(
+
+                          LeaveFeedbackEvent(
+
+                            toiletId: widget.toilet.id,
+
+                            type: 'SAFE',
+
+                            reloadLatitude:
+                                widget.currentLocation.latitude,
+
+                            reloadLongitude:
+                                widget.currentLocation.longitude,
+                          ),
+                        );
+                      },
+                    ),
+
+                    _FeedbackChip(
+
+                      emoji: '🚫',
+
+                      title: 'Dirty',
+
+                      count: dirtyCount,
+
+                      selected: dirtySelected,
+
+                      onTap: () {
+
+                        _toggleFeedback(
+
+                          selected: dirtySelected,
+
+                          onSelect: () {
+
+                            dirtySelected = true;
+
+                            dirtyCount++;
+                          },
+
+                          onUnselect: () {
+
+                            dirtySelected = false;
+
+                            dirtyCount--;
+                          },
+                        );
+
+                        context.read<ToiletBloc>().add(
+
+                          LeaveFeedbackEvent(
+
+                            toiletId: widget.toilet.id,
+
+                            type: 'DIRTY',
+
+                            reloadLatitude:
+                                widget.currentLocation.latitude,
+
+                            reloadLongitude:
+                                widget.currentLocation.longitude,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // INFO CARD
+
+                Container(
+
+                  padding: const EdgeInsets.all(18),
+
+                  decoration: BoxDecoration(
+
+                    color:
+                        Colors.white.withOpacity(0.05),
+
+                    borderRadius:
+                        BorderRadius.circular(20),
+
+                    border: Border.all(
                       color:
-                          Colors.white.withOpacity(0.05),
+                          Colors.white.withOpacity(0.08),
+                    ),
+                  ),
 
-                      borderRadius:
-                          BorderRadius.circular(20),
+                  child: Column(
+                    children: [
 
-                      border: Border.all(
+                      _InfoRow(
+                        icon: Icons.location_on_outlined,
+                        label: 'Address',
+                        value:
+                            widget.toilet.address.isEmpty
+                                ? 'Unknown'
+                                : widget.toilet.address,
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      _InfoRow(
+                        icon: Icons.social_distance,
+                        label: 'Distance',
+                        value: _distanceText(),
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      _InfoRow(
+                        icon: Icons.accessible_forward,
+                        label: 'Accessibility',
+                        value:
+                            widget.toilet.wheelchairAccessible
+                                ? 'Wheelchair accessible'
+                                : 'Not specified',
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      _InfoRow(
+                        icon: Icons.payments_outlined,
+                        label: 'Access',
+                        value:
+                            widget.toilet.accessType
+                                .replaceAll('_', ' '),
+                      ),
+
+                      const SizedBox(height: 26),
+
+                      Divider(
                         color:
                             Colors.white.withOpacity(0.08),
                       ),
-                    ),
 
-                    child: Column(
-                      children: [
+                      const SizedBox(height: 18),
 
-                        _InfoRow(
-                          icon: Icons.location_on_outlined,
-                          label: 'Address',
-                          value:
-                              toilet.address.isEmpty
-                                  ? 'Unknown'
-                                  : toilet.address,
+                      if (widget.toilet.lastConfirmedAt == null) ...[
+
+                        Text(
+
+                          'Help keep the map accurate',
+
+                          style: TextStyle(
+
+                            color:
+                                Colors.white.withOpacity(0.5),
+
+                            fontSize: 13,
+                          ),
                         ),
 
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 14),
 
-                        _InfoRow(
-                          icon: Icons.social_distance,
-                          label: 'Distance',
-                          value: _distanceText(),
+                        Row(
+                          children: [
+
+                            Expanded(
+
+                              child: GestureDetector(
+
+                                onTap: () {
+
+
+                                  context.read<ToiletBloc>().add(
+
+                                    ConfirmToiletEvent(
+
+                                      toiletId: widget.toilet.id,
+
+                                      reloadLatitude:
+                                          widget.currentLocation.latitude,
+
+                                      reloadLongitude:
+                                          widget.currentLocation.longitude,
+                                    ),
+                                  );
+
+                                  Navigator.pop(context);
+                                },
+
+                                child: Container(
+
+                                  height: 52,
+
+                                  decoration: BoxDecoration(
+
+                                    color:
+                                        Colors.greenAccent.withOpacity(0.14),
+
+                                    borderRadius:
+                                        BorderRadius.circular(16),
+
+                                    border: Border.all(
+
+                                      color:
+                                          Colors.greenAccent.withOpacity(0.22),
+                                    ),
+                                  ),
+
+                                  child: const Row(
+
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+
+                                    children: [
+
+                                      Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.greenAccent,
+                                        size: 20,
+                                      ),
+
+                                      SizedBox(width: 8),
+
+                                      Text(
+
+                                        'Still exists',
+
+                                        style: TextStyle(
+
+                                          color: Colors.greenAccent,
+
+                                          fontWeight:
+                                              FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(width: 12),
+
+                            Expanded(
+
+                              child: GestureDetector(
+
+                                onTap: () {
+
+
+
+                                  context.read<ToiletBloc>().add(
+
+                                    ReportToiletEvent(
+
+                                      toiletId: widget.toilet.id,
+
+                                      reloadLatitude:
+                                          widget.currentLocation.latitude,
+
+                                      reloadLongitude:
+                                          widget.currentLocation.longitude,
+                                    ),
+                                  );
+
+                                  Navigator.pop(context);
+                                },
+
+                                child: Container(
+
+                                  height: 52,
+
+                                  decoration: BoxDecoration(
+
+                                    color:
+                                        Colors.redAccent.withOpacity(0.10),
+
+                                    borderRadius:
+                                        BorderRadius.circular(16),
+
+                                    border: Border.all(
+
+                                      color:
+                                          Colors.redAccent.withOpacity(0.20),
+                                    ),
+                                  ),
+
+                                  child: const Row(
+
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+
+                                    children: [
+
+                                      Icon(
+                                        Icons.close,
+                                        color: Colors.redAccent,
+                                        size: 20,
+                                      ),
+
+                                      SizedBox(width: 8),
+
+                                      Text(
+
+                                        'Not there',
+
+                                        style: TextStyle(
+
+                                          color: Colors.redAccent,
+
+                                          fontWeight:
+                                              FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
 
+                      ] else ...[
 
+                        Container(
 
-                        const SizedBox(height: 18),
+                          width: double.infinity,
 
-                        _InfoRow(
-                          icon: Icons.accessible_forward,
-                          label: 'Accessibility',
-                          value:
-                              toilet.wheelchairAccessible
-                                  ? 'Wheelchair accessible'
-                                  : 'Not specified',
+                          padding: const EdgeInsets.all(16),
+
+                          decoration: BoxDecoration(
+
+                            color:
+                                Colors.greenAccent.withOpacity(0.08),
+
+                            borderRadius:
+                                BorderRadius.circular(16),
+
+                            border: Border.all(
+
+                              color:
+                                  Colors.greenAccent.withOpacity(0.14),
+                            ),
+                          ),
+
+                          child: Row(
+                            children: [
+
+                              const Icon(
+                                Icons.verified,
+                                color: Colors.greenAccent,
+                              ),
+
+                              const SizedBox(width: 12),
+
+                              Expanded(
+
+                                child: Column(
+
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+
+                                  children: [
+
+                                    Text(
+
+                                      'Verified by community recently',
+
+                                      style: TextStyle(
+
+                                        color:
+                                            Colors.greenAccent.shade100,
+
+                                        fontWeight:
+                                            FontWeight.w600,
+                                      ),
+                                    ),
+
+                                    const SizedBox(height: 4),
+
+                                    Text(
+
+                                      'Last confirmed $lastConfirmedText',
+
+                                      style: TextStyle(
+
+                                        color:
+                                            Colors.white.withOpacity(0.55),
+
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-
-                        const SizedBox(height: 18),
-
-                        _InfoRow(
-                          icon: Icons.payments_outlined,
-                          label: 'Access',
-                          value:
-                              toilet.accessType
-                                  .replaceAll('_', ' '),
-                        ),
-
-                        const SizedBox(height: 26),
-
-                                                Divider(
-                                                  color: Colors.white.withOpacity(0.08),
-                                                ),
-
-                                                const SizedBox(height: 18),
-
-                                                GestureDetector(
-
-                                                  onTap: () {
-
-                                                    context.read<ToiletBloc>().add(
-
-                                                      ReportToiletEvent(
-
-                                                        toiletId: toilet.id,
-
-                                                        reloadLatitude:
-                                                            currentLocation.latitude,
-
-                                                        reloadLongitude:
-                                                            currentLocation.longitude,
-                                                      ),
-                                                    );
-
-                                                    Navigator.pop(context);
-                                                  },
-
-                                                  child: Container(
-
-                                                    padding: const EdgeInsets.symmetric(
-                                                      vertical: 14,
-                                                      horizontal: 16,
-                                                    ),
-
-                                                    decoration: BoxDecoration(
-
-                                                      color:
-                                                          Colors.red.withOpacity(0.08),
-
-                                                      borderRadius:
-                                                          BorderRadius.circular(16),
-
-                                                      border: Border.all(
-                                                        color:
-                                                            Colors.red.withOpacity(0.18),
-                                                      ),
-                                                    ),
-
-                                                    child: Row(
-                                                      children: [
-
-                                                        Icon(
-                                                          Icons.flag_outlined,
-                                                          color: Colors.redAccent.shade100,
-                                                          size: 20,
-                                                        ),
-
-                                                        const SizedBox(width: 12),
-
-                                                        Expanded(
-
-                                                          child: Column(
-
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment.start,
-
-                                                            children: [
-
-                                                              Text(
-
-                                                                'Report incorrect location',
-
-                                                                style: TextStyle(
-
-                                                                  color:
-                                                                      Colors.redAccent.shade100,
-
-                                                                  fontWeight:
-                                                                      FontWeight.w600,
-
-                                                                  fontSize: 14,
-                                                                ),
-                                                              ),
-
-                                                              const SizedBox(height: 2),
-
-                                                              Text(
-
-                                                                'Helps keep the map accurate',
-
-                                                                style: TextStyle(
-
-                                                                  color:
-                                                                      Colors.white.withOpacity(0.45),
-
-                                                                  fontSize: 12,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                      ],
-                    ),
+                      ]
+                    ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -604,6 +1118,100 @@ class _InfoRow
           ),
         ),
       ],
+    );
+  }
+}
+
+class _FeedbackChip
+    extends StatelessWidget {
+
+  final String emoji;
+
+  final String title;
+
+  final int count;
+
+  final VoidCallback onTap;
+
+  final bool selected;
+
+  const _FeedbackChip({
+
+    required this.emoji,
+
+    required this.title,
+
+    required this.count,
+
+    required this.onTap,
+
+    required this.selected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+
+      onTap: onTap,
+
+      child: Container(
+
+        padding: const EdgeInsets.symmetric(
+
+          horizontal: 14,
+
+          vertical: 10,
+        ),
+
+        decoration: BoxDecoration(
+
+          color:
+              selected
+                  ? Colors.cyanAccent.withOpacity(0.18)
+                  : Colors.white.withOpacity(0.06),
+
+          borderRadius:
+              BorderRadius.circular(14),
+
+          border: Border.all(
+
+            color:
+                Colors.white.withOpacity(0.08),
+          ),
+        ),
+
+        child: Row(
+
+          mainAxisSize: MainAxisSize.min,
+
+          children: [
+
+            Text(
+              emoji,
+              style:
+                  const TextStyle(
+                    fontSize: 16,
+                  ),
+            ),
+
+            const SizedBox(width: 8),
+
+            Text(
+
+              '$title $count',
+
+              style: const TextStyle(
+
+                color: Colors.white,
+
+                fontWeight:
+                    FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

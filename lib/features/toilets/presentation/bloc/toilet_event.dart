@@ -64,3 +64,41 @@ class ReportToiletEvent
     required this.reloadLongitude,
   });
 }
+
+class ConfirmToiletEvent
+    extends ToiletEvent {
+
+  final String toiletId;
+
+  final double reloadLatitude;
+  final double reloadLongitude;
+
+  ConfirmToiletEvent({
+    required this.toiletId,
+    required this.reloadLatitude,
+    required this.reloadLongitude,
+  });
+}
+
+class LeaveFeedbackEvent
+    extends ToiletEvent {
+
+  final String toiletId;
+
+  final String type;
+
+  final double reloadLatitude;
+
+  final double reloadLongitude;
+
+  LeaveFeedbackEvent({
+
+    required this.toiletId,
+
+    required this.type,
+
+    required this.reloadLatitude,
+
+    required this.reloadLongitude,
+  });
+}

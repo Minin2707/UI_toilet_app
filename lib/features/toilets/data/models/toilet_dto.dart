@@ -9,6 +9,13 @@ class ToiletDto {
   final double distanceMeters;
   final String accessType;
   final bool wheelchairAccessible;
+  final int cleanCount;
+  final int dirtyCount;
+  final int hasPaperCount;
+  final int warmCount;
+  final int safeCount;
+  final int confirmationCount;
+  final String? lastConfirmedAt;
 
   const ToiletDto({
     required this.id,
@@ -21,6 +28,13 @@ class ToiletDto {
     required this.distanceMeters,
     required this.accessType,
     required this.wheelchairAccessible,
+    required this.cleanCount,
+    required this.dirtyCount,
+    required this.hasPaperCount,
+    required this.warmCount,
+    required this.safeCount,
+    required this.confirmationCount,
+    required this.lastConfirmedAt,
   });
 
   factory ToiletDto.fromJson(Map<String, dynamic> json) {
@@ -41,6 +55,27 @@ class ToiletDto {
 
       wheelchairAccessible:
           json['wheelchairAccessible'] ?? false,
+
+      cleanCount:
+          json['cleanCount'] ?? 0,
+
+      dirtyCount:
+          json['dirtyCount'] ?? 0,
+
+      hasPaperCount:
+          json['hasPaperCount'] ?? 0,
+
+      warmCount:
+          json['warmCount'] ?? 0,
+
+      safeCount:
+          json['safeCount'] ?? 0,
+
+      confirmationCount:
+          json['confirmationCount'] ?? 0,
+
+      lastConfirmedAt:
+           json['lastConfirmedAt'],
     );
   }
 }

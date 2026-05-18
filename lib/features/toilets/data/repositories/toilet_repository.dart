@@ -85,4 +85,30 @@ class ToiletRepository {
       '/toilets/$toiletId/report',
     );
   }
+
+  Future<void> confirmToilet(
+    String toiletId,
+  ) async {
+
+    await _dio.post(
+      '/toilets/$toiletId/confirm',
+    );
+  }
+
+  Future<void> leaveFeedback(
+
+    String toiletId,
+
+    String type,
+  ) async {
+
+    await _dio.post(
+
+      '/toilets/$toiletId/feedback',
+
+      queryParameters: {
+        'type': type,
+      },
+    );
+  }
 }
