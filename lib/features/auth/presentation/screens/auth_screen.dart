@@ -51,6 +51,7 @@ class _AuthScreenState
   void dispose() {
     _usernameController.dispose();
     _animationController.dispose();
+
     super.dispose();
   }
 
@@ -144,246 +145,265 @@ class _AuthScreenState
           // CONTENT
 
           SafeArea(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
+            child: SingleChildScrollView(
 
-                child: ClipRRect(
-                  borderRadius:
-                      BorderRadius.circular(32),
+              padding: EdgeInsets.only(
+                bottom:
+                    MediaQuery.of(context)
+                        .viewInsets
+                        .bottom,
+              ),
 
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: 18,
-                      sigmaY: 18,
-                    ),
+              child: SizedBox(
 
-                    child: Container(
+                height:
+                    MediaQuery.of(context)
+                        .size
+                        .height,
 
-                      width: double.infinity,
+                child: Center(
 
-                      padding: const EdgeInsets.all(28),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
 
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(32),
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(32),
 
-                        color: Colors.white.withOpacity(0.10),
-
-                        border: Border.all(
-                          color:
-                              Colors.white.withOpacity(0.15),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 18,
+                          sigmaY: 18,
                         ),
-                      ),
 
-                      child: Column(
-                        mainAxisSize:
-                            MainAxisSize.min,
+                        child: Container(
 
-                        children: [
+                          width: double.infinity,
 
-                          // FLOATING ICON
+                          padding: const EdgeInsets.all(28),
 
-                          AnimatedBuilder(
-                            animation: _floatingAnimation,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(32),
 
-                            builder: (context, child) {
+                            color: Colors.white.withOpacity(0.10),
 
-                              return Transform.translate(
-                                offset: Offset(
-                                  0,
-                                  _floatingAnimation.value,
+                            border: Border.all(
+                              color:
+                                  Colors.white.withOpacity(0.15),
+                            ),
+                          ),
+
+                          child: Column(
+                            mainAxisSize:
+                                MainAxisSize.min,
+
+                            children: [
+
+                              // FLOATING ICON
+
+                              AnimatedBuilder(
+                                animation: _floatingAnimation,
+
+                                builder: (context, child) {
+
+                                  return Transform.translate(
+                                    offset: Offset(
+                                      0,
+                                      _floatingAnimation.value,
+                                    ),
+
+                                    child: child,
+                                  );
+                                },
+
+                                child: Container(
+                                  width: 110,
+                                  height: 110,
+
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white.withOpacity(0.12),
+                                  ),
+
+                                  child: const Icon(
+                                    Icons.wc,
+                                    size: 58,
+                                    color: Colors.white,
+                                  ),
                                 ),
-
-                                child: child,
-                              );
-                            },
-
-                            child: Container(
-                              width: 110,
-                              height: 110,
-
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.12),
                               ),
 
-                              child: const Icon(
-                                Icons.wc,
-                                size: 58,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
+                              const SizedBox(height: 28),
 
-                          const SizedBox(height: 28),
+                              const Text(
+                                'ToiletFinder',
 
-                          const Text(
-                            'ToiletFinder',
-
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 34,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                            ),
-                          ),
-
-                          const SizedBox(height: 10),
-
-                          Text(
-                            'Find clean public restrooms nearby',
-
-                            textAlign: TextAlign.center,
-
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.75),
-                              fontSize: 16,
-                              height: 1.4,
-                            ),
-                          ),
-
-                          const SizedBox(height: 34),
-
-                          // USERNAME FIELD
-
-                          TextField(
-                            controller:
-                                _usernameController,
-
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-
-                            decoration: InputDecoration(
-                              hintText: 'Username',
-
-                              hintStyle: TextStyle(
-                                color:
-                                    Colors.white.withOpacity(0.55),
-                              ),
-
-                              prefixIcon: const Icon(
-                                Icons.person_outline,
-                                color: Colors.white,
-                              ),
-
-                              filled: true,
-
-                              fillColor:
-                                  Colors.white.withOpacity(0.08),
-
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.circular(18),
-
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 26),
-
-                          // REGISTER BUTTON
-
-                          SizedBox(
-                            width: double.infinity,
-                            height: 58,
-
-                            child: FilledButton.icon(
-
-                              onPressed: () {
-                                _openAuthWebView(
-                                  isRegister: true,
-                                );
-                              },
-
-                              icon: const Icon(
-                                Icons.fingerprint,
-                              ),
-
-                              label: const Text(
-                                'Register with Passkey',
-                              ),
-
-                              style: FilledButton.styleFrom(
-                                backgroundColor:
-                                    Colors.cyanAccent.shade400,
-
-                                foregroundColor:
-                                    Colors.black,
-
-                                textStyle: const TextStyle(
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 34,
                                   fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              Text(
+                                'Find clean public restrooms nearby',
+
+                                textAlign: TextAlign.center,
+
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.75),
                                   fontSize: 16,
-                                ),
-
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(18),
+                                  height: 1.4,
                                 ),
                               ),
-                            ),
+
+                              const SizedBox(height: 34),
+
+                              // USERNAME FIELD
+
+                              TextField(
+                                controller:
+                                    _usernameController,
+
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+
+                                decoration: InputDecoration(
+                                  hintText: 'Username',
+
+                                  hintStyle: TextStyle(
+                                    color:
+                                        Colors.white.withOpacity(0.55),
+                                  ),
+
+                                  prefixIcon: const Icon(
+                                    Icons.person_outline,
+                                    color: Colors.white,
+                                  ),
+
+                                  filled: true,
+
+                                  fillColor:
+                                      Colors.white.withOpacity(0.08),
+
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(18),
+
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 26),
+
+                              // REGISTER BUTTON
+
+                              SizedBox(
+                                width: double.infinity,
+                                height: 58,
+
+                                child: FilledButton.icon(
+
+                                  onPressed: () {
+                                    _openAuthWebView(
+                                      isRegister: true,
+                                    );
+                                  },
+
+                                  icon: const Icon(
+                                    Icons.fingerprint,
+                                  ),
+
+                                  label: const Text(
+                                    'Register with Passkey',
+                                  ),
+
+                                  style: FilledButton.styleFrom(
+                                    backgroundColor:
+                                        Colors.cyanAccent.shade400,
+
+                                    foregroundColor:
+                                        Colors.black,
+
+                                    textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(18),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 16),
+
+                              // LOGIN BUTTON
+
+                              SizedBox(
+                                width: double.infinity,
+                                height: 58,
+
+                                child: OutlinedButton.icon(
+
+                                  onPressed: () {
+                                    _openAuthWebView(
+                                      isRegister: false,
+                                    );
+                                  },
+
+                                  icon: const Icon(
+                                    Icons.login,
+                                  ),
+
+                                  label: const Text(
+                                    'Login with Passkey',
+                                  ),
+
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+
+                                    side: BorderSide(
+                                      color:
+                                          Colors.white.withOpacity(0.35),
+                                    ),
+
+                                    textStyle: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(18),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 24),
+
+                              Text(
+                                'Secure passwordless authentication',
+
+                                textAlign: TextAlign.center,
+
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.55),
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
                           ),
-
-                          const SizedBox(height: 16),
-
-                          // LOGIN BUTTON
-
-                          SizedBox(
-                            width: double.infinity,
-                            height: 58,
-
-                            child: OutlinedButton.icon(
-
-                              onPressed: () {
-                                _openAuthWebView(
-                                  isRegister: false,
-                                );
-                              },
-
-                              icon: const Icon(
-                                Icons.login,
-                              ),
-
-                              label: const Text(
-                                'Login with Passkey',
-                              ),
-
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.white,
-
-                                side: BorderSide(
-                                  color:
-                                      Colors.white.withOpacity(0.35),
-                                ),
-
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
-
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(18),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(height: 24),
-
-                          Text(
-                            'Secure passwordless authentication',
-
-                            textAlign: TextAlign.center,
-
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.55),
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
@@ -396,5 +416,3 @@ class _AuthScreenState
     );
   }
 }
-
-
