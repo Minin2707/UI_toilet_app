@@ -48,6 +48,35 @@ class _AppRootState extends State<AppRoot> {
   }
 
   Future<void> _listenDeepLinks() async {
+    final initialUri =
+        await _appLinks.getInitialLink();
+
+    if (initialUri != null) {
+
+      debugPrint(
+        'INITIAL DEEPLINK = $initialUri',
+      );
+
+      final token =
+          initialUri.queryParameters['token'];
+
+      if (token != null &&
+          token.isNotEmpty) {
+
+        await _tokenStorage.saveToken(
+          token,
+        );
+
+        debugPrint(
+          'INITIAL JWT SAVED = $token',
+        );
+
+        if (mounted) {
+
+          appRouter.go('/map');
+        }
+      }
+    }
 
     _subscription =
         _appLinks.uriLinkStream.listen(
