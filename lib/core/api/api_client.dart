@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../config/app_config.dart';
-import 'auth_interceptor.dart';
+import '../network/auth_interceptor.dart';
 
 class ApiClient {
   static final Dio dio = Dio(

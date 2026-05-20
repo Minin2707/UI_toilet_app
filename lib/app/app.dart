@@ -1,22 +1,112 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import 'package:app_links/app_links.dart';
+
+import '../core/auth/token_storage.dart';
 import '../core/config/app_config.dart';
+
 import 'router/app_router.dart';
 
-class ToiletMapApp extends StatelessWidget {
-  const ToiletMapApp({super.key});
+class ToiletMapApp extends StatefulWidget {
+
+  const ToiletMapApp({
+    super.key,
+  });
+
+  @override
+  State<ToiletMapApp> createState() =>
+      _ToiletMapAppState();
+}
+
+class _ToiletMapAppState
+    extends State<ToiletMapApp> {
+
+  late final AppLinks _appLinks;
+
+  StreamSubscription? _sub;
+
+  @override
+  void initState() {
+
+    super.initState();
+
+    _initDeepLinks();
+  }
+
+  Future<void> _initDeepLinks() async {
+
+    _appLinks = AppLinks();
+
+    final initialUri =
+        await _appLinks.getInitialLink();
+
+    if (initialUri != null) {
+
+      await _handleDeepLink(
+          initialUri,
+      );
+    }
+
+    _sub = _appLinks.uriLinkStream.listen(
+
+      (uri) async {
+
+        await _handleDeepLink(uri);
+      },
+    );
+  }
+
+  Future<void> _handleDeepLink(
+      Uri uri,
+  ) async {
+
+    if (uri.scheme == 'toiletmap' &&
+        uri.host == 'auth') {
+
+      final token =
+          uri.queryParameters['token'];
+
+      if (token != null &&
+          token.isNotEmpty) {
+
+        await TokenStorage()
+            .saveToken(token);
+
+        if (mounted) {
+
+          appRouter.go('/map');
+        }
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+
+    _sub?.cancel();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: AppConfig.instance.appName,
 
-      debugShowCheckedModeBanner: false,
+    return MaterialApp.router(
+
+      title:
+          AppConfig.instance.appName,
+
+      debugShowCheckedModeBanner:
+          false,
 
       routerConfig: appRouter,
 
       theme: ThemeData(
+
         colorSchemeSeed: Colors.blue,
+
         useMaterial3: true,
       ),
     );

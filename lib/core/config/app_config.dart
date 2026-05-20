@@ -23,7 +23,7 @@ class AppConfig {
         if (kIsWeb) {
           return 'http://localhost:8080';
         }
-        return 'https://copyrighted-tion-lonely-smell.trycloudflare.com';
+        return 'https://greetings-disclose-lonely-responsible.trycloudflare.com';
 
       case Environment.stage:
         return 'https://stage-api.toiletmap.com';

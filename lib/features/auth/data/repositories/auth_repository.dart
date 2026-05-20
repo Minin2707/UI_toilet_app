@@ -32,4 +32,19 @@ class AuthRepository {
 
     return response.data as String;
   }
+
+  Future<bool> validateToken() async {
+
+    try {
+
+      final response =
+          await _dio.get('/auth/me');
+
+      return response.statusCode == 200;
+
+    } catch (_) {
+
+      return false;
+    }
+  }
 }
