@@ -205,9 +205,82 @@ class _ToiletMapScreenState
       body: Stack(
         children: [
 
-          BlocBuilder<
+          BlocConsumer<
                 ToiletBloc,
                 ToiletState>(
+
+                listener: (context, state) {
+
+                  if (
+
+                      state is ToiletLoaded &&
+
+                      state.uiMessageCode != null
+                  ) {
+
+                    String message;
+
+                    switch (state.uiMessageCode) {
+
+                      case 'USER_ALREADY_APPROVED':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .userAlreadyApproved;
+
+                        break;
+
+                      case 'TOILET_ALREADY_APPROVED':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .toiletAlreadyApproved;
+
+                        break;
+
+                      default:
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .unknownError;
+                    }
+
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(
+
+                      SnackBar(
+
+                        content: Text(
+                          message,
+
+                          textAlign: TextAlign.center,
+                        ),
+
+                        behavior:
+                            SnackBarBehavior.floating,
+
+                        margin: const EdgeInsets.only(
+
+                          left: 40,
+                          right: 40,
+                          bottom: 320,
+                        ),
+
+                        shape: RoundedRectangleBorder(
+
+                          borderRadius:
+                              BorderRadius.circular(18),
+                        ),
+
+                        backgroundColor:
+                            Colors.black.withOpacity(0.9),
+
+                        duration:
+                            const Duration(seconds: 2),
+                      ),
+                    );
+                  }
+                },
 
               builder: (context, state) {
 
@@ -219,14 +292,6 @@ class _ToiletMapScreenState
                   );
                 }
 
-                if (state is ToiletError) {
-
-                  return Center(
-                    child: Text(
-                      state.message,
-                    ),
-                  );
-                }
 
                 final toilets =
                     state is ToiletLoaded

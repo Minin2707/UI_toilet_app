@@ -65,5 +65,13 @@
     "lastConfirmed": "Последнее подтверждение {time}",
 
     "metersAway": "{count} м",
-    "kmAway": "{count} км"
+    "kmAway": "{count} км",
+    "userAlreadyApproved":
+          "Вы уже подтверждали этот туалет",
+
+    "toiletAlreadyApproved":
+          "Этот туалет уже подтвержден",
+
+    "unknownError":
+          "Что-то пошло не так"
 }

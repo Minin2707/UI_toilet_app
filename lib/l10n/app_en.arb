@@ -65,5 +65,13 @@
   "lastConfirmed": "Last confirmed {time}",
 
   "metersAway": "{count} m away",
-  "kmAway": "{count} km away"
+  "kmAway": "{count} km away",
+  "userAlreadyApproved":
+        "You already approved this toilet",
+
+  "toiletAlreadyApproved":
+        "This toilet is already approved",
+
+  "unknownError":
+        "Something went wrong"
 }

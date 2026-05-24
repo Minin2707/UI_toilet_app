@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/errors/app_exception.dart';
+
 import '../../data/repositories/toilet_repository.dart';
 
 import 'toilet_event.dart';
@@ -55,19 +57,19 @@ class ToiletBloc
       final toilets =
           await repository.getToilets(
 
-                  latitude: event.latitude,
+        latitude: event.latitude,
 
-                  longitude: event.longitude,
+        longitude: event.longitude,
 
-                  approvedOnly:
-                      event.approvedOnly,
+        approvedOnly:
+            event.approvedOnly,
 
-                  accessibleOnly:
-                      event.accessibleOnly,
+        accessibleOnly:
+            event.accessibleOnly,
 
-                  accessType:
-                      event.accessType,
-                );
+        accessType:
+            event.accessType,
+      );
 
       emit(
         ToiletLoaded(
@@ -75,11 +77,19 @@ class ToiletBloc
         ),
       );
 
+    } on AppException catch (e) {
+
+      emit(
+        ToiletLoadFailed(
+          e.code,
+        ),
+      );
+
     } catch (e) {
 
       emit(
-        ToiletError(
-          e.toString(),
+        ToiletLoadFailed(
+          'UNKNOWN_ERROR',
         ),
       );
     }
@@ -98,8 +108,12 @@ class ToiletBloc
 
       final toilets =
           await repository.getToilets(
-        latitude: event.reloadLatitude,
-        longitude: event.reloadLongitude,
+
+        latitude:
+            event.reloadLatitude,
+
+        longitude:
+            event.reloadLongitude,
       );
 
       emit(
@@ -108,12 +122,18 @@ class ToiletBloc
         ),
       );
 
+    } on AppException catch (e) {
+
+      _emitUiError(
+        emit,
+        e.code,
+      );
+
     } catch (e) {
 
-      emit(
-        ToiletError(
-          e.toString(),
-        ),
+      _emitUiError(
+        emit,
+        'UNKNOWN_ERROR',
       );
     }
   }
@@ -132,9 +152,11 @@ class ToiletBloc
       final toilets =
           await repository.getToilets(
 
-        latitude: event.reloadLatitude,
+        latitude:
+            event.reloadLatitude,
 
-        longitude: event.reloadLongitude,
+        longitude:
+            event.reloadLongitude,
       );
 
       emit(
@@ -143,12 +165,18 @@ class ToiletBloc
         ),
       );
 
+    } on AppException catch (e) {
+
+      _emitUiError(
+        emit,
+        e.code,
+      );
+
     } catch (e) {
 
-      emit(
-        ToiletError(
-          e.toString(),
-        ),
+      _emitUiError(
+        emit,
+        'UNKNOWN_ERROR',
       );
     }
   }
@@ -167,9 +195,11 @@ class ToiletBloc
       final toilets =
           await repository.getToilets(
 
-        latitude: event.reloadLatitude,
+        latitude:
+            event.reloadLatitude,
 
-        longitude: event.reloadLongitude,
+        longitude:
+            event.reloadLongitude,
       );
 
       emit(
@@ -178,12 +208,18 @@ class ToiletBloc
         ),
       );
 
+    } on AppException catch (e) {
+
+      _emitUiError(
+        emit,
+        e.code,
+      );
+
     } catch (e) {
 
-      emit(
-        ToiletError(
-          e.toString(),
-        ),
+      _emitUiError(
+        emit,
+        'UNKNOWN_ERROR',
       );
     }
   }
@@ -201,8 +237,12 @@ class ToiletBloc
 
       final toilets =
           await repository.getToilets(
-        latitude: event.reloadLatitude,
-        longitude: event.reloadLongitude,
+
+        latitude:
+            event.reloadLatitude,
+
+        longitude:
+            event.reloadLongitude,
       );
 
       emit(
@@ -211,12 +251,18 @@ class ToiletBloc
         ),
       );
 
+    } on AppException catch (e) {
+
+      _emitUiError(
+        emit,
+        e.code,
+      );
+
     } catch (e) {
 
-      emit(
-        ToiletError(
-          e.toString(),
-        ),
+      _emitUiError(
+        emit,
+        'UNKNOWN_ERROR',
       );
     }
   }
@@ -240,19 +286,56 @@ class ToiletBloc
       final toilets =
           await repository.getToilets(
 
-        latitude: event.reloadLatitude,
+        latitude:
+            event.reloadLatitude,
 
-        longitude: event.reloadLongitude,
+        longitude:
+            event.reloadLongitude,
       );
 
       emit(
-        ToiletLoaded(toilets),
+        ToiletLoaded(
+          toilets,
+        ),
+      );
+
+    } on AppException catch (e) {
+
+      _emitUiError(
+        emit,
+        e.code,
       );
 
     } catch (e) {
 
+      _emitUiError(
+        emit,
+        'UNKNOWN_ERROR',
+      );
+    }
+  }
+
+  void _emitUiError(
+
+    Emitter<ToiletState> emit,
+
+    String code,
+  ) {
+
+    final currentState =
+        state;
+
+    if (currentState
+        is ToiletLoaded) {
+
       emit(
-        ToiletError(e.toString()),
+
+        ToiletLoaded(
+
+          currentState.toilets,
+
+          uiMessageCode: code,
+        ),
       );
     }
   }

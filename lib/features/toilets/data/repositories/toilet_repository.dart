@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../../../core/api/api_client.dart';
+import '../../../../core/errors/app_exception.dart';
 
 import '../models/toilet_dto.dart';
 import '../models/create_toilet_request.dart';
@@ -72,9 +73,37 @@ class ToiletRepository {
     String toiletId,
   ) async {
 
-    await _dio.post(
-      '/toilets/$toiletId/approve',
-    );
+    try {
+
+      await _dio.post(
+        '/toilets/$toiletId/approve',
+      );
+
+    } on DioException catch (e) {
+
+
+    print(e.response?.data);
+    print(e.response?.statusCode);
+
+
+
+
+
+
+      final data =
+          e.response?.data;
+
+      throw AppException(
+
+        code:
+            data['code'] ??
+                'UNKNOWN_ERROR',
+
+        message:
+            data['message'] ??
+                'Unknown error',
+      );
+    }
   }
 
   Future<void> reportToilet(

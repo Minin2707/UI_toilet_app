@@ -2,18 +2,31 @@ import '../../data/models/toilet_dto.dart';
 
 abstract class ToiletState {}
 
-class ToiletInitial extends ToiletState {}
+class ToiletInitial
+    extends ToiletState {}
 
-class ToiletLoading extends ToiletState {}
+class ToiletLoading
+    extends ToiletState {}
 
-class ToiletLoaded extends ToiletState {
+class ToiletLoaded
+    extends ToiletState {
+
   final List<ToiletDto> toilets;
 
-  ToiletLoaded(this.toilets);
+  final String? uiMessageCode;
+
+  ToiletLoaded(
+
+    this.toilets, {
+
+    this.uiMessageCode,
+  });
 }
 
-class ToiletError extends ToiletState {
-  final String message;
+class ToiletLoadFailed
+    extends ToiletState {
 
-  ToiletError(this.message);
+  final String code;
+
+  ToiletLoadFailed(this.code);
 }
