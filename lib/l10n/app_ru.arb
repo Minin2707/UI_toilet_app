@@ -1,0 +1,69 @@
+{
+  "@@locale": "ru",
+
+  "appName": "ToiletFinder",
+
+  "login": "Войти через Passkey",
+  "register": "Зарегистрироваться через Passkey",
+
+  "username": "Имя пользователя",
+  "enterUsername": "Введите имя пользователя",
+
+  "securePasswordless":
+      "Безопасная аутентификация без пароля",
+
+  "findNearby":
+      "Находите чистые общественные туалеты рядом",
+
+  "language": "Язык",
+
+  "toiletMap": "Карта туалетов",
+  "approved": "Проверенные",
+  "accessible": "Доступные",
+  "free": "Бесплатные",
+  "createToilet": "Добавить туалет",
+  "title": "Название",
+  "description": "Описание",
+  "address": "Адрес",
+  "accessType": "Тип доступа",
+  "freeAccess": "Бесплатный",
+  "paidAccess": "Платный",
+  "customersOnly": "Только для клиентов",
+  "wheelchairAccessible": "Доступен для инвалидной коляски",
+  "create": "Создать",
+    "approvedStatus": "Проверен",
+    "pendingApproval": "Ожидает проверки",
+
+    "approveToilet": "Подтвердить туалет",
+    "navigate": "Маршрут",
+
+    "communityFeedback": "Отзывы сообщества",
+
+    "clean": "Чисто",
+    "dirty": "Грязно",
+    "safe": "Безопасно",
+    "warm": "Тепло",
+    "hasPaper": "Есть бумага",
+
+    "addressLabel": "Адрес",
+    "unknown": "Неизвестно",
+
+    "distanceLabel": "Расстояние",
+
+    "accessibilityLabel": "Доступность",
+    "wheelchairAccessibleValue": "Доступно для инвалидной коляски",
+    "notSpecified": "Не указано",
+
+    "accessLabel": "Доступ",
+
+    "helpKeepMapAccurate": "Помогите поддерживать карту актуальной",
+
+    "stillExists": "Существует",
+    "notThere": "Туалета нет",
+
+    "verifiedRecently": "Недавно подтверждено сообществом",
+    "lastConfirmed": "Последнее подтверждение {time}",
+
+    "metersAway": "{count} м",
+    "kmAway": "{count} км"
+}

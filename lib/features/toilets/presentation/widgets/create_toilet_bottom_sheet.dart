@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../data/models/create_toilet_request.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import '../bloc/toilet_bloc.dart';
 import '../bloc/toilet_event.dart';
@@ -144,9 +145,9 @@ class _CreateToiletBottomSheetState
 
           children: [
 
-            const Text(
-
-              'Create Toilet',
+            Text(
+              AppLocalizations.of(context)!
+                  .createToilet,
 
               style: TextStyle(
                 fontSize: 22,
@@ -163,9 +164,10 @@ class _CreateToiletBottomSheetState
                   _titleController,
 
               decoration:
-                  const InputDecoration(
-
-                labelText: 'Title',
+                  InputDecoration(
+                    labelText:
+                        AppLocalizations.of(context)!
+                            .title,
 
                 border:
                     OutlineInputBorder(),
@@ -182,10 +184,10 @@ class _CreateToiletBottomSheetState
               maxLines: 3,
 
               decoration:
-                  const InputDecoration(
-
-                labelText:
-                    'Description',
+                  InputDecoration(
+                    labelText:
+                        AppLocalizations.of(context)!
+                            .description,
 
                 border:
                     OutlineInputBorder(),
@@ -200,10 +202,10 @@ class _CreateToiletBottomSheetState
                   _addressController,
 
               decoration:
-                  const InputDecoration(
-
-                labelText:
-                    'Address',
+                  InputDecoration(
+                    labelText:
+                        AppLocalizations.of(context)!
+                            .address,
 
                 border:
                     OutlineInputBorder(),
@@ -217,31 +219,41 @@ class _CreateToiletBottomSheetState
               value: _accessType,
 
               decoration:
-                  const InputDecoration(
-
-                labelText:
-                    'Access Type',
+                  InputDecoration(
+                    labelText:
+                        AppLocalizations.of(context)!
+                            .accessType,
 
                 border:
                     OutlineInputBorder(),
               ),
 
-              items: const [
+              items: [
 
                 DropdownMenuItem(
                   value: 'FREE',
-                  child: Text('Free'),
+
+                  child: Text(
+                    AppLocalizations.of(context)!
+                        .freeAccess,
+                  ),
                 ),
 
                 DropdownMenuItem(
                   value: 'PAID',
-                  child: Text('Paid'),
+
+                  child: Text(
+                    AppLocalizations.of(context)!
+                        .paidAccess,
+                  ),
                 ),
 
                 DropdownMenuItem(
                   value: 'CUSTOMERS_ONLY',
+
                   child: Text(
-                    'Customers Only',
+                    AppLocalizations.of(context)!
+                        .customersOnly,
                   ),
                 ),
               ],
@@ -265,8 +277,9 @@ class _CreateToiletBottomSheetState
               value:
                   _wheelchairAccessible,
 
-              title: const Text(
-                'Wheelchair Accessible',
+              title: Text(
+                AppLocalizations.of(context)!
+                    .wheelchairAccessible,
               ),
 
               contentPadding:
@@ -307,8 +320,9 @@ class _CreateToiletBottomSheetState
                                 CircularProgressIndicator(),
                           )
 
-                        : const Text(
-                            'Create',
+                        : Text(
+                            AppLocalizations.of(context)!
+                                .create,
                           ),
               ),
             ),

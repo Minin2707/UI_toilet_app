@@ -2,8 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/localization/locale_cubit.dart';
 import '../../../../core/config/app_config.dart';
+import '../../../../core/localization/locale_state.dart';
+import '../../../../l10n/app_localizations.dart';
+
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -65,9 +70,9 @@ class _AuthScreenState
     if (username.isEmpty) {
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+         SnackBar(
           content: Text(
-            'Enter username',
+            AppLocalizations.of(context)!.enterUsername,
           ),
         ),
       );
@@ -93,7 +98,7 @@ class _AuthScreenState
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+        return Scaffold(
 
       body: Stack(
         children: [
@@ -250,7 +255,7 @@ class _AuthScreenState
                               const SizedBox(height: 10),
 
                               Text(
-                                'Find clean public restrooms nearby',
+                                AppLocalizations.of(context)!.findNearby,
 
                                 textAlign: TextAlign.center,
 
@@ -269,12 +274,12 @@ class _AuthScreenState
                                 controller:
                                     _usernameController,
 
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Colors.white,
                                 ),
 
                                 decoration: InputDecoration(
-                                  hintText: 'Username',
+                                  hintText: AppLocalizations.of(context)!.username,
 
                                   hintStyle: TextStyle(
                                     color:
@@ -320,8 +325,9 @@ class _AuthScreenState
                                     Icons.fingerprint,
                                   ),
 
-                                  label: const Text(
-                                    'Register with Passkey',
+                                  label: Text(
+                                    //'Register with Passkey',
+                                    AppLocalizations.of(context)!.register,
                                   ),
 
                                   style: FilledButton.styleFrom(
@@ -364,8 +370,9 @@ class _AuthScreenState
                                     Icons.login,
                                   ),
 
-                                  label: const Text(
-                                    'Login with Passkey',
+                                  label: Text(
+                                    //'Login with Passkey',
+                                    AppLocalizations.of(context)!.login,
                                   ),
 
                                   style: OutlinedButton.styleFrom(
@@ -392,7 +399,7 @@ class _AuthScreenState
                               const SizedBox(height: 24),
 
                               Text(
-                                'Secure passwordless authentication',
+                                AppLocalizations.of(context)!.securePasswordless,
 
                                 textAlign: TextAlign.center,
 
@@ -411,8 +418,84 @@ class _AuthScreenState
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
+          Positioned(
+                              top: 20,
+                              right: 20,
+
+                              child: Material(
+                                color: Colors.transparent,
+
+                              child: SafeArea(
+
+                                child: BlocBuilder<
+                                    LocaleCubit,
+                                    LocaleState>(
+
+                                  builder: (
+                                    context,
+                                    state,
+                                  ) {
+
+                                    final isRussian =
+                                        state.languageCode == 'ru';
+
+                                    return InkWell(
+                                      borderRadius:
+                                            BorderRadius.circular(14),
+
+                                      onTap: () {
+
+                                        final cubit =
+                                            BlocProvider.of<LocaleCubit>(
+                                              context,
+                                            );
+
+                                        cubit.toggleLocale();
+                                        debugPrint('LANGUAGE TOGGLED');
+                                      },
+
+                                      child: Container(
+
+                                        padding:
+                                            const EdgeInsets.symmetric(
+                                          horizontal: 14,
+                                          vertical: 8,
+                                        ),
+
+                                        decoration: BoxDecoration(
+
+                                          color:
+                                              Colors.white.withOpacity(0.12),
+
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+
+                                          border: Border.all(
+                                            color: Colors.white24,
+                                          ),
+                                        ),
+
+                                        child: Text(
+
+                                          isRussian
+                                              ? 'EN'
+                                              : 'RU',
+
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                             ),
+                            ),
+                ],
+              ),
+            );
+          }
+        }

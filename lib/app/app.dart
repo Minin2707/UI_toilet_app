@@ -1,9 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import 'package:app_links/app_links.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../core/localization/locale_cubit.dart';
+import '../core/localization/locale_state.dart';
+import '../l10n/app_localizations.dart';
 import '../core/auth/token_storage.dart';
 import '../core/config/app_config.dart';
 
@@ -93,22 +97,61 @@ class _ToiletMapAppState
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp.router(
+    return BlocBuilder<
+          LocaleCubit,
+          LocaleState>(
 
-      title:
-          AppConfig.instance.appName,
+        builder: (
+          context,
+          state,
+        ) {
 
-      debugShowCheckedModeBanner:
-          false,
+          debugPrint(
+            'APP REBUILD LOCALE = ${state.languageCode}',
+          );
 
-      routerConfig: appRouter,
+          return MaterialApp.router(
 
-      theme: ThemeData(
+            title:
+                AppConfig.instance.appName,
 
-        colorSchemeSeed: Colors.blue,
+            debugShowCheckedModeBanner:
+                false,
 
-        useMaterial3: true,
-      ),
+            routerConfig: appRouter,
+
+            locale: Locale(
+              state.languageCode,
+            ),
+
+            localeResolutionCallback:
+                (
+                  locale,
+                  supportedLocales,
+                ) {
+
+              return Locale(
+                state.languageCode,
+              );
+            },
+
+            supportedLocales: const [
+              Locale('en'),
+              Locale('ru'),
+            ],
+
+            localizationsDelegates:
+                AppLocalizations.localizationsDelegates,
+
+            theme: ThemeData(
+
+              colorSchemeSeed:
+                  Colors.blue,
+
+              useMaterial3: true,
+            ),
+          );
+        },
     );
   }
 }

@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app/app.dart';
 import 'app/router/app_router.dart';
-
+import 'core/localization/locale_cubit.dart';
 import 'core/auth/token_storage.dart';
 import 'core/config/app_config.dart';
 import 'core/config/environment.dart';
@@ -18,7 +19,13 @@ void main() {
   );
 
   runApp(
-    const AppRoot(),
+
+    BlocProvider(
+
+      create: (_) => LocaleCubit(),
+
+      child: const AppRoot(),
+    ),
   );
 }
 

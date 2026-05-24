@@ -8,6 +8,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 
 import '../../data/models/toilet_dto.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import '../widgets/create_toilet_bottom_sheet.dart';
 import '../bloc/toilet_bloc.dart';
@@ -186,8 +187,8 @@ class _ToiletMapScreenState
               const Color(0xFF07111A),
 
           elevation: 0,
-        title: const Text(
-          'Toilet Map',
+        title: Text(
+          AppLocalizations.of(context)!.toiletMap,
         ),
       ),
 
@@ -409,115 +410,140 @@ class _ToiletMapScreenState
             top: 12,
             left: 12,
 
+            child: SizedBox(
 
-            child: ClipRRect(
+              width:
+                  MediaQuery.of(context)
+                      .size
+                      .width - 24,
 
-                borderRadius:
-                    BorderRadius.circular(22),
+              child: ClipRRect(
 
-                child: BackdropFilter(
+              borderRadius:
+                  BorderRadius.circular(22),
 
-                  filter: ImageFilter.blur(
+              child: BackdropFilter(
 
-                    sigmaX: 18,
-                    sigmaY: 18,
+                filter: ImageFilter.blur(
+
+                  sigmaX: 18,
+                  sigmaY: 18,
+                ),
+
+                child: Container(
+
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
                   ),
 
-                  child: Container(
+                  decoration: BoxDecoration(
 
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 10,
-                    ),
+                    color:
+                        Colors.white.withOpacity(0.08),
 
-                    decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(22),
 
+                    border: Border.all(
                       color:
                           Colors.white.withOpacity(0.08),
+                    ),
 
-                      borderRadius:
-                          BorderRadius.circular(22),
+                    boxShadow: [
 
-                      border: Border.all(
+                      BoxShadow(
+
                         color:
-                            Colors.white.withOpacity(0.08),
+                            Colors.black.withOpacity(0.25),
+
+                        blurRadius: 24,
+
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+
+                  child: SingleChildScrollView(
+
+                    scrollDirection: Axis.horizontal,
+
+
+
+                      child: Row(
+                        children: [
+
+                          _GlassFilterChip(
+
+                            title:
+                                AppLocalizations.of(context)!
+                                    .approved,
+
+                            selected: _approvedOnly,
+
+                            onTap: () {
+
+                              setState(() {
+                                _approvedOnly =
+                                    !_approvedOnly;
+                              });
+
+                              _reloadToilets();
+                            },
+                          ),
+
+                          const SizedBox(width: 10),
+
+                          _GlassFilterChip(
+
+                            title:
+                                AppLocalizations.of(context)!
+                                    .accessible,
+
+                            selected: _accessibleOnly,
+
+                            onTap: () {
+
+                              setState(() {
+                                _accessibleOnly =
+                                    !_accessibleOnly;
+                              });
+
+                              _reloadToilets();
+                            },
+                          ),
+
+                          const SizedBox(width: 10),
+
+                          _GlassFilterChip(
+
+                            title:
+                                AppLocalizations.of(context)!
+                                    .free,
+
+                            selected: _freeOnly,
+
+                            onTap: () {
+
+                              setState(() {
+                                _freeOnly =
+                                    !_freeOnly;
+                              });
+
+                              _reloadToilets();
+                            },
+
+                          ),
+                        ],
                       ),
 
-                      boxShadow: [
-
-                        BoxShadow(
-
-                          color:
-                              Colors.black.withOpacity(0.25),
-
-                          blurRadius: 24,
-
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-
-                    child: Row(
-                  children: [
-
-                    _GlassFilterChip(
-
-                      title: 'Approved',
-
-                      selected: _approvedOnly,
-
-                      onTap: () {
-
-                        setState(() {
-                          _approvedOnly = !_approvedOnly;
-                        });
-
-                        _reloadToilets();
-                      },
-                    ),
-
-                    const SizedBox(width: 10),
-
-                    _GlassFilterChip(
-
-                      title: 'Accessible',
-
-                      selected: _accessibleOnly,
-
-                      onTap: () {
-
-                        setState(() {
-                          _accessibleOnly = !_accessibleOnly;
-                        });
-
-                        _reloadToilets();
-                      },
-                    ),
-
-                    const SizedBox(width: 10),
-
-                    _GlassFilterChip(
-
-                      title: 'Free',
-
-                      selected: _freeOnly,
-
-                      onTap: () {
-
-                        setState(() {
-                          _freeOnly = !_freeOnly;
-                        });
-
-                        _reloadToilets();
-                      },
-                    ),
-                  ],
+                  ),
                 ),
               ),
+            ),
+          ),
+          ),
 
-          ),
-          ),
-          ),
         ],
       ),
     );

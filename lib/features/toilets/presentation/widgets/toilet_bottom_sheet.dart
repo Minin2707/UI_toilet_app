@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../data/models/toilet_dto.dart';
-
+import '../../../../l10n/app_localizations.dart';
 import '../bloc/toilet_bloc.dart';
 import '../bloc/toilet_event.dart';
 
@@ -55,6 +55,11 @@ class ToiletBottomSheet
 
         super.initState();
 
+        timeago.setLocaleMessages(
+          'ru',
+          timeago.RuMessages(),
+        );
+
         cleanCount =
             widget.toilet.cleanCount;
 
@@ -97,13 +102,19 @@ class ToiletBottomSheet
 
     if (widget.toilet.distanceMeters < 1000) {
 
-      return '${widget.toilet.distanceMeters.toInt()} m away';
+      return AppLocalizations.of(context)!
+          .metersAway(
+              widget.toilet.distanceMeters.toInt(),
+          );
     }
 
     final km =
         widget.toilet.distanceMeters / 1000;
 
-    return '${km.toStringAsFixed(1)} km away';
+    return AppLocalizations.of(context)!
+        .kmAway(
+            km.toStringAsFixed(1),
+        );
   }
 
   Future<void> _openDirections() async {
@@ -124,6 +135,30 @@ class ToiletBottomSheet
     }
   }
 
+  String _localizedAccessType(
+      BuildContext context,
+      String accessType,
+  ) {
+
+    switch (accessType) {
+
+      case 'FREE':
+        return AppLocalizations.of(context)!
+            .freeAccess;
+
+      case 'PAID':
+        return AppLocalizations.of(context)!
+            .paidAccess;
+
+      case 'CUSTOMERS_ONLY':
+        return AppLocalizations.of(context)!
+            .customersOnly;
+
+      default:
+        return accessType;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -135,9 +170,14 @@ class ToiletBottomSheet
         widget.toilet.lastConfirmedAt != null
 
             ? timeago.format(
+
                 DateTime.parse(
                   widget.toilet.lastConfirmedAt!,
                 ),
+
+                locale:
+                    Localizations.localeOf(context)
+                        .languageCode,
               )
 
             : null;
@@ -277,8 +317,12 @@ class ToiletBottomSheet
                               Text(
 
                                 isApproved
-                                    ? 'Approved'
-                                    : 'Pending approval',
+
+                                    ? AppLocalizations.of(context)!
+                                        .approvedStatus
+
+                                    : AppLocalizations.of(context)!
+                                        .pendingApproval,
 
                                 style: TextStyle(
 
@@ -335,8 +379,9 @@ class ToiletBottomSheet
                         Icons.verified,
                       ),
 
-                      label: const Text(
-                        'Approve Toilet',
+                      label: Text(
+                        AppLocalizations.of(context)!
+                            .approveToilet,
                       ),
 
                       style: FilledButton.styleFrom(
@@ -380,8 +425,9 @@ class ToiletBottomSheet
                       Icons.navigation,
                     ),
 
-                    label: const Text(
-                      'Navigate',
+                    label: Text(
+                      AppLocalizations.of(context)!
+                          .navigate,
                     ),
 
                     style: FilledButton.styleFrom(
@@ -415,7 +461,8 @@ class ToiletBottomSheet
 
                 Text(
 
-                  'Community feedback',
+                  AppLocalizations.of(context)!
+                      .communityFeedback,
 
                   style: TextStyle(
 
@@ -444,7 +491,9 @@ class ToiletBottomSheet
 
                       emoji: '🧼',
 
-                      title: 'Clean',
+                      title:
+                          AppLocalizations.of(context)!
+                              .clean,
 
                       count: cleanCount,
 
@@ -493,7 +542,9 @@ class ToiletBottomSheet
 
                       emoji: '🧻',
 
-                      title: 'Has paper',
+                      title:
+                          AppLocalizations.of(context)!
+                              .hasPaper,
 
                       count: hasPaperCount,
 
@@ -542,7 +593,9 @@ class ToiletBottomSheet
 
                       emoji: '🔥',
 
-                      title: 'Warm',
+                      title:
+                          AppLocalizations.of(context)!
+                              .warm,
 
                       count: warmCount,
 
@@ -591,7 +644,9 @@ class ToiletBottomSheet
 
                       emoji: '🔒',
 
-                      title: 'Safe',
+                      title:
+                          AppLocalizations.of(context)!
+                              .safe,
 
                       count: safeCount,
 
@@ -640,7 +695,9 @@ class ToiletBottomSheet
 
                       emoji: '🚫',
 
-                      title: 'Dirty',
+                      title:
+                          AppLocalizations.of(context)!
+                              .dirty,
 
                       count: dirtyCount,
 
@@ -714,10 +771,13 @@ class ToiletBottomSheet
 
                       _InfoRow(
                         icon: Icons.location_on_outlined,
-                        label: 'Address',
+                        label:
+                            AppLocalizations.of(context)!
+                                .addressLabel,
                         value:
                             widget.toilet.address.isEmpty
-                                ? 'Unknown'
+                                ? AppLocalizations.of(context)!
+                                    .unknown
                                 : widget.toilet.address,
                       ),
 
@@ -725,7 +785,9 @@ class ToiletBottomSheet
 
                       _InfoRow(
                         icon: Icons.social_distance,
-                        label: 'Distance',
+                        label:
+                            AppLocalizations.of(context)!
+                                .distanceLabel,
                         value: _distanceText(),
                       ),
 
@@ -733,21 +795,29 @@ class ToiletBottomSheet
 
                       _InfoRow(
                         icon: Icons.accessible_forward,
-                        label: 'Accessibility',
+                        label:
+                            AppLocalizations.of(context)!
+                                .accessibilityLabel,
                         value:
                             widget.toilet.wheelchairAccessible
-                                ? 'Wheelchair accessible'
-                                : 'Not specified',
+                                ? AppLocalizations.of(context)!
+                                    .wheelchairAccessibleValue
+                                : AppLocalizations.of(context)!
+                                    .notSpecified,
                       ),
 
                       const SizedBox(height: 18),
 
                       _InfoRow(
                         icon: Icons.payments_outlined,
-                        label: 'Access',
+                        label:
+                            AppLocalizations.of(context)!
+                                .accessLabel,
                         value:
-                            widget.toilet.accessType
-                                .replaceAll('_', ' '),
+                            _localizedAccessType(
+                              context,
+                              widget.toilet.accessType,
+                            ),
                       ),
 
                       const SizedBox(height: 26),
@@ -763,7 +833,8 @@ class ToiletBottomSheet
 
                         Text(
 
-                          'Help keep the map accurate',
+                          AppLocalizations.of(context)!
+                              .helpKeepMapAccurate,
 
                           style: TextStyle(
 
@@ -822,7 +893,7 @@ class ToiletBottomSheet
                                     ),
                                   ),
 
-                                  child: const Row(
+                                  child:  Row(
 
                                     mainAxisAlignment:
                                         MainAxisAlignment.center,
@@ -839,7 +910,8 @@ class ToiletBottomSheet
 
                                       Text(
 
-                                        'Still exists',
+                                        AppLocalizations.of(context)!
+                                            .stillExists,
 
                                         style: TextStyle(
 
@@ -901,7 +973,7 @@ class ToiletBottomSheet
                                     ),
                                   ),
 
-                                  child: const Row(
+                                  child:  Row(
 
                                     mainAxisAlignment:
                                         MainAxisAlignment.center,
@@ -918,7 +990,8 @@ class ToiletBottomSheet
 
                                       Text(
 
-                                        'Not there',
+                                        AppLocalizations.of(context)!
+                                            .notThere,
 
                                         style: TextStyle(
 
@@ -980,7 +1053,8 @@ class ToiletBottomSheet
 
                                     Text(
 
-                                      'Verified by community recently',
+                                      AppLocalizations.of(context)!
+                                          .verifiedRecently,
 
                                       style: TextStyle(
 
@@ -996,7 +1070,10 @@ class ToiletBottomSheet
 
                                     Text(
 
-                                      'Last confirmed $lastConfirmedText',
+                                      AppLocalizations.of(context)!
+                                          .lastConfirmed(
+                                              lastConfirmedText!,
+                                          ),
 
                                       style: TextStyle(
 

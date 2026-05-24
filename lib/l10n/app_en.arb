@@ -1,0 +1,69 @@
+{
+  "@@locale": "en",
+
+  "appName": "ToiletFinder",
+
+  "login": "Login with Passkey",
+  "register": "Register with Passkey",
+
+  "username": "Username",
+  "enterUsername": "Enter username",
+
+  "securePasswordless":
+      "Secure passwordless authentication",
+
+  "findNearby":
+      "Find clean public restrooms nearby",
+
+  "language": "Language",
+
+  "toiletMap": "Toilet Map",
+  "approved": "Approved",
+  "accessible": "Accessible",
+  "free": "Free",
+  "createToilet": "Create Toilet",
+  "title": "Title",
+  "description": "Description",
+  "address": "Address",
+  "accessType": "Access Type",
+  "freeAccess": "Free",
+  "paidAccess": "Paid",
+  "customersOnly": "Customers Only",
+  "wheelchairAccessible": "Wheelchair Accessible",
+  "create": "Create",
+  "approvedStatus": "Approved",
+  "pendingApproval": "Pending approval",
+
+  "approveToilet": "Approve Toilet",
+  "navigate": "Navigate",
+
+  "communityFeedback": "Community feedback",
+
+  "clean": "Clean",
+  "dirty": "Dirty",
+  "safe": "Safe",
+  "warm": "Warm",
+  "hasPaper": "Has paper",
+
+  "addressLabel": "Address",
+  "unknown": "Unknown",
+
+  "distanceLabel": "Distance",
+
+  "accessibilityLabel": "Accessibility",
+  "wheelchairAccessibleValue": "Wheelchair accessible",
+  "notSpecified": "Not specified",
+
+  "accessLabel": "Access",
+
+  "helpKeepMapAccurate": "Help keep the map accurate",
+
+  "stillExists": "Still exists",
+  "notThere": "Not there",
+
+  "verifiedRecently": "Verified by community recently",
+  "lastConfirmed": "Last confirmed {time}",
+
+  "metersAway": "{count} m away",
+  "kmAway": "{count} km away"
+}
