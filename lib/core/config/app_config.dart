@@ -23,7 +23,7 @@ class AppConfig {
         if (kIsWeb) {
           return 'http://localhost:8080';
         }
-        return 'https://fundamentals-per-infinite-afford.trycloudflare.com';
+        return 'https://kodak-threaded-disclosure-movements.trycloudflare.com';
 
       case Environment.stage:
         return 'https://stage-api.toiletmap.com';

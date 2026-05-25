@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class AnimatedToiletMarker
     extends StatefulWidget {
 
-  final bool approved;
+  final String status;
 
   const AnimatedToiletMarker({
     super.key,
-    required this.approved,
+    required this.status,
   });
 
   @override
@@ -48,7 +48,51 @@ class _AnimatedToiletMarkerState
   @override
   Widget build(BuildContext context) {
 
-    if (widget.approved) {
+    final isApproved =
+        widget.status == 'APPROVED';
+
+    final needsRevalidation =
+        widget.status ==
+            'NEEDS_REVALIDATION';
+
+    // 🔴 NEEDS_REVALIDATION
+
+    if (needsRevalidation) {
+
+      return Container(
+
+        decoration: BoxDecoration(
+
+          shape: BoxShape.circle,
+
+          boxShadow: [
+
+            BoxShadow(
+
+              color:
+                  Colors.redAccent.withOpacity(0.50),
+
+              blurRadius: 22,
+
+              spreadRadius: 4,
+            ),
+          ],
+        ),
+
+        child: const Icon(
+
+          Icons.wc,
+
+          size: 38,
+
+          color: Colors.redAccent,
+        ),
+      );
+    }
+
+    // 🟢 APPROVED
+
+    if (isApproved) {
 
       return Container(
 
@@ -80,6 +124,8 @@ class _AnimatedToiletMarkerState
         ),
       );
     }
+
+    // 🟧 PENDING
 
     return AnimatedBuilder(
 

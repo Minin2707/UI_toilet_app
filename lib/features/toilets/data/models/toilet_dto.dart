@@ -16,6 +16,8 @@ class ToiletDto {
   final int safeCount;
   final int confirmationCount;
   final String? lastConfirmedAt;
+  final int reportCount;
+  final int revalidationConfirmationCount;
 
   const ToiletDto({
     required this.id,
@@ -35,6 +37,8 @@ class ToiletDto {
     required this.safeCount,
     required this.confirmationCount,
     required this.lastConfirmedAt,
+    required this.reportCount,
+    required this.revalidationConfirmationCount,
   });
 
   factory ToiletDto.fromJson(Map<String, dynamic> json) {
@@ -76,6 +80,12 @@ class ToiletDto {
 
       lastConfirmedAt:
            json['lastConfirmedAt'],
+
+      reportCount:
+          json['reportCount'] ?? 0,
+
+      revalidationConfirmationCount:
+          json['revalidationConfirmationCount'] ?? 0,
     );
   }
 }

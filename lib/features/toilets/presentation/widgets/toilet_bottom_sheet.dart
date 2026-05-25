@@ -165,6 +165,39 @@ class ToiletBottomSheet
     final isApproved =
         widget.toilet.status == 'APPROVED';
 
+    final needsRevalidation =
+            widget.toilet.status ==
+                'NEEDS_REVALIDATION';
+
+    final isPending =
+        widget.toilet.status == 'PENDING';
+
+    final showFreshnessActions =
+        isApproved &&
+        widget.toilet.lastConfirmedAt == null;
+
+    final showRecentlyVerified =
+        isApproved &&
+        widget.toilet.lastConfirmedAt != null;
+
+    final showRevalidationWarning =
+        needsRevalidation;
+
+    Color toiletIconColor;
+
+    if (needsRevalidation) {
+
+      toiletIconColor = Colors.redAccent;
+
+    } else if (isApproved) {
+
+      toiletIconColor = Colors.greenAccent;
+
+    } else {
+
+      toiletIconColor = Colors.orangeAccent;
+    }
+
     final lastConfirmedText =
 
         widget.toilet.lastConfirmedAt != null
@@ -262,10 +295,7 @@ class ToiletBottomSheet
 
                         size: 36,
 
-                        color:
-                            isApproved
-                                ? Colors.greenAccent
-                                : Colors.grey.shade400,
+                        color: toiletIconColor,
                       ),
                     ),
 
@@ -307,29 +337,46 @@ class ToiletBottomSheet
                                 size: 10,
 
                                 color:
-                                    isApproved
-                                        ? Colors.greenAccent
-                                        : Colors.orangeAccent,
+                                    needsRevalidation
+
+                                        ? Colors.amberAccent
+
+                                        : isApproved
+
+                                            ? Colors.greenAccent
+
+                                            : Colors.orangeAccent,
                               ),
 
                               const SizedBox(width: 8),
 
                               Text(
 
-                                isApproved
+                                needsRevalidation
 
                                     ? AppLocalizations.of(context)!
-                                        .approvedStatus
+                                        .needsRevalidation
 
-                                    : AppLocalizations.of(context)!
-                                        .pendingApproval,
+                                    : isApproved
+
+                                        ? AppLocalizations.of(context)!
+                                            .approvedStatus
+
+                                        : AppLocalizations.of(context)!
+                                            .pendingApproval,
 
                                 style: TextStyle(
 
                                   color:
-                                      isApproved
-                                          ? Colors.greenAccent
-                                          : Colors.orangeAccent,
+                                      needsRevalidation
+
+                                          ? Colors.amberAccent
+
+                                          : isApproved
+
+                                              ? Colors.greenAccent
+
+                                              : Colors.orangeAccent,
 
                                   fontWeight:
                                       FontWeight.w600,
@@ -347,7 +394,7 @@ class ToiletBottomSheet
 
                 // APPROVE BUTTON
 
-                if (!isApproved)
+                if (!isApproved || needsRevalidation)
 
                   SizedBox(
 
@@ -748,7 +795,7 @@ class ToiletBottomSheet
 
                 // INFO CARD
 
-                Container(
+                    Container(
 
                   padding: const EdgeInsets.all(18),
 
@@ -829,7 +876,7 @@ class ToiletBottomSheet
 
                       const SizedBox(height: 18),
 
-                      if (widget.toilet.lastConfirmedAt == null) ...[
+                      if (showFreshnessActions) ...[
 
                         Text(
 
@@ -1008,8 +1055,11 @@ class ToiletBottomSheet
                             ),
                           ],
                         ),
+                      ],
+                      if (showRecentlyVerified &&
+                          !showRevalidationWarning) ...[
 
-                      ] else ...[
+                        // GREEN VERIFIED CARD
 
                         Container(
 
@@ -1033,6 +1083,7 @@ class ToiletBottomSheet
                           ),
 
                           child: Row(
+
                             children: [
 
                               const Icon(
@@ -1066,7 +1117,7 @@ class ToiletBottomSheet
                                       ),
                                     ),
 
-                                    const SizedBox(height: 4),
+                                    const SizedBox(height: 8),
 
                                     Text(
 
@@ -1089,7 +1140,85 @@ class ToiletBottomSheet
                             ],
                           ),
                         ),
-                      ]
+
+                        const SizedBox(height: 16),
+
+                        // RED REPORT BUTTON
+
+                        GestureDetector(
+
+                          onTap: () {
+
+                            context.read<ToiletBloc>().add(
+
+                              ReportToiletEvent(
+
+                                toiletId: widget.toilet.id,
+
+                                reloadLatitude:
+                                    widget.currentLocation.latitude,
+
+                                reloadLongitude:
+                                    widget.currentLocation.longitude,
+                              ),
+                            );
+
+                            Navigator.pop(context);
+                          },
+
+                          child: Container(
+
+                            height: 56,
+
+                            decoration: BoxDecoration(
+
+                              color:
+                                  Colors.redAccent.withOpacity(0.10),
+
+                              borderRadius:
+                                  BorderRadius.circular(16),
+
+                              border: Border.all(
+
+                                color:
+                                    Colors.redAccent.withOpacity(0.20),
+                              ),
+                            ),
+
+                            child: Row(
+
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center,
+
+                              children: [
+
+                                const Icon(
+                                  Icons.close,
+                                  color: Colors.redAccent,
+                                  size: 20,
+                                ),
+
+                                const SizedBox(width: 8),
+
+                                Text(
+
+                                  '${AppLocalizations.of(context)!
+                                      .notThere} '
+                                  '(${widget.toilet.reportCount}/3)',
+
+                                  style: const TextStyle(
+
+                                    color: Colors.redAccent,
+
+                                    fontWeight:
+                                        FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),

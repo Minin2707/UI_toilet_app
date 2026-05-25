@@ -1,0 +1,166 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
+class AppLocalizationsEn extends AppLocalizations {
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get appName => 'ToiletFinder';
+
+  @override
+  String get login => 'Login with Passkey';
+
+  @override
+  String get register => 'Register with Passkey';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get enterUsername => 'Enter username';
+
+  @override
+  String get securePasswordless => 'Secure passwordless authentication';
+
+  @override
+  String get findNearby => 'Find clean public restrooms nearby';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get toiletMap => 'Toilet Map';
+
+  @override
+  String get approved => 'Approved';
+
+  @override
+  String get accessible => 'Accessible';
+
+  @override
+  String get free => 'Free';
+
+  @override
+  String get createToilet => 'Create Toilet';
+
+  @override
+  String get title => 'Title';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get accessType => 'Access Type';
+
+  @override
+  String get freeAccess => 'Free';
+
+  @override
+  String get paidAccess => 'Paid';
+
+  @override
+  String get customersOnly => 'Customers Only';
+
+  @override
+  String get wheelchairAccessible => 'Wheelchair Accessible';
+
+  @override
+  String get create => 'Create';
+
+  @override
+  String get approvedStatus => 'Approved';
+
+  @override
+  String get pendingApproval => 'Pending approval';
+
+  @override
+  String get approveToilet => 'Approve Toilet';
+
+  @override
+  String get navigate => 'Navigate';
+
+  @override
+  String get communityFeedback => 'Community feedback';
+
+  @override
+  String get clean => 'Clean';
+
+  @override
+  String get dirty => 'Dirty';
+
+  @override
+  String get safe => 'Safe';
+
+  @override
+  String get warm => 'Warm';
+
+  @override
+  String get hasPaper => 'Has paper';
+
+  @override
+  String get addressLabel => 'Address';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get distanceLabel => 'Distance';
+
+  @override
+  String get accessibilityLabel => 'Accessibility';
+
+  @override
+  String get wheelchairAccessibleValue => 'Wheelchair accessible';
+
+  @override
+  String get notSpecified => 'Not specified';
+
+  @override
+  String get accessLabel => 'Access';
+
+  @override
+  String get helpKeepMapAccurate => 'Help keep the map accurate';
+
+  @override
+  String get stillExists => 'Still exists';
+
+  @override
+  String get notThere => 'Not there';
+
+  @override
+  String get verifiedRecently => 'Verified by community recently';
+
+  @override
+  String lastConfirmed(Object time) {
+    return 'Last confirmed $time';
+  }
+
+  @override
+  String metersAway(Object count) {
+    return '$count m away';
+  }
+
+  @override
+  String kmAway(Object count) {
+    return '$count km away';
+  }
+
+  @override
+  String get userAlreadyApproved => 'You already approved this toilet';
+
+  @override
+  String get toiletAlreadyApproved => 'This toilet is already approved';
+
+  @override
+  String get unknownError => 'Something went wrong';
+
+  @override
+  String get needsRevalidation => 'Needs re-validation';
+}

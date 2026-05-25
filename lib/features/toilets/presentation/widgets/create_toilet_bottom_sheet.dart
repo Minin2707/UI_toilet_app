@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
@@ -17,9 +19,7 @@ class CreateToiletBottomSheet
 
   const CreateToiletBottomSheet({
     super.key,
-
     required this.location,
-
     required this.currentLocation,
   });
 
@@ -106,6 +106,61 @@ class _CreateToiletBottomSheetState
     Navigator.pop(context);
   }
 
+  InputDecoration _inputDecoration(
+    String label,
+  ) {
+
+    return InputDecoration(
+
+      labelText: label,
+
+      labelStyle: const TextStyle(
+        color: Colors.white70,
+      ),
+
+      filled: true,
+
+      fillColor:
+          Colors.white.withOpacity(0.05),
+
+      border: OutlineInputBorder(
+
+        borderRadius:
+            BorderRadius.circular(18),
+
+        borderSide: BorderSide(
+
+          color:
+              Colors.white.withOpacity(0.08),
+        ),
+      ),
+
+      enabledBorder: OutlineInputBorder(
+
+        borderRadius:
+            BorderRadius.circular(18),
+
+        borderSide: BorderSide(
+
+          color:
+              Colors.white.withOpacity(0.08),
+        ),
+      ),
+
+      focusedBorder: OutlineInputBorder(
+
+        borderRadius:
+            BorderRadius.circular(18),
+
+        borderSide: const BorderSide(
+
+          color: Colors.cyanAccent,
+          width: 1.4,
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
 
@@ -121,212 +176,390 @@ class _CreateToiletBottomSheetState
   @override
   Widget build(BuildContext context) {
 
-    return Padding(
+    return ClipRRect(
 
-      padding: EdgeInsets.only(
+      borderRadius:
+          const BorderRadius.vertical(
 
-        left: 16,
-        right: 16,
-        top: 16,
-
-        bottom:
-            MediaQuery.of(context)
-                    .viewInsets
-                    .bottom +
-                16,
+        top: Radius.circular(28),
       ),
 
-      child: SingleChildScrollView(
+      child: BackdropFilter(
 
-        child: Column(
+        filter: ImageFilter.blur(
 
-          mainAxisSize:
-              MainAxisSize.min,
+          sigmaX: 18,
+          sigmaY: 18,
+        ),
 
-          children: [
+        child: Container(
 
-            Text(
-              AppLocalizations.of(context)!
-                  .createToilet,
+          decoration: BoxDecoration(
 
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight:
-                    FontWeight.bold,
-              ),
+            color:
+                const Color(0xFF07111A),
+
+            borderRadius:
+                const BorderRadius.vertical(
+
+              top: Radius.circular(28),
             ),
 
-            const SizedBox(height: 16),
+            border: Border.all(
 
-            TextField(
+              color:
+                  Colors.white.withOpacity(0.06),
+            ),
+          ),
 
-              controller:
-                  _titleController,
+          child: Padding(
 
-              decoration:
-                  InputDecoration(
-                    labelText:
-                        AppLocalizations.of(context)!
-                            .title,
+            padding: EdgeInsets.only(
 
-                border:
-                    OutlineInputBorder(),
-              ),
+              left: 20,
+              right: 20,
+              top: 14,
+
+              bottom:
+                  MediaQuery.of(context)
+                          .viewInsets
+                          .bottom +
+                      20,
             ),
 
-            const SizedBox(height: 12),
+            child: SingleChildScrollView(
 
-            TextField(
+              child: Column(
 
-              controller:
-                  _descriptionController,
+                mainAxisSize:
+                    MainAxisSize.min,
 
-              maxLines: 3,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
 
-              decoration:
-                  InputDecoration(
-                    labelText:
-                        AppLocalizations.of(context)!
-                            .description,
+                children: [
 
-                border:
-                    OutlineInputBorder(),
-              ),
-            ),
+                  Center(
 
-            const SizedBox(height: 12),
+                    child: Container(
 
-            TextField(
+                      width: 44,
+                      height: 5,
 
-              controller:
-                  _addressController,
+                      decoration: BoxDecoration(
 
-              decoration:
-                  InputDecoration(
-                    labelText:
-                        AppLocalizations.of(context)!
-                            .address,
+                        color:
+                            Colors.white24,
 
-                border:
-                    OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
-            DropdownButtonFormField<String>(
-
-              value: _accessType,
-
-              decoration:
-                  InputDecoration(
-                    labelText:
-                        AppLocalizations.of(context)!
-                            .accessType,
-
-                border:
-                    OutlineInputBorder(),
-              ),
-
-              items: [
-
-                DropdownMenuItem(
-                  value: 'FREE',
-
-                  child: Text(
-                    AppLocalizations.of(context)!
-                        .freeAccess,
+                        borderRadius:
+                            BorderRadius.circular(20),
+                      ),
+                    ),
                   ),
-                ),
 
-                DropdownMenuItem(
-                  value: 'PAID',
+                  const SizedBox(height: 22),
 
-                  child: Text(
+                  Text(
+
                     AppLocalizations.of(context)!
-                        .paidAccess,
+                        .createToilet,
+
+                    style: const TextStyle(
+
+                      color: Colors.white,
+
+                      fontSize: 26,
+
+                      fontWeight:
+                          FontWeight.w700,
+                    ),
                   ),
-                ),
 
-                DropdownMenuItem(
-                  value: 'CUSTOMERS_ONLY',
+                  const SizedBox(height: 6),
 
-                  child: Text(
+                  Text(
+
                     AppLocalizations.of(context)!
-                        .customersOnly,
+                        .helpKeepMapAccurate,
+
+                    style: TextStyle(
+
+                      color:
+                          Colors.white.withOpacity(0.65),
+
+                      fontSize: 15,
+                    ),
                   ),
-                ),
-              ],
 
-              onChanged: (value) {
+                  const SizedBox(height: 26),
 
-                if (value == null) {
-                  return;
-                }
+                  TextField(
 
-                setState(() {
-                  _accessType = value;
-                });
-              },
-            ),
+                    controller:
+                        _titleController,
 
-            const SizedBox(height: 12),
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
 
-            CheckboxListTile(
+                    decoration:
+                        _inputDecoration(
 
-              value:
-                  _wheelchairAccessible,
+                      AppLocalizations.of(context)!
+                          .title,
+                    ),
+                  ),
 
-              title: Text(
-                AppLocalizations.of(context)!
-                    .wheelchairAccessible,
-              ),
+                  const SizedBox(height: 16),
 
-              contentPadding:
-                  EdgeInsets.zero,
+                  TextField(
 
-              onChanged: (value) {
+                    controller:
+                        _descriptionController,
 
-                setState(() {
+                    maxLines: 4,
 
-                  _wheelchairAccessible =
-                      value ?? false;
-                });
-              },
-            ),
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
 
-            const SizedBox(height: 20),
+                    decoration:
+                        _inputDecoration(
 
-            SizedBox(
+                      AppLocalizations.of(context)!
+                          .description,
+                    ),
+                  ),
 
-              width: double.infinity,
+                  const SizedBox(height: 16),
 
-              child: FilledButton(
+                  TextField(
 
-                onPressed:
-                    _isLoading
-                        ? null
-                        : _createToilet,
+                    controller:
+                        _addressController,
 
-                child:
-                    _isLoading
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
 
-                        ? const SizedBox(
+                    decoration:
+                        _inputDecoration(
 
-                            width: 22,
-                            height: 22,
+                      AppLocalizations.of(context)!
+                          .address,
+                    ),
+                  ),
 
-                            child:
-                                CircularProgressIndicator(),
-                          )
+                  const SizedBox(height: 16),
 
-                        : Text(
-                            AppLocalizations.of(context)!
-                                .create,
+                  DropdownButtonFormField<String>(
+
+                    value: _accessType,
+
+                    dropdownColor:
+                        const Color(0xFF101C26),
+
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+
+                    decoration:
+                        _inputDecoration(
+
+                      AppLocalizations.of(context)!
+                          .accessType,
+                    ),
+
+                    items: [
+
+                      DropdownMenuItem(
+
+                        value: 'FREE',
+
+                        child: Text(
+
+                          AppLocalizations.of(context)!
+                              .freeAccess,
+                        ),
+                      ),
+
+                      DropdownMenuItem(
+
+                        value: 'PAID',
+
+                        child: Text(
+
+                          AppLocalizations.of(context)!
+                              .paidAccess,
+                        ),
+                      ),
+
+                      DropdownMenuItem(
+
+                        value: 'CUSTOMERS_ONLY',
+
+                        child: Text(
+
+                          AppLocalizations.of(context)!
+                              .customersOnly,
+                        ),
+                      ),
+                    ],
+
+                    onChanged: (value) {
+
+                      if (value == null) {
+                        return;
+                      }
+
+                      setState(() {
+
+                        _accessType = value;
+                      });
+                    },
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Container(
+
+                    decoration: BoxDecoration(
+
+                      color:
+                          Colors.white.withOpacity(0.04),
+
+                      borderRadius:
+                          BorderRadius.circular(18),
+
+                      border: Border.all(
+
+                        color:
+                            Colors.white.withOpacity(0.06),
+                      ),
+                    ),
+
+                    child: CheckboxListTile(
+
+                      value:
+                          _wheelchairAccessible,
+
+                      activeColor:
+                          Colors.cyanAccent,
+
+                      checkColor:
+                          Colors.black,
+
+                      title: Text(
+
+                        AppLocalizations.of(context)!
+                            .wheelchairAccessible,
+
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+
+                      contentPadding:
+                          const EdgeInsets.symmetric(
+                        horizontal: 12,
+                      ),
+
+                      onChanged: (value) {
+
+                        setState(() {
+
+                          _wheelchairAccessible =
+                              value ?? false;
+                        });
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 26),
+
+                  SizedBox(
+
+                    width: double.infinity,
+
+                    height: 58,
+
+                    child: DecoratedBox(
+
+                      decoration: BoxDecoration(
+
+                        borderRadius:
+                            BorderRadius.circular(18),
+
+                        boxShadow: [
+
+                          BoxShadow(
+
+                            color:
+                                Colors.cyanAccent.withOpacity(0.35),
+
+                            blurRadius: 24,
                           ),
+                        ],
+                      ),
+
+                      child: FilledButton(
+
+                        onPressed:
+                            _isLoading
+                                ? null
+                                : _createToilet,
+
+                        style:
+                            FilledButton.styleFrom(
+
+                          backgroundColor:
+                              Colors.cyanAccent,
+
+                          foregroundColor:
+                              Colors.black,
+
+                          shape:
+                              RoundedRectangleBorder(
+
+                            borderRadius:
+                                BorderRadius.circular(18),
+                          ),
+                        ),
+
+                        child:
+                            _isLoading
+
+                                ? const SizedBox(
+
+                                    width: 24,
+                                    height: 24,
+
+                                    child:
+                                        CircularProgressIndicator(
+                                      color: Colors.black,
+                                    ),
+                                  )
+
+                                : Text(
+
+                                    AppLocalizations.of(context)!
+                                        .create,
+
+                                    style: const TextStyle(
+
+                                      fontSize: 16,
+
+                                      fontWeight:
+                                          FontWeight.w700,
+                                    ),
+                                  ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

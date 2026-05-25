@@ -404,8 +404,7 @@ class _ToiletMapScreenState
 
                                 child: AnimatedToiletMarker(
 
-                                  approved:
-                                      toilet.status == 'APPROVED',
+                                  status: toilet.status,
                                 ),
                               ),
                             ),
