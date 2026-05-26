@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../../photo/repositories/photo_repository.dart';
@@ -59,6 +61,7 @@ class ToiletBottomSheet
           PhotoRepository();
 
       List<ToiletPhoto> _photos = [];
+      Uint8List? _photoBytes;
 
 
       Future<void> _loadPhotos() async {
@@ -70,8 +73,26 @@ class ToiletBottomSheet
                 widget.toilet.id,
               );
 
+          Uint8List? bytes;
+
+          if (photos.isNotEmpty) {
+
+            final imageUrl =
+                '${AppConfig.instance.baseUrl}${photos.first.photoUrl}';
+
+            print('IMAGE URL = $imageUrl');
+
+            bytes =
+                await _photoRepository.loadPhotoBytes(
+                  imageUrl,
+                );
+          }
+
           setState(() {
+
             _photos = photos;
+
+            _photoBytes = bytes;
           });
 
         } catch (e) {
@@ -583,65 +604,30 @@ class ToiletBottomSheet
                           borderRadius:
                               BorderRadius.circular(20),
 
-                          child: Image.network(
+                          child:
 
-                            imageUrl,
+                              _photoBytes != null
 
-                            height: 180,
+                                  ? Image.memory(
 
-                            width: double.infinity,
+                                      _photoBytes!,
 
-                            fit: BoxFit.cover,
+                                      width: double.infinity,
 
-                            loadingBuilder:
-                                (context, child, progress) {
+                                      height: 180,
 
-                              if (progress == null) {
-                                return child;
-                              }
+                                      fit: BoxFit.cover,
+                                    )
 
-                              return const SizedBox(
+                                  : Container(
 
-                                height: 180,
+                                      height: 180,
 
-                                child: Center(
-                                  child:
-                                      CircularProgressIndicator(),
-                                ),
-                              );
-                            },
+                                      alignment: Alignment.center,
 
-                            errorBuilder:
-                                (context, error, stackTrace) {
-
-                              print(error);
-
-                              return Container(
-
-                                height: 180,
-
-                                decoration: BoxDecoration(
-
-                                  color: Colors.red
-                                      .withOpacity(0.15),
-
-                                  borderRadius:
-                                      BorderRadius.circular(20),
-                                ),
-
-                                child: const Center(
-
-                                  child: Icon(
-
-                                    Icons.broken_image,
-
-                                    color: Colors.red,
-                                    size: 40,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                                      child:
+                                          const CircularProgressIndicator(),
+                                    ),
                         );
                       },
                     ),

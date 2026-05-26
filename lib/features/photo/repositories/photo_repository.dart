@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 
 import 'package:http_parser/http_parser.dart';
@@ -61,5 +63,23 @@ class PhotoRepository {
       );
 
     }).toList();
+  }
+
+  Future<Uint8List> loadPhotoBytes(
+    String url,
+  ) async {
+
+    final response = await _dio.get<List<int>>(
+
+      url,
+
+      options: Options(
+        responseType: ResponseType.bytes,
+      ),
+    );
+
+    return Uint8List.fromList(
+      response.data!,
+    );
   }
 }
