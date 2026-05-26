@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import '../../../../core/api/api_client.dart';
 
 class AuthRepository {
-  final Dio _dio = ApiClient.dio;
+  final Dio _dio = ApiClient.createDio();
 
   Future<Map<String, dynamic>> startRegistration({
     required String username,

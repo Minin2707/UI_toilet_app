@@ -1,9 +1,14 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../../../photo/repositories/photo_repository.dart';
+import '../../../photo/model/toilet_photo.dart';
+import '../../../photo/helpers/photo_picker_helper.dart';
+import '../../../../core/config/app_config.dart';
 import '../../data/models/toilet_dto.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../bloc/toilet_bloc.dart';
@@ -50,10 +55,63 @@ class ToiletBottomSheet
 
       bool hasPaperSelected = false;
 
+      final PhotoRepository _photoRepository =
+          PhotoRepository();
+
+      List<ToiletPhoto> _photos = [];
+
+
+      Future<void> _loadPhotos() async {
+
+        try {
+
+          final photos =
+              await _photoRepository.getPhotos(
+                widget.toilet.id,
+              );
+
+          setState(() {
+            _photos = photos;
+          });
+
+        } catch (e) {
+
+          debugPrint('LOAD PHOTOS ERROR: $e');
+        }
+      }
+
+      Future<void> _uploadPhoto() async {
+
+        try {
+
+          final File? file =
+              await PhotoPickerHelper.pickImage();
+
+          if (file == null) {
+            return;
+          }
+
+          await _photoRepository.uploadPhoto(
+
+            toiletId: widget.toilet.id,
+
+            file: file,
+          );
+
+          await _loadPhotos();
+
+        } catch (e) {
+
+          debugPrint('UPLOAD ERROR: $e');
+        }
+      }
+
       @override
       void initState() {
 
         super.initState();
+
+        _loadPhotos();
 
         timeago.setLocaleMessages(
           'ru',
@@ -503,6 +561,116 @@ class ToiletBottomSheet
                 ),
 
                 const SizedBox(height: 24),
+
+
+                if (isApproved || needsRevalidation) ...[
+
+                  if (_photos.isNotEmpty) ...[
+
+                    Builder(
+
+                      builder: (context) {
+
+                        final photo = _photos.first;
+
+                        final imageUrl =
+                            '${AppConfig.instance.baseUrl}${photo.photoUrl}';
+
+                        print('IMAGE URL = $imageUrl');
+
+                        return ClipRRect(
+
+                          borderRadius:
+                              BorderRadius.circular(20),
+
+                          child: Image.network(
+
+                            imageUrl,
+
+                            height: 180,
+
+                            width: double.infinity,
+
+                            fit: BoxFit.cover,
+
+                            loadingBuilder:
+                                (context, child, progress) {
+
+                              if (progress == null) {
+                                return child;
+                              }
+
+                              return const SizedBox(
+
+                                height: 180,
+
+                                child: Center(
+                                  child:
+                                      CircularProgressIndicator(),
+                                ),
+                              );
+                            },
+
+                            errorBuilder:
+                                (context, error, stackTrace) {
+
+                              print(error);
+
+                              return Container(
+
+                                height: 180,
+
+                                decoration: BoxDecoration(
+
+                                  color: Colors.red
+                                      .withOpacity(0.15),
+
+                                  borderRadius:
+                                      BorderRadius.circular(20),
+                                ),
+
+                                child: const Center(
+
+                                  child: Icon(
+
+                                    Icons.broken_image,
+
+                                    color: Colors.red,
+                                    size: 40,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+
+                    const SizedBox(height: 16),
+                  ],
+
+                  if (_photos.length < 2)
+
+                    SizedBox(
+
+                      width: double.infinity,
+
+                      child: OutlinedButton.icon(
+
+                        onPressed: _uploadPhoto,
+
+                        icon: const Icon(
+                          Icons.add_a_photo,
+                        ),
+
+                        label: const Text(
+                          'Добавить фото',
+                        ),
+                      ),
+                    ),
+
+                  const SizedBox(height: 24),
+                ],
 
                 // FEEDBACK TITLE
 

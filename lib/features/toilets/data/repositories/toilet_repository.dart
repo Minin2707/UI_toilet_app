@@ -8,8 +8,7 @@ import '../models/create_toilet_request.dart';
 
 class ToiletRepository {
 
-  final Dio _dio =
-      ApiClient.dio;
+  final Dio _dio = ApiClient.createDio();
 
   Future<List<ToiletDto>> getToilets({
 
