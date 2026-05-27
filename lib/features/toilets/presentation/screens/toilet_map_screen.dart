@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../data/models/toilet_dto.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -42,11 +43,62 @@ class _ToiletMapScreenState
 
   bool _freeOnly = false;
 
+  Future<void> _moveToCurrentLocation()
+  async {
+
+    final permission =
+
+        await Geolocator
+            .checkPermission();
+
+    if (permission ==
+        LocationPermission.denied ||
+
+        permission ==
+        LocationPermission.deniedForever) {
+
+      return;
+    }
+
+    final position =
+
+        await Geolocator
+            .getCurrentPosition();
+
+    final userLocation = LatLng(
+
+      position.latitude,
+
+      position.longitude,
+    );
+
+    setState(() {
+
+      _currentLocation =
+          userLocation;
+    });
+
+    _mapController.move(
+
+      userLocation,
+
+      16,
+    );
+
+    _reloadToilets();
+
+    _startLiveTracking();
+  }
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) {
 
-    _determinePosition();
+      _moveToCurrentLocation();
+    });
+
   }
 
   void _startLiveTracking() {
@@ -193,14 +245,49 @@ class _ToiletMapScreenState
       ),
 
       floatingActionButton:
-          FloatingActionButton(
 
-        onPressed: _determinePosition,
+          Column(
 
-        child: const Icon(
-          Icons.my_location,
-        ),
-      ),
+            mainAxisSize:
+                MainAxisSize.min,
+
+            children: [
+
+              FloatingActionButton(
+
+                heroTag: 'onboarding',
+
+                mini: true,
+
+                onPressed: () {
+
+                  context.push(
+                    '/onboarding',
+                  );
+                },
+
+                child: const Icon(
+                  Icons.help_outline,
+                ),
+              ),
+
+              const SizedBox(
+                height: 12,
+              ),
+
+              FloatingActionButton(
+
+                heroTag: 'location',
+
+                onPressed:
+                    _determinePosition,
+
+                child: const Icon(
+                  Icons.my_location,
+                ),
+              ),
+            ],
+          ),
 
       body: Stack(
         children: [

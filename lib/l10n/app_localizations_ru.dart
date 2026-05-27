@@ -163,4 +163,34 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get needsRevalidation => 'Требуется повторная проверка';
+
+  @override
+  String get onboardingWelcomeTitle => 'Добро пожаловать';
+
+  @override
+  String get onboardingWelcomeDescription => 'Toilet Map — это карта общественных туалетов, созданная сообществом.';
+
+  @override
+  String get onboardingAddTitle => 'Добавление туалетов';
+
+  @override
+  String get onboardingAddDescription => 'Долгий тап по карте создаёт новый туалет.';
+
+  @override
+  String get onboardingStatusesTitle => 'Статусы';
+
+  @override
+  String get onboardingStatusesDescription => 'Зелёные, оранжевые и красные маркеры показывают статус туалета.';
+
+  @override
+  String get onboardingCommunityTitle => 'Сообщество';
+
+  @override
+  String get onboardingCommunityDescription => 'Каждый вклад помогает сделать карту лучше для всех.';
+
+  @override
+  String get onboardingNext => 'Далее';
+
+  @override
+  String get onboardingStart => 'Начать';
 }

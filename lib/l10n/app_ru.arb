@@ -76,5 +76,20 @@
           "Что-то пошло не так",
 
     "needsRevalidation":
-        "Требуется повторная проверка"
+        "Требуется повторная проверка",
+
+    "onboardingWelcomeTitle": "Добро пожаловать",
+      "onboardingWelcomeDescription": "Toilet Map — это карта общественных туалетов, созданная сообществом.",
+
+      "onboardingAddTitle": "Добавление туалетов",
+      "onboardingAddDescription": "Долгий тап по карте создаёт новый туалет.",
+
+      "onboardingStatusesTitle": "Статусы",
+      "onboardingStatusesDescription": "Зелёные, оранжевые и красные маркеры показывают статус туалета.",
+
+      "onboardingCommunityTitle": "Сообщество",
+      "onboardingCommunityDescription": "Каждый вклад помогает сделать карту лучше для всех.",
+
+      "onboardingNext": "Далее",
+      "onboardingStart": "Начать"
 }

@@ -394,6 +394,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Needs re-validation'**
   String get needsRevalidation;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Toilet Map is a community-driven map of public toilets.'**
+  String get onboardingWelcomeDescription;
+
+  /// No description provided for @onboardingAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Toilets'**
+  String get onboardingAddTitle;
+
+  /// No description provided for @onboardingAddDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Long tap on the map to add a new toilet.'**
+  String get onboardingAddDescription;
+
+  /// No description provided for @onboardingStatusesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Statuses'**
+  String get onboardingStatusesTitle;
+
+  /// No description provided for @onboardingStatusesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Green, orange and red markers show toilet status.'**
+  String get onboardingStatusesDescription;
+
+  /// No description provided for @onboardingCommunityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get onboardingCommunityTitle;
+
+  /// No description provided for @onboardingCommunityDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Every contribution helps improve the map for everyone.'**
+  String get onboardingCommunityDescription;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get onboardingStart;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

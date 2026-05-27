@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/auth/token_storage.dart';
 
 import '../../data/repositories/auth_repository.dart';
+import '../../../onboarding/data/onboarding_storage.dart';
 
 class SplashScreen extends StatefulWidget {
 
@@ -86,7 +87,22 @@ class _SplashScreenState
 
     if (!mounted) return;
 
-    context.go('/map');
+    final completed =
+        await OnboardingStorage()
+            .isCompleted();
+
+    if (!mounted) {
+      return;
+    }
+
+    if (completed) {
+
+      context.go('/map');
+
+    } else {
+
+      context.go('/onboarding');
+    }
   }
 
   @override

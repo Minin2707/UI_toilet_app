@@ -76,5 +76,20 @@
         "Something went wrong",
 
   "needsRevalidation":
-      "Needs re-validation"
+      "Needs re-validation",
+
+  "onboardingWelcomeTitle": "Welcome",
+    "onboardingWelcomeDescription": "Toilet Map is a community-driven map of public toilets.",
+
+    "onboardingAddTitle": "Add Toilets",
+    "onboardingAddDescription": "Long tap on the map to add a new toilet.",
+
+    "onboardingStatusesTitle": "Statuses",
+    "onboardingStatusesDescription": "Green, orange and red markers show toilet status.",
+
+    "onboardingCommunityTitle": "Community",
+    "onboardingCommunityDescription": "Every contribution helps improve the map for everyone.",
+
+    "onboardingNext": "Next",
+    "onboardingStart": "Start"
 }

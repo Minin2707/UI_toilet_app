@@ -101,7 +101,7 @@ class _ToiletMapAppState
 
         if (mounted) {
 
-          appRouter.go('/map');
+          appRouter.go('/');
         }
       }
     }

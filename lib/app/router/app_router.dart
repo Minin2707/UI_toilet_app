@@ -11,6 +11,7 @@ import '../../features/toilets/data/repositories/toilet_repository.dart';
 import '../../features/toilets/presentation/bloc/toilet_bloc.dart';
 
 import '../../features/toilets/presentation/screens/toilet_map_screen.dart';
+import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 
 final GoRouter appRouter = GoRouter(
 
@@ -25,6 +26,19 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) =>
 
           const SplashScreen(),
+    ),
+
+    GoRoute(
+
+      path: '/onboarding',
+
+      builder: (
+        context,
+        state,
+      ) {
+
+        return const OnboardingScreen();
+      },
     ),
 
     GoRoute(

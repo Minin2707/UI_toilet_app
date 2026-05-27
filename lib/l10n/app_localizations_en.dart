@@ -163,4 +163,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get needsRevalidation => 'Needs re-validation';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome';
+
+  @override
+  String get onboardingWelcomeDescription => 'Toilet Map is a community-driven map of public toilets.';
+
+  @override
+  String get onboardingAddTitle => 'Add Toilets';
+
+  @override
+  String get onboardingAddDescription => 'Long tap on the map to add a new toilet.';
+
+  @override
+  String get onboardingStatusesTitle => 'Statuses';
+
+  @override
+  String get onboardingStatusesDescription => 'Green, orange and red markers show toilet status.';
+
+  @override
+  String get onboardingCommunityTitle => 'Community';
+
+  @override
+  String get onboardingCommunityDescription => 'Every contribution helps improve the map for everyone.';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingStart => 'Start';
 }
