@@ -41,7 +41,7 @@ class _SplashScreenState
     );
 
     final token =
-        await _tokenStorage.getToken();
+        await _tokenStorage.getAccessToken();
 
     debugPrint(
       'TOKEN = $token',
@@ -73,7 +73,7 @@ class _SplashScreenState
 
     if (!valid) {
 
-      await _tokenStorage.clearToken();
+      await _tokenStorage.clearTokens();
 
       if (!mounted) return;
 

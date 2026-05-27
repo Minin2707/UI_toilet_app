@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:app_links/app_links.dart';
@@ -69,14 +70,34 @@ class _ToiletMapAppState
     if (uri.scheme == 'toiletmap' &&
         uri.host == 'auth') {
 
-      final token =
-          uri.queryParameters['token'];
+      final tokensJson =
+          uri.queryParameters['tokens'];
 
-      if (token != null &&
-          token.isNotEmpty) {
+      if (tokensJson != null &&
+          tokensJson.isNotEmpty) {
+
+        final data =
+            jsonDecode(tokensJson);
+
+        final accessToken =
+            data['accessToken'];
+
+        final refreshToken =
+            data['refreshToken'];
 
         await TokenStorage()
-            .saveToken(token);
+            .saveAccessToken(
+                accessToken,
+            );
+
+        await TokenStorage()
+            .saveRefreshToken(
+                refreshToken,
+            );
+
+        debugPrint(
+          'TOKENS SAVED',
+        );
 
         if (mounted) {
 

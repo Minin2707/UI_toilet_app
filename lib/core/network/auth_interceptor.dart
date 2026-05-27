@@ -14,7 +14,7 @@ class AuthInterceptor extends Interceptor {
         ) async {
 
     final token =
-        await _tokenStorage.getToken();
+        await _tokenStorage.getAccessToken();
 
     if (token != null &&
         token.isNotEmpty) {

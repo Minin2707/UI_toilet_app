@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,7 @@ class _AppRootState extends State<AppRoot> {
   }
 
   Future<void> _listenDeepLinks() async {
+
     final initialUri =
         await _appLinks.getInitialLink();
 
@@ -64,18 +66,33 @@ class _AppRootState extends State<AppRoot> {
         'INITIAL DEEPLINK = $initialUri',
       );
 
-      final token =
-          initialUri.queryParameters['token'];
+      final tokensJson =
+          initialUri.queryParameters['tokens'];
 
-      if (token != null &&
-          token.isNotEmpty) {
+      if (tokensJson != null &&
+          tokensJson.isNotEmpty) {
 
-        await _tokenStorage.saveToken(
-          token,
-        );
+        final data =
+            jsonDecode(tokensJson);
+
+        final accessToken =
+            data['accessToken'];
+
+        final refreshToken =
+            data['refreshToken'];
+
+        await _tokenStorage
+            .saveAccessToken(
+                accessToken,
+            );
+
+        await _tokenStorage
+            .saveRefreshToken(
+                refreshToken,
+            );
 
         debugPrint(
-          'INITIAL JWT SAVED = $token',
+          'TOKENS SAVED',
         );
 
         if (mounted) {
@@ -87,26 +104,43 @@ class _AppRootState extends State<AppRoot> {
 
     _subscription =
         _appLinks.uriLinkStream.listen(
-              (uri) async {
+
+          (uri) async {
 
             debugPrint(
               'DEEPLINK = $uri',
             );
 
-            final token =
-                uri.queryParameters['token'];
+            final tokensJson =
+                uri.queryParameters['tokens'];
 
-            if (token == null) {
+            if (tokensJson == null ||
+                tokensJson.isEmpty) {
+
               return;
             }
 
-            // save JWT
-            await _tokenStorage.saveToken(
-              token,
-            );
+            final data =
+                jsonDecode(tokensJson);
+
+            final accessToken =
+                data['accessToken'];
+
+            final refreshToken =
+                data['refreshToken'];
+
+            await _tokenStorage
+                .saveAccessToken(
+                    accessToken,
+                );
+
+            await _tokenStorage
+                .saveRefreshToken(
+                    refreshToken,
+                );
 
             debugPrint(
-              'JWT SAVED = $token',
+              'TOKENS SAVED',
             );
 
             if (!mounted) {

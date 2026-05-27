@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -36,10 +37,32 @@ class _AuthWebViewScreenState
             'AuthChannel',
             onMessageReceived: (message) async {
 
-              final token = message.message;
+              final data =
+                  jsonDecode(message.message);
 
-              // save JWT
-              await _tokenStorage.saveToken(token);
+              final accessToken =
+                  data['accessToken'];
+
+              final refreshToken =
+                  data['refreshToken'];
+
+              await _tokenStorage
+                  .saveAccessToken(
+                      accessToken,
+                  );
+
+              await _tokenStorage
+                  .saveRefreshToken(
+                      refreshToken,
+                  );
+
+              debugPrint(
+                'ACCESS TOKEN SAVED',
+              );
+
+              debugPrint(
+                'REFRESH TOKEN SAVED',
+              );
 
               debugPrint(
                 'JWT SAVED = $token',

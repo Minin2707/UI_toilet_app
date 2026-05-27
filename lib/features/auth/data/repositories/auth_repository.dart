@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../../../../core/api/api_client.dart';
+import '../models/auth_tokens.dart';
 
 class AuthRepository {
   final Dio _dio = ApiClient.createDio();
@@ -18,7 +19,7 @@ class AuthRepository {
     return Map<String, dynamic>.from(response.data);
   }
 
-  Future<String> finishRegistration({
+  Future<AuthTokens> finishRegistration({
     required Map<String, dynamic> credential,
     required String username,
   }) async {
@@ -30,7 +31,9 @@ class AuthRepository {
       },
     );
 
-    return response.data as String;
+    return AuthTokens.fromJson(
+      response.data,
+    );
   }
 
   Future<bool> validateToken() async {

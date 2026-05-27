@@ -23,7 +23,7 @@ class AppConfig {
         if (kIsWeb) {
           return 'http://localhost:8080';
         }
-        return 'https://wage-mall-disposal-developmental.trycloudflare.com';
+        return 'https://amplifier-imperial-trusts-results.trycloudflare.com';
 
       case Environment.stage:
         return 'https://stage-api.toiletmap.com';
