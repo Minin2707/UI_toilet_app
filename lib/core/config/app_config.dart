@@ -23,7 +23,7 @@ class AppConfig {
         if (kIsWeb) {
           return 'http://localhost:8080';
         }
-        return 'https://nominations-compression-part-reynolds.trycloudflare.com';
+        return 'https://nil-speeds-cache-licensing.trycloudflare.com';
 
       case Environment.stage:
         return 'https://stage-api.toiletmap.com';

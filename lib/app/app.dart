@@ -133,7 +133,7 @@ class _ToiletMapAppState
 
           return MaterialApp.router(
 
-            showPerformanceOverlay: true,
+
 
             title:
                 AppConfig.instance.appName,

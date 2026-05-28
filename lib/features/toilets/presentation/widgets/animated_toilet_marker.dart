@@ -1,180 +1,77 @@
 import 'package:flutter/material.dart';
 
 class AnimatedToiletMarker
-    extends StatefulWidget {
+    extends StatelessWidget {
 
   final String status;
 
   const AnimatedToiletMarker({
+
     super.key,
+
     required this.status,
   });
 
-  @override
-  State<AnimatedToiletMarker> createState() =>
-      _AnimatedToiletMarkerState();
-}
+  static const Color approvedColor =
+      Colors.greenAccent;
 
-class _AnimatedToiletMarkerState
-    extends State<AnimatedToiletMarker>
+  static const Color pendingColor =
+      Colors.orangeAccent;
 
-    with SingleTickerProviderStateMixin {
-
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-
-    super.initState();
-
-    _controller = AnimationController(
-
-      vsync: this,
-
-      duration: const Duration(
-        milliseconds: 1400,
-      ),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-
-    _controller.dispose();
-
-    super.dispose();
-  }
+  static const Color revalidationColor =
+      Colors.redAccent;
 
   @override
   Widget build(BuildContext context) {
 
-    final isApproved =
-        widget.status == 'APPROVED';
+    Color color;
 
-    final needsRevalidation =
-        widget.status ==
-            'NEEDS_REVALIDATION';
+    switch (status) {
 
-    // 🔴 NEEDS_REVALIDATION
+      case 'APPROVED':
 
-    if (needsRevalidation) {
+        color = approvedColor;
 
-      return Container(
+        break;
 
-        decoration: BoxDecoration(
+      case 'NEEDS_REVALIDATION':
 
-          shape: BoxShape.circle,
+        color = revalidationColor;
 
-          boxShadow: [
+        break;
 
-            BoxShadow(
+      default:
 
-              color:
-                  Colors.redAccent.withOpacity(0.50),
-
-              blurRadius: 22,
-
-              spreadRadius: 4,
-            ),
-          ],
-        ),
-
-        child: const Icon(
-
-          Icons.wc,
-
-          size: 38,
-
-          color: Colors.redAccent,
-        ),
-      );
+        color = pendingColor;
     }
 
-    // 🟢 APPROVED
+    return Container(
 
-    if (isApproved) {
+      decoration: BoxDecoration(
 
-      return Container(
+        shape: BoxShape.circle,
 
-        decoration: BoxDecoration(
+        boxShadow: [
 
-          shape: BoxShape.circle,
+          BoxShadow(
 
-          boxShadow: [
+            color: color.withOpacity(0.22),
 
-            BoxShadow(
+            blurRadius: 8,
 
-              color:
-                  Colors.greenAccent.withOpacity(0.55),
-
-              blurRadius: 22,
-
-              spreadRadius: 4,
-            ),
-          ],
-        ),
-
-        child: const Icon(
-
-          Icons.wc,
-
-          size: 38,
-
-          color: Colors.greenAccent,
-        ),
-      );
-    }
-
-    // 🟧 PENDING
-
-    return AnimatedBuilder(
-
-      animation: _controller,
-
-      builder: (context, child) {
-
-        final scale =
-            1 + (_controller.value * 0.18);
-
-        return Transform.scale(
-
-          scale: scale,
-
-          child: Container(
-
-            decoration: BoxDecoration(
-
-              shape: BoxShape.circle,
-
-              boxShadow: [
-
-                BoxShadow(
-
-                  color:
-                      Colors.orangeAccent.withOpacity(
-                        0.45,
-                      ),
-
-                  blurRadius:
-                      16 + (_controller.value * 12),
-
-                  spreadRadius:
-                      2 + (_controller.value * 4),
-                ),
-              ],
-            ),
-
-            child: const Icon(
-
-              Icons.wc,
-
-              size: 38,
-
-              color: Colors.orangeAccent,
-            ),
+            spreadRadius: 1,
           ),
-        );
-      },
+        ],
+      ),
+
+      child: Icon(
+
+        Icons.wc,
+
+        size: 36,
+
+        color: color,
+      ),
     );
   }
 }

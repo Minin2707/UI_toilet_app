@@ -62,8 +62,8 @@ class _AnimatedUserMarkerState
 
             Container(
 
-              width: 50 + (pulse * 30),
-              height: 50 + (pulse * 30),
+              width: 40 + (pulse * 12),
+              height: 40 + (pulse * 12),
 
               decoration: BoxDecoration(
 
@@ -94,9 +94,9 @@ class _AnimatedUserMarkerState
                     color:
                         Colors.cyanAccent.withOpacity(0.8),
 
-                    blurRadius: 20,
+                    blurRadius: 8,
 
-                    spreadRadius: 4,
+                    spreadRadius: 1,
                   ),
                 ],
               ),

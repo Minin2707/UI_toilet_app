@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +18,8 @@ import '../bloc/toilet_state.dart';
 import '../widgets/toilet_bottom_sheet.dart';
 import '../widgets/animated_toilet_marker.dart';
 import '../widgets/animated_user_marker.dart';
+import '../widgets/map_view.dart';
+import '../widgets/filter_overlay.dart';
 
 class ToiletMapScreen extends StatefulWidget {
   const ToiletMapScreen({super.key});
@@ -386,415 +387,65 @@ class _ToiletMapScreenState
                         CircularProgressIndicator(),
                   );
                 }
-
-
                 final toilets =
                     state is ToiletLoaded
                         ? state.toilets
                         : <ToiletDto>[];
 
-                return FlutterMap(
+                return MapView(
 
                   mapController: _mapController,
 
-                  options: MapOptions(
+                  toilets: toilets,
 
-                    initialCenter:
-                        const LatLng(
-                          50.1109,
-                          8.6821,
-                        ),
-
-                    initialZoom: 13,
-
-                    onLongPress:
-                        (tapPosition, point) {
-
-                      showModalBottomSheet(
-
-                        context: context,
-
-                        isScrollControlled: true,
-
-                        builder: (_) =>
-                            BlocProvider.value(
-
-                          value:
-                              context.read<ToiletBloc>(),
-
-                          child:
-                              CreateToiletBottomSheet(
-
-                            location: point,
-
-                            currentLocation:
-                                _currentLocation!,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-
-                  children: [
-
-                    TileLayer(
-
-                      urlTemplate:
-                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-
-                      userAgentPackageName:
-                          'com.example.toilet_map_app',
-                    ),
-
-                    MarkerClusterLayerWidget(
-
-                      options: MarkerClusterLayerOptions(
-
-                        maxClusterRadius: 45,
-
-                        size: const Size(50, 50),
-
-                        alignment: Alignment.center,
-
-                        padding: const EdgeInsets.all(50),
-
-                        maxZoom: 17,
-
-                        markers: [
-
-                          ...toilets.map(
-
-                            (toilet) => Marker(
-
-                              point: LatLng(
-                                toilet.latitude,
-                                toilet.longitude,
-                              ),
-
-                              width: 80,
-                              height: 80,
-
-                              child: GestureDetector(
-
-                                onTap: () {
-
-                                  showModalBottomSheet(
-
-                                    context: context,
-
-                                    builder: (_) =>
-                                        BlocProvider.value(
-
-                                      value:
-                                          context.read<ToiletBloc>(),
-
-                                      child: ToiletBottomSheet(
-                                        toilet: toilet,
-                                        currentLocation:
-                                            _currentLocation!,
-                                      ),
-                                    ),
-                                  );
-                                },
-
-                                child: AnimatedToiletMarker(
-
-                                  status: toilet.status,
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          if (_currentLocation != null)
-
-                            Marker(
-
-                              point: _currentLocation!,
-
-                              width: 80,
-                              height: 80,
-
-                              child: const AnimatedUserMarker(),
-                            ),
-                        ],
-
-                        builder: (context, markers) {
-
-                          return Container(
-
-                            decoration: BoxDecoration(
-
-                              color: Colors.cyanAccent,
-
-                              shape: BoxShape.circle,
-
-                              boxShadow: [
-
-                                BoxShadow(
-
-                                  color:
-                                      Colors.cyanAccent.withOpacity(0.45),
-
-                                  blurRadius: 18,
-                                ),
-                              ],
-                            ),
-
-                            child: Center(
-
-                              child: Text(
-
-                                markers.length.toString(),
-
-                                style: const TextStyle(
-
-                                  color: Colors.black,
-
-                                  fontWeight: FontWeight.bold,
-
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                  currentLocation: _currentLocation,
                 );
+
+
               },
           ),
-          Positioned(
+                    FilterOverlay(
 
-            top: 12,
-            left: 12,
+                      approvedOnly: _approvedOnly,
 
-            child: SizedBox(
+                      accessibleOnly: _accessibleOnly,
 
-              width:
-                  MediaQuery.of(context)
-                      .size
-                      .width - 24,
+                      freeOnly: _freeOnly,
 
-              child: ClipRRect(
+                      onApprovedTap: () {
 
-              borderRadius:
-                  BorderRadius.circular(22),
+                        setState(() {
 
-              child: BackdropFilter(
+                          _approvedOnly =
+                              !_approvedOnly;
+                        });
 
-                filter: ImageFilter.blur(
+                        _reloadToilets();
+                      },
 
-                  sigmaX: 18,
-                  sigmaY: 18,
-                ),
+                      onAccessibleTap: () {
 
-                child: Container(
+                        setState(() {
 
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
+                          _accessibleOnly =
+                              !_accessibleOnly;
+                        });
 
-                  decoration: BoxDecoration(
+                        _reloadToilets();
+                      },
 
-                    color:
-                        Colors.white.withOpacity(0.08),
+                      onFreeTap: () {
 
-                    borderRadius:
-                        BorderRadius.circular(22),
+                        setState(() {
 
-                    border: Border.all(
-                      color:
-                          Colors.white.withOpacity(0.08),
+                          _freeOnly =
+                              !_freeOnly;
+                        });
+
+                        _reloadToilets();
+                      },
                     ),
-
-                    boxShadow: [
-
-                      BoxShadow(
-
-                        color:
-                            Colors.black.withOpacity(0.25),
-
-                        blurRadius: 24,
-
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-
-                  child: SingleChildScrollView(
-
-                    scrollDirection: Axis.horizontal,
-
-
-
-                      child: Row(
-                        children: [
-
-                          _GlassFilterChip(
-
-                            title:
-                                AppLocalizations.of(context)!
-                                    .approved,
-
-                            selected: _approvedOnly,
-
-                            onTap: () {
-
-                              setState(() {
-                                _approvedOnly =
-                                    !_approvedOnly;
-                              });
-
-                              _reloadToilets();
-                            },
-                          ),
-
-                          const SizedBox(width: 10),
-
-                          _GlassFilterChip(
-
-                            title:
-                                AppLocalizations.of(context)!
-                                    .accessible,
-
-                            selected: _accessibleOnly,
-
-                            onTap: () {
-
-                              setState(() {
-                                _accessibleOnly =
-                                    !_accessibleOnly;
-                              });
-
-                              _reloadToilets();
-                            },
-                          ),
-
-                          const SizedBox(width: 10),
-
-                          _GlassFilterChip(
-
-                            title:
-                                AppLocalizations.of(context)!
-                                    .free,
-
-                            selected: _freeOnly,
-
-                            onTap: () {
-
-                              setState(() {
-                                _freeOnly =
-                                    !_freeOnly;
-                              });
-
-                              _reloadToilets();
-                            },
-
-                          ),
-                        ],
-                      ),
-
-                  ),
-                ),
-              ),
-            ),
-          ),
-          ),
-
         ],
-      ),
-    );
-  }
-}
-class _GlassFilterChip
-    extends StatelessWidget {
-
-  final String title;
-
-  final bool selected;
-
-  final VoidCallback onTap;
-
-  const _GlassFilterChip({
-
-    required this.title,
-
-    required this.selected,
-
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-
-    return GestureDetector(
-
-      onTap: onTap,
-
-      child: AnimatedContainer(
-
-        duration:
-            const Duration(milliseconds: 180),
-
-        padding: const EdgeInsets.symmetric(
-          horizontal: 22,
-        ),
-        height: 46,
-
-        decoration: BoxDecoration(
-
-          color:
-              selected
-                  ? Colors.cyanAccent
-                  : Colors.white.withOpacity(0.06),
-
-          borderRadius:
-              BorderRadius.circular(16),
-
-          border: Border.all(
-
-            color:
-                selected
-                    ? Colors.cyanAccent
-                    : Colors.white.withOpacity(0.08),
-          ),
-
-          boxShadow: [
-
-            if (selected)
-
-              BoxShadow(
-
-                color:
-                    Colors.cyanAccent.withOpacity(0.35),
-
-                blurRadius: 18,
-              ),
-          ],
-        ),
-
-        child: Center(
-
-          child: Text(
-
-            title,
-
-            style: TextStyle(
-
-              color:
-                  selected
-                      ? Colors.black
-                      : Colors.white,
-
-              fontWeight:
-                  FontWeight.w600,
-
-              fontSize: 15,
-            ),
-          ),
-        ),
       ),
     );
   }
