@@ -91,5 +91,7 @@
       "onboardingCommunityDescription": "Каждый вклад помогает сделать карту лучше для всех.",
 
       "onboardingNext": "Далее",
-      "onboardingStart": "Начать"
+      "onboardingStart": "Начать",
+      "userAlreadyReported":
+          "Вы уже жаловались на этот туалет"
 }

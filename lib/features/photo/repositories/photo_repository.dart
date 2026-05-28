@@ -22,27 +22,46 @@ class PhotoRepository {
     required File file,
   }) async {
 
-    final formData = FormData.fromMap({
+    try {
 
-      'photo': await MultipartFile.fromFile(
+      final formData = FormData.fromMap({
 
-        file.path,
+        'photo': await MultipartFile.fromFile(
 
-        filename: 'photo.jpg',
+          file.path,
 
-        contentType: MediaType(
-          'image',
-          'jpeg',
+          filename: 'photo.jpg',
+
+          contentType: MediaType(
+            'image',
+            'jpeg',
+          ),
         ),
-      ),
-    });
+      });
 
-    await _dio.post(
+      await _dio.post(
 
-      '/toilet-photos/$toiletId',
+        '/toilet-photos/$toiletId',
 
-      data: formData,
-    );
+        data: formData,
+      );
+
+    } on DioException catch (e) {
+
+      final data =
+          e.response?.data;
+
+      throw AppException(
+
+        code:
+            data['code'] ??
+                'UNKNOWN_ERROR',
+
+        message:
+            data['message'] ??
+                'Unknown error',
+      );
+    }
   }
 
   Future<List<ToiletPhoto>> getPhotos(

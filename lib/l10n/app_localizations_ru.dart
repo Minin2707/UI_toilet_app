@@ -193,4 +193,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingStart => 'Начать';
+
+  @override
+  String get userAlreadyReported => 'Вы уже жаловались на этот туалет';
 }

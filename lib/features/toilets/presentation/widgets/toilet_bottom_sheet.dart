@@ -121,9 +121,34 @@ class ToiletBottomSheet
 
           await _loadPhotos();
 
-        } catch (e) {
+        } on AppException catch (e) {
 
-          debugPrint('UPLOAD ERROR: $e');
+          String message;
+
+          switch (e.code) {
+
+            case 'PHOTO_LIMIT_EXCEEDED':
+
+              message =
+                  AppLocalizations.of(context)!
+                      .photoLimitExceeded;
+
+              break;
+
+            case 'PHOTOS_ONLY_FOR_APPROVED':
+
+              message =
+                  AppLocalizations.of(context)!
+                      .photosOnlyForApproved;
+
+              break;
+
+            default:
+
+              message =
+                  AppLocalizations.of(context)!
+                      .unknownError;
+          }
         }
       }
 

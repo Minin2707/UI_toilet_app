@@ -193,4 +193,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingStart => 'Start';
+
+  @override
+  String get userAlreadyReported => 'You already reported this toilet';
 }

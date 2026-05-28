@@ -91,5 +91,7 @@
     "onboardingCommunityDescription": "Every contribution helps improve the map for everyone.",
 
     "onboardingNext": "Next",
-    "onboardingStart": "Start"
+    "onboardingStart": "Start",
+    "userAlreadyReported":
+        "You already reported this toilet"
 }

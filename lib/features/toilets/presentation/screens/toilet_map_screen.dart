@@ -325,6 +325,14 @@ class _ToiletMapScreenState
 
                         break;
 
+                      case 'USER_ALREADY_REPORTED':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .userAlreadyReported;
+
+                        break;
+
                       default:
 
                         message =

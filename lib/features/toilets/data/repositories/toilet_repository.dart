@@ -109,9 +109,28 @@ class ToiletRepository {
     String toiletId,
   ) async {
 
-    await _dio.post(
-      '/toilets/$toiletId/report',
-    );
+    try {
+
+      await _dio.post(
+        '/toilets/$toiletId/report',
+      );
+
+    } on DioException catch (e) {
+
+      final data =
+          e.response?.data;
+
+      throw AppException(
+
+        code:
+            data['code'] ??
+                'UNKNOWN_ERROR',
+
+        message:
+            data['message'] ??
+                'Unknown error',
+      );
+    }
   }
 
   Future<void> confirmToilet(

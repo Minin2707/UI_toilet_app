@@ -454,6 +454,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start'**
   String get onboardingStart;
+
+  /// No description provided for @userAlreadyReported.
+  ///
+  /// In en, this message translates to:
+  /// **'You already reported this toilet'**
+  String get userAlreadyReported;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
