@@ -196,4 +196,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get userAlreadyReported => 'Вы уже жаловались на этот туалет';
+
+  @override
+  String get photoLimitExceeded => 'Можно загрузить максимум 2 фотографии';
+
+  @override
+  String get photosOnlyForApproved => 'Фотографии можно добавлять только к подтверждённым туалетам';
 }

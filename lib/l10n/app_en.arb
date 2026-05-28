@@ -93,5 +93,10 @@
     "onboardingNext": "Next",
     "onboardingStart": "Start",
     "userAlreadyReported":
-        "You already reported this toilet"
+        "You already reported this toilet",
+    "photoLimitExceeded":
+        "Maximum 2 photos allowed",
+
+    "photosOnlyForApproved":
+        "Photos can only be added to approved toilets"
 }

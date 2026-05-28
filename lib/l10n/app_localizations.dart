@@ -460,6 +460,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You already reported this toilet'**
   String get userAlreadyReported;
+
+  /// No description provided for @photoLimitExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum 2 photos allowed'**
+  String get photoLimitExceeded;
+
+  /// No description provided for @photosOnlyForApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos can only be added to approved toilets'**
+  String get photosOnlyForApproved;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

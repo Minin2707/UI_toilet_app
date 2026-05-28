@@ -196,4 +196,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get userAlreadyReported => 'You already reported this toilet';
+
+  @override
+  String get photoLimitExceeded => 'Maximum 2 photos allowed';
+
+  @override
+  String get photosOnlyForApproved => 'Photos can only be added to approved toilets';
 }

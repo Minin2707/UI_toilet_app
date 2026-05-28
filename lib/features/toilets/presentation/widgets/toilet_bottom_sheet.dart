@@ -15,6 +15,7 @@ import '../../data/models/toilet_dto.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../bloc/toilet_bloc.dart';
 import '../bloc/toilet_event.dart';
+import '../../../../core/errors/app_exception.dart';
 
 class ToiletBottomSheet
     extends StatefulWidget {

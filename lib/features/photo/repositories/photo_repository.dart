@@ -10,6 +10,8 @@ import '../../../../core/api/api_client.dart';
 
 import '../model/toilet_photo.dart';
 
+import '../../../../core/errors/app_exception.dart';
+
 class PhotoRepository {
 
   final Dio _dio =
