@@ -48,9 +48,12 @@ class ToiletBloc
     Emitter<ToiletState> emit,
   ) async {
 
-    emit(
-      ToiletLoading(),
-    );
+    if (state is! ToiletLoaded) {
+
+      emit(
+        ToiletLoading(),
+      );
+    }
 
     try {
 

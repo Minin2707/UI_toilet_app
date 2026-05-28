@@ -44,6 +44,39 @@ class _ToiletMapScreenState
 
   bool _freeOnly = false;
 
+  LatLng? _lastReloadLocation;
+
+  DateTime? _lastReloadTime;
+
+  bool _shouldReloadToilets(
+    LatLng newLocation,
+  ) {
+
+    if (_lastReloadLocation == null ||
+        _lastReloadTime == null) {
+
+      return true;
+    }
+
+    final distance =
+        Geolocator.distanceBetween(
+
+      _lastReloadLocation!.latitude,
+      _lastReloadLocation!.longitude,
+
+      newLocation.latitude,
+      newLocation.longitude,
+    );
+
+    final secondsSinceReload =
+        DateTime.now()
+            .difference(_lastReloadTime!)
+            .inSeconds;
+
+    return distance >= 50 &&
+        secondsSinceReload >= 5;
+  }
+
   Future<void> _moveToCurrentLocation()
   async {
 
@@ -136,7 +169,18 @@ class _ToiletMapScreenState
                   newLocation;
             });
 
-            _reloadToilets();
+            if (_shouldReloadToilets(
+                  newLocation,
+                )) {
+
+              _lastReloadLocation =
+                  newLocation;
+
+              _lastReloadTime =
+                  DateTime.now();
+
+              _reloadToilets();
+            }
           },
         );
   }
