@@ -40,51 +40,51 @@ class _OnboardingScreenState
     return [
 
       OnboardingPageData(
-
-        icon:
-            Icons.public,
-
-        title:
-            l10n.onboardingWelcomeTitle,
-
-        description:
-            l10n.onboardingWelcomeDescription,
+        icon: Icons.public,
+        title: l10n.onboardingWelcomeTitle,
+        description: l10n.onboardingWelcomeDescription,
       ),
 
       OnboardingPageData(
-
-        icon:
-            Icons.add_location_alt,
-
-        title:
-            l10n.onboardingAddTitle,
-
-        description:
-            l10n.onboardingAddDescription,
+        icon: Icons.add_location_alt,
+        title: l10n.onboardingAddTitle,
+        description: l10n.onboardingAddDescription,
       ),
 
       OnboardingPageData(
-
-        icon:
-            Icons.verified,
-
-        title:
-            l10n.onboardingStatusesTitle,
-
-        description:
-            l10n.onboardingStatusesDescription,
+        icon: Icons.place,
+        title: l10n.onboardingColorsTitle,
+        description: l10n.onboardingColorsDescription,
       ),
 
       OnboardingPageData(
+        icon: Icons.verified,
+        title: l10n.onboardingApproveTitle,
+        description: l10n.onboardingApproveDescription,
+      ),
 
-        icon:
-            Icons.people_alt,
+      OnboardingPageData(
+        icon: Icons.photo_camera,
+        title: l10n.onboardingPhotosTitle,
+        description: l10n.onboardingPhotosDescription,
+      ),
 
-        title:
-            l10n.onboardingCommunityTitle,
+      OnboardingPageData(
+        icon: Icons.rate_review,
+        title: l10n.onboardingFeedbackTitle,
+        description: l10n.onboardingFeedbackDescription,
+      ),
 
-        description:
-            l10n.onboardingCommunityDescription,
+      OnboardingPageData(
+        icon: Icons.report_problem,
+        title: l10n.onboardingReportTitle,
+        description: l10n.onboardingReportDescription,
+      ),
+
+      OnboardingPageData(
+        icon: Icons.favorite,
+        title: l10n.onboardingTogetherTitle,
+        description: l10n.onboardingTogetherDescription,
       ),
     ];
   }
@@ -377,11 +377,8 @@ class _OnboardingScreenState
 
                     child: Text(
 
-                      _currentPage ==
-                              pages.length - 1
-
-                          ? l10n.onboardingStart
-
+                      _currentPage == pages.length - 1
+                          ? l10n.onboardingOpenMap
                           : l10n.onboardingNext,
 
                       style:

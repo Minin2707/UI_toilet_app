@@ -111,7 +111,45 @@
         "Thanks! Your report has been submitted.",
 
     "createSuccess":
-        "Toilet successfully added."
+        "Toilet successfully added.",
+
+    "onboardingColorsTitle": "What do the colors mean?",
+
+    "onboardingColorsDescription":
+        "🟠 Orange — waiting for verification\n\n🟢 Green — verified by the community\n\n🔴 Red — needs re-validation",
+
+    "onboardingApproveTitle":
+        "Verify toilets",
+
+    "onboardingApproveDescription":
+        "Several confirmations from users make a toilet trusted and verified.",
+
+    "onboardingPhotosTitle":
+        "Add photos",
+
+    "onboardingPhotosDescription":
+        "After a toilet is verified by the community, photos can be added to help other users.",
+
+    "onboardingFeedbackTitle":
+        "Leave feedback",
+
+    "onboardingFeedbackDescription":
+        "Tell others whether the toilet is clean, has paper, is warm and feels safe.",
+
+    "onboardingReportTitle":
+        "Report problems",
+
+    "onboardingReportDescription":
+        "If a toilet no longer exists or information is outdated, submit a report for re-validation.",
+
+    "onboardingTogetherTitle":
+        "Thank you",
+
+    "onboardingTogetherDescription":
+        "Every confirmation, every review and every new toilet helps make the map better for everyone.",
+
+    "onboardingOpenMap":
+        "Open Map"
 
 
 }

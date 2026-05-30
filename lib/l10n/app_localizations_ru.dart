@@ -217,4 +217,43 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get createSuccess => 'Туалет успешно добавлен.';
+
+  @override
+  String get onboardingColorsTitle => 'Что означают цвета?';
+
+  @override
+  String get onboardingColorsDescription => '🟠 Оранжевый — ожидает проверки\n\n🟢 Зелёный — подтверждён сообществом\n\n🔴 Красный — требуется повторная проверка';
+
+  @override
+  String get onboardingApproveTitle => 'Подтверждайте туалеты';
+
+  @override
+  String get onboardingApproveDescription => 'Несколько подтверждений от пользователей делают туалет проверенным и надёжным.';
+
+  @override
+  String get onboardingPhotosTitle => 'Добавляйте фотографии';
+
+  @override
+  String get onboardingPhotosDescription => 'После подтверждения туалета сообществом можно загружать фотографии и помогать другим пользователям.';
+
+  @override
+  String get onboardingFeedbackTitle => 'Оставляйте отзывы';
+
+  @override
+  String get onboardingFeedbackDescription => 'Сообщайте, чисто ли в туалете, есть ли бумага, тепло ли внутри и насколько там безопасно.';
+
+  @override
+  String get onboardingReportTitle => 'Сообщайте об ошибках';
+
+  @override
+  String get onboardingReportDescription => 'Если туалет больше не существует или информация устарела, отправьте жалобу для повторной проверки.';
+
+  @override
+  String get onboardingTogetherTitle => 'Спасибо за помощь';
+
+  @override
+  String get onboardingTogetherDescription => 'Каждое подтверждение, каждый отзыв и каждый новый туалет делают карту лучше для всех.';
+
+  @override
+  String get onboardingOpenMap => 'Открыть карту';
 }

@@ -217,4 +217,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createSuccess => 'Toilet successfully added.';
+
+  @override
+  String get onboardingColorsTitle => 'What do the colors mean?';
+
+  @override
+  String get onboardingColorsDescription => '🟠 Orange — waiting for verification\n\n🟢 Green — verified by the community\n\n🔴 Red — needs re-validation';
+
+  @override
+  String get onboardingApproveTitle => 'Verify toilets';
+
+  @override
+  String get onboardingApproveDescription => 'Several confirmations from users make a toilet trusted and verified.';
+
+  @override
+  String get onboardingPhotosTitle => 'Add photos';
+
+  @override
+  String get onboardingPhotosDescription => 'After a toilet is verified by the community, photos can be added to help other users.';
+
+  @override
+  String get onboardingFeedbackTitle => 'Leave feedback';
+
+  @override
+  String get onboardingFeedbackDescription => 'Tell others whether the toilet is clean, has paper, is warm and feels safe.';
+
+  @override
+  String get onboardingReportTitle => 'Report problems';
+
+  @override
+  String get onboardingReportDescription => 'If a toilet no longer exists or information is outdated, submit a report for re-validation.';
+
+  @override
+  String get onboardingTogetherTitle => 'Thank you';
+
+  @override
+  String get onboardingTogetherDescription => 'Every confirmation, every review and every new toilet helps make the map better for everyone.';
+
+  @override
+  String get onboardingOpenMap => 'Open Map';
 }

@@ -502,6 +502,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Toilet successfully added.'**
   String get createSuccess;
+
+  /// No description provided for @onboardingColorsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What do the colors mean?'**
+  String get onboardingColorsTitle;
+
+  /// No description provided for @onboardingColorsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'🟠 Orange — waiting for verification\n\n🟢 Green — verified by the community\n\n🔴 Red — needs re-validation'**
+  String get onboardingColorsDescription;
+
+  /// No description provided for @onboardingApproveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify toilets'**
+  String get onboardingApproveTitle;
+
+  /// No description provided for @onboardingApproveDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Several confirmations from users make a toilet trusted and verified.'**
+  String get onboardingApproveDescription;
+
+  /// No description provided for @onboardingPhotosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photos'**
+  String get onboardingPhotosTitle;
+
+  /// No description provided for @onboardingPhotosDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'After a toilet is verified by the community, photos can be added to help other users.'**
+  String get onboardingPhotosDescription;
+
+  /// No description provided for @onboardingFeedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave feedback'**
+  String get onboardingFeedbackTitle;
+
+  /// No description provided for @onboardingFeedbackDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell others whether the toilet is clean, has paper, is warm and feels safe.'**
+  String get onboardingFeedbackDescription;
+
+  /// No description provided for @onboardingReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report problems'**
+  String get onboardingReportTitle;
+
+  /// No description provided for @onboardingReportDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'If a toilet no longer exists or information is outdated, submit a report for re-validation.'**
+  String get onboardingReportDescription;
+
+  /// No description provided for @onboardingTogetherTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you'**
+  String get onboardingTogetherTitle;
+
+  /// No description provided for @onboardingTogetherDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Every confirmation, every review and every new toilet helps make the map better for everyone.'**
+  String get onboardingTogetherDescription;
+
+  /// No description provided for @onboardingOpenMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Map'**
+  String get onboardingOpenMap;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
