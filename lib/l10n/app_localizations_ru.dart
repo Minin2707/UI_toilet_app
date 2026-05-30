@@ -202,4 +202,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get photosOnlyForApproved => 'Фотографии можно добавлять только к подтверждённым туалетам';
+
+  @override
+  String get titleRequired => 'Название обязательно';
+
+  @override
+  String get usernameRequired => 'Логин обязателен';
 }

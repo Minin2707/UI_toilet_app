@@ -22,6 +22,8 @@ class _AuthScreenState
     extends State<AuthScreen>
     with SingleTickerProviderStateMixin {
 
+  String? _usernameError;
+
   final TextEditingController
       _usernameController =
           TextEditingController();
@@ -69,13 +71,12 @@ class _AuthScreenState
 
     if (username.isEmpty) {
 
-      ScaffoldMessenger.of(context).showSnackBar(
-         SnackBar(
-          content: Text(
-            AppLocalizations.of(context)!.enterUsername,
-          ),
-        ),
-      );
+      setState(() {
+
+        _usernameError =
+            AppLocalizations.of(context)!
+                .usernameRequired;
+      });
 
       return;
     }
@@ -271,14 +272,27 @@ class _AuthScreenState
                               // USERNAME FIELD
 
                               TextField(
-                                controller:
-                                    _usernameController,
+
+                                controller: _usernameController,
+
+                                onChanged: (_) {
+
+                                  if (_usernameError != null) {
+
+                                    setState(() {
+
+                                      _usernameError = null;
+                                    });
+                                  }
+                                },
 
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
 
                                 decoration: InputDecoration(
+
+                                  errorText: _usernameError,
                                   hintText: AppLocalizations.of(context)!.username,
 
                                   hintStyle: TextStyle(
@@ -297,10 +311,41 @@ class _AuthScreenState
                                       Colors.white.withOpacity(0.08),
 
                                   border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    borderSide: BorderSide.none,
+                                  ),
+
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    borderSide: BorderSide.none,
+                                  ),
+
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    borderSide: BorderSide.none,
+                                  ),
+
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    borderSide: const BorderSide(
+                                      color: Colors.redAccent,
+                                      width: 1.5,
+                                    ),
+                                  ),
+
+
+
+                                  focusedErrorBorder: OutlineInputBorder(
+
                                     borderRadius:
                                         BorderRadius.circular(18),
 
-                                    borderSide: BorderSide.none,
+                                    borderSide: const BorderSide(
+
+                                      color: Colors.redAccent,
+
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
                               ),

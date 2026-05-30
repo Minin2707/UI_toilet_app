@@ -98,5 +98,9 @@
         "Maximum 2 photos allowed",
 
     "photosOnlyForApproved":
-        "Photos can only be added to approved toilets"
+        "Photos can only be added to approved toilets",
+
+    "titleRequired": "Title is required",
+
+    "usernameRequired": "Username is required"
 }

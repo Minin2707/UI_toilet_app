@@ -23,7 +23,7 @@ class AppConfig {
         if (kIsWeb) {
           return 'http://localhost:8080';
         }
-        return 'https://nil-speeds-cache-licensing.trycloudflare.com';
+        return 'https://realtor-buzz-guns-calibration.trycloudflare.com';
 
       case Environment.stage:
         return 'https://stage-api.toiletmap.com';

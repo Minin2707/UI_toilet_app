@@ -472,6 +472,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Photos can only be added to approved toilets'**
   String get photosOnlyForApproved;
+
+  /// No description provided for @titleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Title is required'**
+  String get titleRequired;
+
+  /// No description provided for @usernameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Username is required'**
+  String get usernameRequired;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

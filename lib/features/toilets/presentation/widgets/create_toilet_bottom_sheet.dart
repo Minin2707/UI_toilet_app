@@ -43,6 +43,8 @@ class _CreateToiletBottomSheetState
 
   bool _isLoading = false;
 
+  String? _titleError;
+
   String _accessType = 'FREE';
 
   bool _wheelchairAccessible =
@@ -54,6 +56,14 @@ class _CreateToiletBottomSheetState
         _titleController.text.trim();
 
     if (title.isEmpty) {
+
+      setState(() {
+
+        _titleError =
+            AppLocalizations.of(context)!
+                .titleRequired;
+      });
+
       return;
     }
 
@@ -295,19 +305,33 @@ class _CreateToiletBottomSheetState
 
                   TextField(
 
-                    controller:
-                        _titleController,
+                    controller: _titleController,
 
                     style: const TextStyle(
                       color: Colors.white,
                     ),
 
+                    onChanged: (_) {
+
+                      if (_titleError != null) {
+
+                        setState(() {
+
+                          _titleError = null;
+                        });
+                      }
+                    },
+
                     decoration:
                         _inputDecoration(
 
-                      AppLocalizations.of(context)!
-                          .title,
-                    ),
+                          AppLocalizations.of(context)!
+                              .title,
+
+                        ).copyWith(
+
+                          errorText: _titleError,
+                        ),
                   ),
 
                   const SizedBox(height: 16),

@@ -202,4 +202,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get photosOnlyForApproved => 'Photos can only be added to approved toilets';
+
+  @override
+  String get titleRequired => 'Title is required';
+
+  @override
+  String get usernameRequired => 'Username is required';
 }
