@@ -4,6 +4,8 @@ class OnboardingPageData {
 
   final IconData icon;
 
+  final Color iconColor;
+
   final String title;
 
   final String description;
@@ -11,6 +13,8 @@ class OnboardingPageData {
   const OnboardingPageData({
 
     required this.icon,
+
+    required this.iconColor,
 
     required this.title,
 

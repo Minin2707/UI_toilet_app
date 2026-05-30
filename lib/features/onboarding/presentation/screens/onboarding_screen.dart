@@ -43,48 +43,56 @@ class _OnboardingScreenState
         icon: Icons.public,
         title: l10n.onboardingWelcomeTitle,
         description: l10n.onboardingWelcomeDescription,
+        iconColor: Colors.cyan,
       ),
 
       OnboardingPageData(
         icon: Icons.add_location_alt,
         title: l10n.onboardingAddTitle,
         description: l10n.onboardingAddDescription,
+        iconColor: Colors.orange,
       ),
 
       OnboardingPageData(
         icon: Icons.place,
         title: l10n.onboardingColorsTitle,
         description: l10n.onboardingColorsDescription,
+        iconColor: Colors.deepOrange,
       ),
 
       OnboardingPageData(
         icon: Icons.verified,
         title: l10n.onboardingApproveTitle,
         description: l10n.onboardingApproveDescription,
+        iconColor: Colors.green,
       ),
 
       OnboardingPageData(
         icon: Icons.photo_camera,
         title: l10n.onboardingPhotosTitle,
         description: l10n.onboardingPhotosDescription,
+        iconColor: Colors.blue,
       ),
 
       OnboardingPageData(
         icon: Icons.rate_review,
         title: l10n.onboardingFeedbackTitle,
         description: l10n.onboardingFeedbackDescription,
+        iconColor: Colors.amber,
       ),
 
       OnboardingPageData(
         icon: Icons.report_problem,
         title: l10n.onboardingReportTitle,
         description: l10n.onboardingReportDescription,
+        iconColor: Colors.red,
       ),
 
       OnboardingPageData(
         icon: Icons.favorite,
         title: l10n.onboardingTogetherTitle,
         description: l10n.onboardingTogetherDescription,
+        iconColor: Colors.pink,
       ),
     ];
   }
@@ -193,7 +201,7 @@ class _OnboardingScreenState
                                       .withOpacity(0.1),
                             ),
                           ),
-
+                        child: SingleChildScrollView(
                           child: Column(
 
                             mainAxisSize:
@@ -201,18 +209,34 @@ class _OnboardingScreenState
 
                             children: [
 
-                              Icon(
+                              Container(
 
-                                page.icon,
+                                width: 120,
 
-                                size: 120,
+                                height: 120,
 
-                                color:
-                                    Colors.white,
+                                decoration: BoxDecoration(
+
+                                  shape: BoxShape.circle,
+
+                                  color:
+                                      page.iconColor.withOpacity(
+                                        0.15,
+                                      ),
+                                ),
+
+                                child: Icon(
+
+                                  page.icon,
+
+                                  size: 64,
+
+                                  color: page.iconColor,
+                                ),
                               ),
 
                               const SizedBox(
-                                height: 40,
+                                height: 24,
                               ),
 
                               Text(
@@ -228,7 +252,7 @@ class _OnboardingScreenState
                                   color:
                                       Colors.white,
 
-                                  fontSize: 32,
+                                  fontSize: 28,
 
                                   fontWeight:
                                       FontWeight.bold,
@@ -253,13 +277,14 @@ class _OnboardingScreenState
                                       Colors.white
                                           .withOpacity(0.8),
 
-                                  fontSize: 18,
+                                  fontSize: 17,
 
                                   height: 1.5,
                                 ),
                               ),
                             ],
                           ),
+                        ),
                         ),
                       );
                     },
@@ -400,78 +425,6 @@ class _OnboardingScreenState
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _OnboardingPage
-    extends StatelessWidget {
-
-  final String title;
-
-  final String description;
-
-  const _OnboardingPage({
-
-    required this.title,
-
-    required this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Padding(
-
-      padding:
-          const EdgeInsets.all(32),
-
-      child: Column(
-
-        mainAxisAlignment:
-            MainAxisAlignment.center,
-
-        children: [
-
-          const Icon(
-
-            Icons.public,
-
-            size: 120,
-          ),
-
-          const SizedBox(
-            height: 40,
-          ),
-
-          Text(
-
-            title,
-
-            style:
-                Theme.of(context)
-                    .textTheme
-                    .headlineMedium,
-          ),
-
-          const SizedBox(
-            height: 24,
-          ),
-
-          Text(
-
-            description,
-
-            textAlign:
-                TextAlign.center,
-
-            style:
-                Theme.of(context)
-                    .textTheme
-                    .bodyLarge,
-          ),
-        ],
       ),
     );
   }
