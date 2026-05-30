@@ -208,4 +208,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get usernameRequired => 'Username is required';
+
+  @override
+  String get approveSuccess => 'Thanks! Your confirmation has been recorded.';
+
+  @override
+  String get reportSuccess => 'Thanks! Your report has been submitted.';
+
+  @override
+  String get createSuccess => 'Toilet successfully added.';
 }

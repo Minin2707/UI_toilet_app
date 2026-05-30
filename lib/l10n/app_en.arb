@@ -102,5 +102,16 @@
 
     "titleRequired": "Title is required",
 
-    "usernameRequired": "Username is required"
+    "usernameRequired": "Username is required",
+
+    "approveSuccess":
+        "Thanks! Your confirmation has been recorded.",
+
+    "reportSuccess":
+        "Thanks! Your report has been submitted.",
+
+    "createSuccess":
+        "Toilet successfully added."
+
+
 }

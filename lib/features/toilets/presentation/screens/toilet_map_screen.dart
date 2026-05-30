@@ -378,6 +378,30 @@ class _ToiletMapScreenState
 
                         break;
 
+                      case 'APPROVE_SUCCESS':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .approveSuccess;
+
+                        break;
+
+                      case 'REPORT_SUCCESS':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .reportSuccess;
+
+                        break;
+
+                      case 'CREATE_SUCCESS':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .createSuccess;
+
+                        break;
+
                       default:
 
                         message =

@@ -484,6 +484,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Username is required'**
   String get usernameRequired;
+
+  /// No description provided for @approveSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks! Your confirmation has been recorded.'**
+  String get approveSuccess;
+
+  /// No description provided for @reportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks! Your report has been submitted.'**
+  String get reportSuccess;
+
+  /// No description provided for @createSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Toilet successfully added.'**
+  String get createSuccess;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

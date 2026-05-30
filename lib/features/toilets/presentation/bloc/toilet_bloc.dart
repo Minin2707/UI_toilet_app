@@ -112,16 +112,20 @@ class ToiletBloc
       final toilets =
           await repository.getToilets(
 
-        latitude:
-            event.reloadLatitude,
+            latitude:
+                event.reloadLatitude,
 
-        longitude:
-            event.reloadLongitude,
-      );
+            longitude:
+                event.reloadLongitude,
+          );
 
       emit(
         ToiletLoaded(
+
           toilets,
+
+          uiMessageCode:
+              'APPROVE_SUCCESS',
         ),
       );
 
@@ -208,6 +212,7 @@ class ToiletBloc
       emit(
         ToiletLoaded(
           toilets,
+          uiMessageCode: 'REPORT_SUCCESS',
         ),
       );
 
@@ -251,6 +256,7 @@ class ToiletBloc
       emit(
         ToiletLoaded(
           toilets,
+          uiMessageCode: 'CREATE_SUCCESS',
         ),
       );
 

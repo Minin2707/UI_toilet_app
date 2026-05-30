@@ -102,5 +102,14 @@
 
       "titleRequired": "Название обязательно",
 
-      "usernameRequired": "Логин обязателен"
+      "usernameRequired": "Логин обязателен",
+
+      "approveSuccess":
+          "Спасибо! Ваше подтверждение учтено.",
+
+      "reportSuccess":
+          "Спасибо! Жалоба отправлена.",
+
+      "createSuccess":
+          "Туалет успешно добавлен."
 }

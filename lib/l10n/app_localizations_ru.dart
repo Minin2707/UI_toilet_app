@@ -208,4 +208,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get usernameRequired => 'Логин обязателен';
+
+  @override
+  String get approveSuccess => 'Спасибо! Ваше подтверждение учтено.';
+
+  @override
+  String get reportSuccess => 'Спасибо! Жалоба отправлена.';
+
+  @override
+  String get createSuccess => 'Туалет успешно добавлен.';
 }
