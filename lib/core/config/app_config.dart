@@ -23,7 +23,7 @@ class AppConfig {
         if (kIsWeb) {
           return 'http://localhost:8080';
         }
-        return 'https://numbers-vat-civil-floor.trycloudflare.com';
+        return 'https://journey-mechanism-gratuit-presentations.trycloudflare.com';
 
       case Environment.stage:
         return 'https://stage-api.toiletmap.com';

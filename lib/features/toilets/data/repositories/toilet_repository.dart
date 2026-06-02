@@ -34,7 +34,7 @@ class ToiletRepository {
 
         'radiusMeters': 5000,
 
-        'limit': 200,
+        'limit': 50,
 
         if (approvedOnly)
           'approvedOnly': true,
