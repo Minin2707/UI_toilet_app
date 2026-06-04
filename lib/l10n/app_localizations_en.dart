@@ -268,4 +268,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toiletFeedbackLimitExceeded => 'You have reached the feedback limit.';
+
+  @override
+  String tryAgainInSeconds(int seconds) {
+    return 'Try again in $seconds seconds.';
+  }
 }

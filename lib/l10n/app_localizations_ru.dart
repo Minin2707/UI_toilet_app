@@ -268,4 +268,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get toiletFeedbackLimitExceeded => 'Вы достигли лимита на отправку отзывов.';
+
+  @override
+  String tryAgainInSeconds(int seconds) {
+    return 'Попробуйте снова через $seconds сек.';
+  }
 }

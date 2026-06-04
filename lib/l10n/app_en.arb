@@ -161,7 +161,18 @@
         "You have reached the report limit.",
 
     "toiletFeedbackLimitExceeded":
-        "You have reached the feedback limit."
+        "You have reached the feedback limit.",
+
+    "tryAgainInSeconds":
+        "Try again in {seconds} seconds.",
+
+    "@tryAgainInSeconds": {
+      "placeholders": {
+        "seconds": {
+          "type": "int"
+        }
+      }
+    }
 
 
 }

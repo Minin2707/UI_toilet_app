@@ -161,5 +161,16 @@
           "Вы достигли лимита на отправку жалоб.",
 
       "toiletFeedbackLimitExceeded":
-          "Вы достигли лимита на отправку отзывов."
+          "Вы достигли лимита на отправку отзывов.",
+
+      "tryAgainInSeconds":
+          "Попробуйте снова через {seconds} сек.",
+
+      "@tryAgainInSeconds": {
+        "placeholders": {
+          "seconds": {
+            "type": "int"
+          }
+        }
+      }
 }

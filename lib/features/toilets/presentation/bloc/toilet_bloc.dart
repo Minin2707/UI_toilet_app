@@ -134,6 +134,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         e.code,
+        e.retryAfterSeconds,
       );
 
     } catch (e) {
@@ -141,6 +142,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         'UNKNOWN_ERROR',
+        null,
       );
     }
   }
@@ -177,6 +179,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         e.code,
+        e.retryAfterSeconds,
       );
 
     } catch (e) {
@@ -184,6 +187,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         'UNKNOWN_ERROR',
+        null,
       );
     }
   }
@@ -221,6 +225,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         e.code,
+        e.retryAfterSeconds,
       );
 
     } catch (e) {
@@ -228,6 +233,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         'UNKNOWN_ERROR',
+        null,
       );
     }
   }
@@ -265,6 +271,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         e.code,
+        e.retryAfterSeconds,
       );
 
     } catch (e) {
@@ -272,6 +279,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         'UNKNOWN_ERROR',
+        null,
       );
     }
   }
@@ -313,6 +321,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         e.code,
+        e.retryAfterSeconds,
       );
 
     } catch (e) {
@@ -320,6 +329,7 @@ class ToiletBloc
       _emitUiError(
         emit,
         'UNKNOWN_ERROR',
+        null,
       );
     }
   }
@@ -329,6 +339,8 @@ class ToiletBloc
     Emitter<ToiletState> emit,
 
     String code,
+
+    int? retryAfterSeconds,
   ) {
 
     final currentState =
@@ -344,6 +356,9 @@ class ToiletBloc
           currentState.toilets,
 
           uiMessageCode: code,
+
+          retryAfterSeconds:
+                    retryAfterSeconds,
         ),
       );
     }

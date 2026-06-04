@@ -15,11 +15,15 @@ class ToiletLoaded
 
   final String? uiMessageCode;
 
+  final int? retryAfterSeconds;
+
   ToiletLoaded(
 
     this.toilets, {
 
     this.uiMessageCode,
+
+    this.retryAfterSeconds,
   });
 }
 

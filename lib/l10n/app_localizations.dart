@@ -604,6 +604,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You have reached the feedback limit.'**
   String get toiletFeedbackLimitExceeded;
+
+  /// No description provided for @tryAgainInSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again in {seconds} seconds.'**
+  String tryAgainInSeconds(int seconds);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

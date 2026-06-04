@@ -352,6 +352,8 @@ class _ToiletMapScreenState
 
                     String message;
 
+
+
                     switch (state.uiMessageCode) {
 
                       case 'USER_ALREADY_APPROVED':
@@ -439,6 +441,16 @@ class _ToiletMapScreenState
                         message =
                             AppLocalizations.of(context)!
                                 .unknownError;
+                    }
+
+                    if (state.retryAfterSeconds != null) {
+
+                      message =
+                          '$message\n\n'
+                          '${AppLocalizations.of(context)!
+                              .tryAgainInSeconds(
+                                  state.retryAfterSeconds!
+                              )}';
                     }
 
                     ScaffoldMessenger.of(context)
