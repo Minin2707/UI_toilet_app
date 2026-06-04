@@ -580,6 +580,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open Map'**
   String get onboardingOpenMap;
+
+  /// No description provided for @toiletCreateLimitExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the toilet creation limit.'**
+  String get toiletCreateLimitExceeded;
+
+  /// No description provided for @toiletApproveLimitExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the toilet approval limit.'**
+  String get toiletApproveLimitExceeded;
+
+  /// No description provided for @toiletReportLimitExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the report limit.'**
+  String get toiletReportLimitExceeded;
+
+  /// No description provided for @toiletFeedbackLimitExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the feedback limit.'**
+  String get toiletFeedbackLimitExceeded;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

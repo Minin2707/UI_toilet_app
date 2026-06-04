@@ -62,10 +62,32 @@ class ToiletRepository {
     CreateToiletRequest request,
   ) async {
 
-    await _dio.post(
-      '/toilets',
-      data: request.toJson(),
-    );
+    try {
+
+      await _dio.post(
+        '/toilets',
+        data: request.toJson(),
+      );
+
+    } on DioException catch (e) {
+
+      final data =
+          e.response?.data;
+
+      throw AppException(
+
+        code:
+            data['code'] ??
+            'UNKNOWN_ERROR',
+
+        message:
+            data['message'] ??
+            'Unknown error',
+
+        retryAfterSeconds:
+            data['retryAfterSeconds'],
+      );
+    }
   }
 
   Future<void> approveToilet(
@@ -80,15 +102,6 @@ class ToiletRepository {
 
     } on DioException catch (e) {
 
-
-    print(e.response?.data);
-    print(e.response?.statusCode);
-
-
-
-
-
-
       final data =
           e.response?.data;
 
@@ -96,11 +109,14 @@ class ToiletRepository {
 
         code:
             data['code'] ??
-                'UNKNOWN_ERROR',
+            'UNKNOWN_ERROR',
 
         message:
             data['message'] ??
-                'Unknown error',
+            'Unknown error',
+
+        retryAfterSeconds:
+            data['retryAfterSeconds'],
       );
     }
   }
@@ -124,11 +140,14 @@ class ToiletRepository {
 
         code:
             data['code'] ??
-                'UNKNOWN_ERROR',
+            'UNKNOWN_ERROR',
 
         message:
             data['message'] ??
-                'Unknown error',
+            'Unknown error',
+
+        retryAfterSeconds:
+            data['retryAfterSeconds'],
       );
     }
   }

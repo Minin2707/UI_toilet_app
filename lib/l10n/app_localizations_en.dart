@@ -256,4 +256,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingOpenMap => 'Open Map';
+
+  @override
+  String get toiletCreateLimitExceeded => 'You have reached the toilet creation limit.';
+
+  @override
+  String get toiletApproveLimitExceeded => 'You have reached the toilet approval limit.';
+
+  @override
+  String get toiletReportLimitExceeded => 'You have reached the report limit.';
+
+  @override
+  String get toiletFeedbackLimitExceeded => 'You have reached the feedback limit.';
 }

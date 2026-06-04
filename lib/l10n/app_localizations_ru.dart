@@ -256,4 +256,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingOpenMap => 'Открыть карту';
+
+  @override
+  String get toiletCreateLimitExceeded => 'Вы достигли лимита на добавление туалетов.';
+
+  @override
+  String get toiletApproveLimitExceeded => 'Вы достигли лимита на подтверждение туалетов.';
+
+  @override
+  String get toiletReportLimitExceeded => 'Вы достигли лимита на отправку жалоб.';
+
+  @override
+  String get toiletFeedbackLimitExceeded => 'Вы достигли лимита на отправку отзывов.';
 }

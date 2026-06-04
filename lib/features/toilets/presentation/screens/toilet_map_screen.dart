@@ -402,6 +402,38 @@ class _ToiletMapScreenState
 
                         break;
 
+                      case 'TOILET_CREATE_LIMIT_EXCEEDED':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .toiletCreateLimitExceeded;
+
+                        break;
+
+                      case 'TOILET_APPROVE_LIMIT_EXCEEDED':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .toiletApproveLimitExceeded;
+
+                        break;
+
+                      case 'TOILET_REPORT_LIMIT_EXCEEDED':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .toiletReportLimitExceeded;
+
+                        break;
+
+                      case 'TOILET_FEEDBACK_LIMIT_EXCEEDED':
+
+                        message =
+                            AppLocalizations.of(context)!
+                                .toiletFeedbackLimitExceeded;
+
+                        break;
+
                       default:
 
                         message =

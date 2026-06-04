@@ -149,7 +149,19 @@
         "Every confirmation, every review and every new toilet helps make the map better for everyone.",
 
     "onboardingOpenMap":
-        "Open Map"
+        "Open Map",
+
+    "toiletCreateLimitExceeded":
+        "You have reached the toilet creation limit.",
+
+    "toiletApproveLimitExceeded":
+        "You have reached the toilet approval limit.",
+
+    "toiletReportLimitExceeded":
+        "You have reached the report limit.",
+
+    "toiletFeedbackLimitExceeded":
+        "You have reached the feedback limit."
 
 
 }

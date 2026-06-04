@@ -5,10 +5,14 @@ class AppException
 
   final String message;
 
+  final int? retryAfterSeconds;
+
   AppException({
 
     required this.code,
 
     required this.message,
+
+    this.retryAfterSeconds,
   });
 }
