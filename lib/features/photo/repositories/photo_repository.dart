@@ -17,54 +17,49 @@ class PhotoRepository {
   final Dio _dio =
       ApiClient.createDio();
 
-  Future<void> uploadPhoto({
 
-    required String toiletId,
 
-    required File file,
-  }) async {
+ Future<void> uploadPhoto({
+   required String toiletId,
+   required File file,
+ }) async {
+   try {
+     final formData = FormData.fromMap({
+       'photo': await MultipartFile.fromFile(
+         file.path,
+         filename: 'photo.jpg',
+         contentType: MediaType(
+           'image',
+           'jpeg',
+         ),
+       ),
+     });
 
-    try {
+     await _dio.post(
+       '/toilet-photos/$toiletId',
+       data: formData,
+       onSendProgress: (sent, total) {
+         print('UPLOAD: $sent / $total');
+       },
+     );
+   } on DioException catch (e) {
+     final data = e.response?.data;
 
-      final formData = FormData.fromMap({
+     if (data is Map<String, dynamic>) {
+       throw AppException(
+         code: data['code'] ?? 'UNKNOWN_ERROR',
+         message: data['message'] ?? 'Unknown error',
+       );
+     }
 
-        'photo': await MultipartFile.fromFile(
+     throw AppException(
+       code: 'UNKNOWN_ERROR',
+       message: e.message ?? 'Unknown error',
+     );
+   }
+ }
 
-          file.path,
 
-          filename: 'photo.jpg',
-
-          contentType: MediaType(
-            'image',
-            'jpeg',
-          ),
-        ),
-      });
-
-      await _dio.post(
-
-        '/toilet-photos/$toiletId',
-
-        data: formData,
-      );
-
-    } on DioException catch (e) {
-
-      final data =
-          e.response?.data;
-
-      throw AppException(
-
-        code:
-            data['code'] ??
-                'UNKNOWN_ERROR',
-
-        message:
-            data['message'] ??
-                'Unknown error',
-      );
-    }
-  }
 
   Future<List<ToiletPhoto>> getPhotos(
     String toiletId,

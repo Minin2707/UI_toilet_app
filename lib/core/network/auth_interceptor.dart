@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
 
-import '../config/app_config.dart';
 import '../auth/token_storage.dart';
+import '../config/app_config.dart';
 
 class AuthInterceptor extends Interceptor {
-
-  final TokenStorage _tokenStorage =
-      TokenStorage();
+  final TokenStorage _tokenStorage = TokenStorage();
 
   bool _isRefreshing = false;
 
@@ -14,67 +12,57 @@ class AuthInterceptor extends Interceptor {
 
   @override
   Future<void> onRequest(
-
-      RequestOptions options,
-
-      RequestInterceptorHandler handler,
+    RequestOptions options,
+    RequestInterceptorHandler handler,
   ) async {
+    print(
+      'INTERCEPTOR: ${options.method} ${options.uri}',
+    );
 
     final accessToken =
-
-        await _tokenStorage
-            .getAccessToken();
+        await _tokenStorage.getAccessToken();
 
     if (accessToken != null &&
         accessToken.isNotEmpty) {
-
       options.headers['Authorization'] =
-
           'Bearer $accessToken';
     }
 
-    return handler.next(options);
+    handler.next(options);
   }
 
   @override
   Future<void> onError(
-
-      DioException err,
-
-      ErrorInterceptorHandler handler,
+    DioException err,
+    ErrorInterceptorHandler handler,
   ) async {
-
     if (err.response?.statusCode != 401) {
-
       return handler.next(err);
     }
 
     try {
-
       String? accessToken;
 
       if (_isRefreshing) {
-
         accessToken =
             await _refreshFuture;
-
       } else {
-
         _isRefreshing = true;
 
-        _refreshFuture =
-            _refreshAccessToken();
+        try {
+          _refreshFuture =
+              _refreshAccessToken();
 
-        accessToken =
-            await _refreshFuture;
-
-        _isRefreshing = false;
+          accessToken =
+              await _refreshFuture;
+        } finally {
+          _isRefreshing = false;
+          _refreshFuture = null;
+        }
       }
 
       if (accessToken == null) {
-
-        await _tokenStorage
-            .clearTokens();
+        await _tokenStorage.clearTokens();
 
         return handler.next(err);
       }
@@ -83,7 +71,6 @@ class AuthInterceptor extends Interceptor {
           err.requestOptions;
 
       requestOptions.headers['Authorization'] =
-
           'Bearer $accessToken';
 
       final dio = Dio(
@@ -95,35 +82,29 @@ class AuthInterceptor extends Interceptor {
 
       final response =
           await dio.fetch(
-              requestOptions,
-          );
-
-      return handler.resolve(
-          response,
+        requestOptions,
       );
 
+      return handler.resolve(
+        response,
+      );
     } catch (_) {
-
       _isRefreshing = false;
+      _refreshFuture = null;
 
-      await _tokenStorage
-          .clearTokens();
+      await _tokenStorage.clearTokens();
 
       return handler.next(err);
     }
   }
 
   Future<String?> _refreshAccessToken() async {
-
     try {
-
       final refreshToken =
-
           await _tokenStorage
               .getRefreshToken();
 
       if (refreshToken == null) {
-
         return null;
       }
 
@@ -131,38 +112,47 @@ class AuthInterceptor extends Interceptor {
 
       final response =
           await dio.post(
-
         '${AppConfig.instance.baseUrl}/auth/refresh',
-
         data: {
-
           'refreshToken':
               refreshToken,
         },
       );
 
-      final newAccessToken =
+      if (response.data
+          is! Map<String, dynamic>) {
+        return null;
+      }
 
-          response.data['accessToken'];
+      final data =
+          response.data
+              as Map<String, dynamic>;
+
+      final newAccessToken =
+          data['accessToken']
+              as String?;
 
       final newRefreshToken =
+          data['refreshToken']
+              as String?;
 
-          response.data['refreshToken'];
+      if (newAccessToken == null ||
+          newRefreshToken == null) {
+        return null;
+      }
 
       await _tokenStorage
           .saveAccessToken(
-              newAccessToken,
-          );
+        newAccessToken,
+      );
 
       await _tokenStorage
           .saveRefreshToken(
-              newRefreshToken,
-          );
+        newRefreshToken,
+      );
 
       return newAccessToken;
-
     } catch (_) {
-
       return null;
     }
   }

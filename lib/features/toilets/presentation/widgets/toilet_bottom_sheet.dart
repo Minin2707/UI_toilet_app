@@ -104,6 +104,7 @@ class ToiletBottomSheet
 
       Future<void> _uploadPhoto() async {
 
+
         try {
 
           final File? file =
@@ -114,13 +115,13 @@ class ToiletBottomSheet
           }
 
           await _photoRepository.uploadPhoto(
-
             toiletId: widget.toilet.id,
-
             file: file,
           );
 
-          await _loadPhotos();
+          print('UPLOAD FINISHED');
+
+          return;
 
         } on AppException catch (e) {
 
