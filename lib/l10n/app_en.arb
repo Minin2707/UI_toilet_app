@@ -172,7 +172,20 @@
           "type": "int"
         }
       }
-    }
+    },
+
+    "feedbackTitle": "Feedback",
+    "messageType": "Message type",
+    "suggestion": "Suggestion",
+    "complaint": "Complaint",
+    "bug": "Bug",
+    "other": "Other",
+    "message": "Message",
+    "messageHint": "Describe your idea, complaint or bug...",
+    "send": "Send",
+    "messageCannotBeEmpty": "Message cannot be empty",
+    "feedbackSent": "Thank you for your feedback!",
+    "feedbackFailed": "Failed to send message"
 
 
 }

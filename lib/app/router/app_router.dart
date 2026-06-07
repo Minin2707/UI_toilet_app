@@ -12,6 +12,7 @@ import '../../features/toilets/presentation/bloc/toilet_bloc.dart';
 
 import '../../features/toilets/presentation/screens/toilet_map_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
+import '../../features/user_messages/presentation/screens/user_message_screen.dart';
 
 final GoRouter appRouter = GoRouter(
 
@@ -38,6 +39,13 @@ final GoRouter appRouter = GoRouter(
       ) {
 
         return const OnboardingScreen();
+      },
+    ),
+
+    GoRoute(
+      path: '/feedback',
+      builder: (context, state) {
+        return const UserMessageScreen();
       },
     ),
 

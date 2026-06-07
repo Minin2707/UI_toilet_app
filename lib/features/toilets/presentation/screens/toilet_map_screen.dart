@@ -298,6 +298,21 @@ class _ToiletMapScreenState
 
             children: [
 
+            FloatingActionButton(
+                      heroTag: 'feedback',
+                      mini: true,
+                      onPressed: () {
+                        context.push('/feedback');
+                      },
+                      child: const Icon(
+                        Icons.chat_bubble_outline,
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 12,
+                    ),
+
               FloatingActionButton(
 
                 heroTag: 'onboarding',

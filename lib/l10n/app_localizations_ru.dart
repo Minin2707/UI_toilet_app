@@ -273,4 +273,40 @@ class AppLocalizationsRu extends AppLocalizations {
   String tryAgainInSeconds(int seconds) {
     return 'Попробуйте снова через $seconds сек.';
   }
+
+  @override
+  String get feedbackTitle => 'Обратная связь';
+
+  @override
+  String get messageType => 'Тип сообщения';
+
+  @override
+  String get suggestion => 'Предложение';
+
+  @override
+  String get complaint => 'Жалоба';
+
+  @override
+  String get bug => 'Ошибка';
+
+  @override
+  String get other => 'Другое';
+
+  @override
+  String get message => 'Сообщение';
+
+  @override
+  String get messageHint => 'Опишите вашу идею, жалобу или найденную ошибку...';
+
+  @override
+  String get send => 'Отправить';
+
+  @override
+  String get messageCannotBeEmpty => 'Сообщение не может быть пустым';
+
+  @override
+  String get feedbackSent => 'Спасибо за ваш отзыв!';
+
+  @override
+  String get feedbackFailed => 'Не удалось отправить сообщение';
 }

@@ -610,6 +610,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again in {seconds} seconds.'**
   String tryAgainInSeconds(int seconds);
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback'**
+  String get feedbackTitle;
+
+  /// No description provided for @messageType.
+  ///
+  /// In en, this message translates to:
+  /// **'Message type'**
+  String get messageType;
+
+  /// No description provided for @suggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion'**
+  String get suggestion;
+
+  /// No description provided for @complaint.
+  ///
+  /// In en, this message translates to:
+  /// **'Complaint'**
+  String get complaint;
+
+  /// No description provided for @bug.
+  ///
+  /// In en, this message translates to:
+  /// **'Bug'**
+  String get bug;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
+
+  /// No description provided for @message.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get message;
+
+  /// No description provided for @messageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your idea, complaint or bug...'**
+  String get messageHint;
+
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
+  /// No description provided for @messageCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Message cannot be empty'**
+  String get messageCannotBeEmpty;
+
+  /// No description provided for @feedbackSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your feedback!'**
+  String get feedbackSent;
+
+  /// No description provided for @feedbackFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send message'**
+  String get feedbackFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

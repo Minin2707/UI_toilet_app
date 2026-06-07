@@ -273,4 +273,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String tryAgainInSeconds(int seconds) {
     return 'Try again in $seconds seconds.';
   }
+
+  @override
+  String get feedbackTitle => 'Feedback';
+
+  @override
+  String get messageType => 'Message type';
+
+  @override
+  String get suggestion => 'Suggestion';
+
+  @override
+  String get complaint => 'Complaint';
+
+  @override
+  String get bug => 'Bug';
+
+  @override
+  String get other => 'Other';
+
+  @override
+  String get message => 'Message';
+
+  @override
+  String get messageHint => 'Describe your idea, complaint or bug...';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get messageCannotBeEmpty => 'Message cannot be empty';
+
+  @override
+  String get feedbackSent => 'Thank you for your feedback!';
+
+  @override
+  String get feedbackFailed => 'Failed to send message';
 }
