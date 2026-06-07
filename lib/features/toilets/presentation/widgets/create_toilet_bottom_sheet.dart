@@ -269,21 +269,43 @@ class _CreateToiletBottomSheetState
 
                   const SizedBox(height: 22),
 
-                  Text(
 
-                    AppLocalizations.of(context)!
-                        .createToilet,
 
-                    style: const TextStyle(
+                    Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
 
-                      color: Colors.white,
+                      children: [
 
-                      fontSize: 26,
+                        Text(
 
-                      fontWeight:
-                          FontWeight.w700,
+                          AppLocalizations.of(context)!
+                              .createToilet,
+
+                          style: const TextStyle(
+
+                            color: Colors.white,
+
+                            fontSize: 26,
+
+                            fontWeight:
+                                FontWeight.w700,
+                          ),
+                        ),
+
+                        IconButton(
+
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+
+                          icon: const Icon(
+                            Icons.close,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
 
                   const SizedBox(height: 6),
 

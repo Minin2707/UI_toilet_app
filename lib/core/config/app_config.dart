@@ -23,7 +23,7 @@ class AppConfig {
         if (kIsWeb) {
           return 'http://localhost:8080';
         }
-        return 'https://clay-ringtone-only-springer.trycloudflare.com';
+        return 'https://responsible-designer-terry-corporation.trycloudflare.com';
 
       case Environment.stage:
         return 'https://stage-api.toiletmap.com';
