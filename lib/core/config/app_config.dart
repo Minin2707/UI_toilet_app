@@ -23,7 +23,7 @@ class AppConfig {
         if (kIsWeb) {
           return 'http://localhost:8080';
         }
-        return 'https://restaurants-represented-naval-relaxation.trycloudflare.com';
+        return 'https://queen-appreciation-vii-update.trycloudflare.com';
 
       case Environment.stage:
         return 'https://stage-api.toiletmap.com';

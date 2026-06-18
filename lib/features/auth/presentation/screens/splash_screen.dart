@@ -29,16 +29,12 @@ class _SplashScreenState
 
   @override
   void initState() {
-
     super.initState();
 
     _bootstrap();
   }
 
-
-
   Future<void> _bootstrap() async {
-
     debugPrint(
       'BOOTSTRAP START',
     );
@@ -46,7 +42,10 @@ class _SplashScreenState
     final token =
         await _tokenStorage.getAccessToken();
 
-
+    if (_tokenStorage
+        .consumeWasResetAfterPlatformException()) {
+      await OnboardingStorage().reset();
+    }
 
     debugPrint(
       'TOKEN = $token',
@@ -54,20 +53,19 @@ class _SplashScreenState
 
     // NO TOKEN
 
+    if (token == null ||
+        token.isEmpty) {
 
-if (token == null ||
-    token.isEmpty) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) {
 
-  WidgetsBinding.instance
-      .addPostFrameCallback((_) {
+        if (!mounted) return;
 
-    if (!mounted) return;
+        context.go('/auth');
+      });
 
-    context.go('/auth');
-  });
-
-  return;
-}
+      return;
+    }
 
     // VALIDATE TOKEN
 
@@ -116,11 +114,8 @@ if (token == null ||
 
   @override
   Widget build(BuildContext context) {
-
     return const Scaffold(
-
       body: Center(
-
         child:
             CircularProgressIndicator(),
       ),
