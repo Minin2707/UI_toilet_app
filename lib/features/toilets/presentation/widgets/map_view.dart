@@ -86,7 +86,7 @@ class MapView extends StatelessWidget {
         TileLayer(
 
           urlTemplate:
-              'https://papers-generally-uni-org.trycloudflare.com/styles/basic-preview/512/{z}/{x}/{y}.png',
+              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 
           userAgentPackageName:
               'com.example.toilet_map_app',

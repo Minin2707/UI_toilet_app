@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TokenStorage {
@@ -13,7 +14,7 @@ class TokenStorage {
 
   Future<void> saveAccessToken(
       String token,
-  ) async {
+      ) async {
 
     await _storage.write(
 
@@ -25,7 +26,7 @@ class TokenStorage {
 
   Future<void> saveRefreshToken(
       String token,
-  ) async {
+      ) async {
 
     await _storage.write(
 
@@ -37,16 +38,42 @@ class TokenStorage {
 
   Future<String?> getAccessToken() async {
 
-    return _storage.read(
-      key: _accessTokenKey,
-    );
+    try {
+
+      return await _storage.read(
+        key: _accessTokenKey,
+      );
+
+    } on PlatformException {
+
+      try {
+
+        await _storage.deleteAll();
+
+      } catch (_) {}
+
+      return null;
+    }
   }
 
   Future<String?> getRefreshToken() async {
 
-    return _storage.read(
-      key: _refreshTokenKey,
-    );
+    try {
+
+      return await _storage.read(
+        key: _refreshTokenKey,
+      );
+
+    } on PlatformException {
+
+      try {
+
+        await _storage.deleteAll();
+
+      } catch (_) {}
+
+      return null;
+    }
   }
 
   Future<void> clearTokens() async {

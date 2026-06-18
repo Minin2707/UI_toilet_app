@@ -35,6 +35,8 @@ class _SplashScreenState
     _bootstrap();
   }
 
+
+
   Future<void> _bootstrap() async {
 
     debugPrint(
@@ -44,21 +46,28 @@ class _SplashScreenState
     final token =
         await _tokenStorage.getAccessToken();
 
+
+
     debugPrint(
       'TOKEN = $token',
     );
 
     // NO TOKEN
 
-    if (token == null ||
-        token.isEmpty) {
 
-      if (!mounted) return;
+if (token == null ||
+    token.isEmpty) {
 
-      context.go('/auth');
+  WidgetsBinding.instance
+      .addPostFrameCallback((_) {
 
-      return;
-    }
+    if (!mounted) return;
+
+    context.go('/auth');
+  });
+
+  return;
+}
 
     // VALIDATE TOKEN
 
